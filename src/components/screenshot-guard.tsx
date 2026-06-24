@@ -1,59 +1,57 @@
-import { useEffect, useState } from "react";
-import { toast } from "sonner";
+import { useEffect, useRef, useState } from "react";
 
 /**
  * Best-effort deterrent against screenshots & content copying.
- * Note: No web app can truly block OS-level screenshots, but this
- * disables common capture paths and warns the user.
+ * Shows an INSTANT inline warning banner (no toast queue delay).
  */
 export function ScreenshotGuard() {
   const [blurred, setBlurred] = useState(false);
+  const [warning, setWarning] = useState<string | null>(null);
+  const hideTimer = useRef<number | null>(null);
 
   useEffect(() => {
     const warn = (msg = "Screenshots are not allowed on this site.") => {
-      toast.warning(msg, { duration: 2500 });
+      // Instant — synchronous state update, no animation/queue.
+      setWarning(msg);
       setBlurred(true);
-      window.setTimeout(() => setBlurred(false), 1500);
+      if (hideTimer.current) window.clearTimeout(hideTimer.current);
+      hideTimer.current = window.setTimeout(() => {
+        setWarning(null);
+        setBlurred(false);
+      }, 1400);
     };
 
-    // Disable right-click
     const onContext = (e: MouseEvent) => {
       e.preventDefault();
       warn("Right-click is disabled.");
     };
 
-    // Block common screenshot / devtools / copy shortcuts
     const onKey = (e: KeyboardEvent) => {
       const k = e.key?.toLowerCase();
       const meta = e.metaKey || e.ctrlKey;
 
-      // PrintScreen
       if (k === "printscreen" || e.key === "PrintScreen") {
         try { navigator.clipboard.writeText(""); } catch {}
         warn("Screenshots are blocked.");
         e.preventDefault();
         return;
       }
-      // Win+Shift+S / Cmd+Shift+3/4/5 / Ctrl+Shift+S
       if (e.shiftKey && (k === "s" || k === "3" || k === "4" || k === "5")) {
         warn("Screenshot shortcut blocked.");
         e.preventDefault();
         return;
       }
-      // DevTools: F12, Ctrl/Cmd+Shift+I/J/C, Ctrl/Cmd+U (view source)
       if (k === "f12" || (meta && e.shiftKey && (k === "i" || k === "j" || k === "c")) || (meta && k === "u")) {
         warn("Developer tools are disabled.");
         e.preventDefault();
         return;
       }
-      // Copy / Save
       if (meta && (k === "s" || k === "p")) {
         warn("This action is disabled.");
         e.preventDefault();
       }
     };
 
-    // Blur when tab loses focus (mitigates capture tools)
     const onBlur = () => setBlurred(true);
     const onFocus = () => setBlurred(false);
     const onVis = () => setBlurred(document.visibilityState !== "visible");
@@ -72,6 +70,7 @@ export function ScreenshotGuard() {
       window.removeEventListener("blur", onBlur);
       window.removeEventListener("focus", onFocus);
       document.removeEventListener("visibilitychange", onVis);
+      if (hideTimer.current) window.clearTimeout(hideTimer.current);
     };
   }, []);
 
@@ -83,9 +82,21 @@ export function ScreenshotGuard() {
         img, video { -webkit-user-drag: none; user-drag: none; pointer-events: auto; }
         @media print { body { display: none !important; } }
       `}</style>
+
+      {warning && (
+        <div
+          role="alert"
+          data-testid="screenshot-warning"
+          className="fixed left-1/2 top-4 z-[10000] -translate-x-1/2 rounded-lg border border-red-500/40 bg-red-600 px-4 py-2 text-sm font-semibold text-white shadow-2xl"
+        >
+          ⚠ {warning}
+        </div>
+      )}
+
       {blurred && (
         <div
           aria-hidden
+          data-testid="screenshot-overlay"
           className="fixed inset-0 z-[9999] grid place-items-center bg-black/90 text-center text-white backdrop-blur-xl"
         >
           <div className="px-6">
