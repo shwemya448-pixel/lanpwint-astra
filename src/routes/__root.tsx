@@ -161,6 +161,7 @@ function RootComponent() {
         <ViewRoleProvider>
           <QueryClientProvider client={queryClient}>
             <LazyTranslator />
+            <ScreenshotGuard />
             <Outlet />
             <Toaster richColors position="top-right" />
           </QueryClientProvider>
