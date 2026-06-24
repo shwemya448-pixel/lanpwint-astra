@@ -254,6 +254,22 @@
   .inner-page a:not([class*="bg-"]):hover { color: var(--gold); }
 }
 
+/* Dark mode readability: legacy pages use text-navy for headings and names. */
+.dark h1.text-navy,
+.dark h2.text-navy,
+.dark h3.text-navy,
+.dark .font-serif.text-navy {
+  color: var(--foreground);
+}
+
+.dark .text-teal {
+  color: color-mix(in oklab, var(--teal) 88%, white);
+}
+
+.dark .bg-teal\/15 {
+  background-color: color-mix(in oklab, var(--teal) 18%, transparent);
+}
+
 /* Light-mode tuning: keep gold readable on white backgrounds */
 :root:not(.dark) {
   --gold: oklch(0.62 0.16 80);            /* deeper, readable gold */
