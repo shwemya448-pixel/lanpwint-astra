@@ -125,6 +125,9 @@ export function LocaleProvider({ children }: { children: ReactNode }) {
   }, []);
 
   function setLang(l: Lang) {
+    if (typeof window !== "undefined" && l === "en") {
+      window.dispatchEvent(new Event("lp-restore-english"));
+    }
     setLangState(l);
     if (typeof window !== "undefined") {
       localStorage.setItem(STORAGE_KEY, l);

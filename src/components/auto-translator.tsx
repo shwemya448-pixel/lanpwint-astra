@@ -93,6 +93,12 @@ export function AutoTranslator() {
   }, []);
 
   useEffect(() => {
+    if (typeof window === "undefined") return;
+    window.addEventListener("lp-restore-english", restoreEnglish);
+    return () => window.removeEventListener("lp-restore-english", restoreEnglish);
+  }, [restoreEnglish]);
+
+  useEffect(() => {
     if (typeof document === "undefined") return;
 
     if (lang !== "my") {
