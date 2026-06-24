@@ -1,251 +1,172 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import {
-  ArrowRight,
-  BookOpen,
-  Bot,
-  Briefcase,
-  FileSearch,
-  GraduationCap,
-  ShieldCheck,
-  Sparkles,
-  Users,
-} from "lucide-react";
-import heroImage from "@/assets/hero.jpg";
-import { PageShell } from "@/components/page-shell";
-import { Button } from "@/components/ui/button";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { useState } from "react";
+import { Sparkles, BookOpen, FileText, Users, ArrowRight } from "lucide-react";
+import { useSession } from "@/lib/auth";
+import { DoorScene } from "@/components/lp/DoorScene";
+import { ShootingStars } from "@/components/lp/ShootingStars";
+import { PortalCard, type PortalKind } from "@/components/lp/PortalCard";
+import { PortalTransition } from "@/components/lp/PortalTransition";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Lan Pwint (လမ်းပွင့်) — Open the road to your career" },
+      { title: "Lan Pwint — AI Academic & Career Gateway" },
       {
         name: "description",
         content:
-          "Helping students and graduates build successful careers through learning, internships, and employment opportunities.",
+          "Lan Pwint (လမ်းပွင့်) — AI-powered gateway for Myanmar students, graduates, and candidates: discover your passion, learn, find scholarships, build a CV, and connect with recruiters.",
       },
-      { property: "og:title", content: "Lan Pwint — Open the road to your career" },
+      { property: "og:title", content: "Lan Pwint — AI Academic & Career Gateway" },
       {
         property: "og:description",
-        content:
-          "Learning resources, internship stories, AI career guidance, and recruitment — all in one place.",
+        content: "Discover your passion, build skills, find scholarships, and launch your career.",
       },
     ],
   }),
-  component: Home,
+  component: LandingPage,
 });
 
-function Home() {
-  return (
-    <PageShell>
-      <Hero />
-      <Pathways />
-      <Features />
-      <Stats />
-      <CallToAction />
-    </PageShell>
-  );
-}
+const PORTAL_TO_ROUTE: Record<PortalKind, string> = {
+  undergrad: "/undergraduate",
+  grad: "/graduates",
+  candidate: "/candidates",
+};
 
-function Hero() {
+function LandingPage() {
+  const navigate = useNavigate();
+  const { user } = useSession();
+  const [chosen, setChosen] = useState<PortalKind | null>(null);
+  const [transitioning, setTransitioning] = useState<PortalKind | null>(null);
+
+  const choosePortal = (kind: PortalKind) => {
+    setChosen(kind);
+    if (user) setTransitioning(kind);
+    else navigate({ to: "/auth", search: { as: kind === "candidate" ? "employer" : "student" } as never });
+  };
+
+  const finishTransition = () => {
+    const target = PORTAL_TO_ROUTE[transitioning ?? "undergrad"];
+    setTransitioning(null);
+    navigate({ to: target as never }).catch(() => {});
+  };
+
   return (
-    <section className="relative overflow-hidden">
-      <div className="mx-auto grid max-w-7xl gap-10 px-4 py-16 sm:px-6 lg:grid-cols-12 lg:gap-12 lg:px-8 lg:py-24">
-        <div className="lg:col-span-6 flex flex-col justify-center">
-          <p className="text-xs uppercase tracking-[0.22em] text-teal">
-            Careers · Learning · Recruitment
-          </p>
-          <h1 className="mt-4 font-serif text-5xl leading-[1.05] text-navy sm:text-6xl lg:text-7xl">
-            Lan Pwint
-            <span className="block text-2xl text-deep mt-2 sm:text-3xl">လမ်းပွင့်</span>
-          </h1>
-          <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground">
-            Helping students and graduates build successful careers through learning, internships, and
-            employment opportunities.
-          </p>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <Button asChild size="lg" className="bg-navy text-navy-foreground hover:bg-deep">
-              <Link to="/auth" search={{ as: "student" }}>
-                <GraduationCap className="mr-2 h-4 w-4" />
-                Login as Student
-              </Link>
-            </Button>
-            <Button asChild size="lg" variant="outline" className="border-navy text-navy hover:bg-navy hover:text-navy-foreground">
-              <Link to="/auth" search={{ as: "employer" }}>
-                <Briefcase className="mr-2 h-4 w-4" />
-                Login as Candidate / Employer
-              </Link>
-            </Button>
-          </div>
-          <div className="mt-10 flex items-center gap-6 text-xs text-muted-foreground">
-            <div className="flex items-center gap-2">
-              <ShieldCheck className="h-4 w-4 text-teal" /> Secure platform
+    <div className="min-h-screen relative overflow-x-hidden">
+      <ShootingStars />
+
+      {/* Header */}
+      <header className="fixed top-0 inset-x-0 z-40">
+        <div className="mx-auto max-w-7xl px-3 sm:px-5 py-3 sm:py-4 flex items-center justify-between gap-2">
+          <Link to="/" className="flex items-center gap-2 sm:gap-3 min-w-0">
+            <div className="h-9 w-9 sm:h-10 sm:w-10 rounded-xl lp-glass flex items-center justify-center">
+              <span className="lp-gold-text text-base sm:text-lg font-bold">လ</span>
             </div>
-            <div className="hidden h-1 w-1 rounded-full bg-muted-foreground/50 sm:block" />
-            <div className="flex items-center gap-2">
-              <Sparkles className="h-4 w-4 text-teal" /> AI-powered guidance
-            </div>
-          </div>
-        </div>
-
-        <div className="lg:col-span-6 relative">
-          <div className="relative overflow-hidden rounded-2xl bg-navy shadow-lift grain">
-            <img
-              src={heroImage}
-              alt="An open gateway facing the sunrise — symbolizing the career journey ahead."
-              width={1280}
-              height={1280}
-              className="h-full w-full object-cover"
-            />
-          </div>
-          <div className="absolute -bottom-6 -left-6 hidden rounded-xl bg-background hairline p-4 shadow-soft sm:block">
-            <p className="text-[11px] uppercase tracking-[0.18em] text-teal">Live this month</p>
-            <p className="mt-1 font-serif text-2xl text-navy">240+ graduates hired</p>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-const PATHWAYS = [
-  {
-    icon: BookOpen,
-    title: "Undergraduate Students",
-    description:
-      "Internship stories, learning resources, AI career assistant, and a learning center with certificates on completion.",
-    to: "/undergraduate" as const,
-    cta: "Start learning",
-  },
-  {
-    icon: GraduationCap,
-    title: "Graduates",
-    description:
-      "Get your CV analyzed by AI, build a professional job-seeking profile, and connect directly with employers.",
-    to: "/graduates" as const,
-    cta: "Build my profile",
-  },
-  {
-    icon: Briefcase,
-    title: "Candidates / Employers",
-    description:
-      "Browse graduate profiles, filter by skills, education, and experience, and reach out to candidates directly.",
-    to: "/candidates" as const,
-    cta: "Find talent",
-  },
-];
-
-function Pathways() {
-  return (
-    <section className="border-t border-border bg-muted/40">
-      <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
-        <div className="flex items-end justify-between gap-6">
-          <div>
-            <p className="text-xs uppercase tracking-[0.22em] text-teal">Choose your road</p>
-            <h2 className="mt-3 font-serif text-3xl text-navy sm:text-4xl">
-              Three paths, one platform
-            </h2>
-          </div>
-        </div>
-        <div className="mt-10 grid gap-5 md:grid-cols-3">
-          {PATHWAYS.map((p) => (
-            <Link
-              key={p.title}
-              to={p.to}
-              className="group relative flex flex-col rounded-2xl border border-border bg-card p-7 transition-all hover:-translate-y-0.5 hover:border-teal hover:shadow-lift"
-            >
-              <div className="grid h-11 w-11 place-items-center rounded-lg bg-navy text-navy-foreground">
-                <p.icon className="h-5 w-5" />
+            <div className="leading-tight min-w-0">
+              <div className="lp-shimmer-text text-sm sm:text-lg font-bold tracking-wide truncate">Lan Pwint</div>
+              <div className="hidden sm:block text-[10px] uppercase tracking-[0.2em] text-muted-foreground truncate">
+                Academic · Career · Gateway
               </div>
-              <h3 className="mt-5 font-serif text-2xl text-navy">{p.title}</h3>
-              <p className="mt-3 flex-1 text-sm leading-relaxed text-muted-foreground">{p.description}</p>
-              <span className="mt-6 inline-flex items-center text-sm font-medium text-teal">
-                {p.cta} <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
-              </span>
+            </div>
+          </Link>
+          <div className="flex items-center gap-2">
+            <Link to="/about" className="lp-ghost-btn h-10 px-3 rounded-xl hidden sm:inline-flex items-center text-sm font-semibold">About</Link>
+            <Link to="/contact" className="lp-ghost-btn h-10 px-3 rounded-xl hidden sm:inline-flex items-center text-sm font-semibold">Contact</Link>
+            {user ? (
+              <Link to="/undergraduate" className="lp-gold-btn h-10 px-5 rounded-xl text-sm font-semibold inline-flex items-center">Dashboard</Link>
+            ) : (
+              <Link to="/auth" search={{ as: "student" } as never} className="lp-gold-btn h-10 px-5 rounded-xl text-sm font-semibold inline-flex items-center">Sign in</Link>
+            )}
+          </div>
+        </div>
+      </header>
+
+      {/* Hero */}
+      <section className="relative pt-24 sm:pt-28 pb-12 sm:pb-16 px-4 sm:px-5">
+        <div className="mx-auto max-w-6xl grid md:grid-cols-2 gap-8 md:gap-10 items-center lp-animate-in">
+          <DoorScene />
+          <div className="text-center md:text-left">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full lp-glass text-[10px] sm:text-xs tracking-wider uppercase">
+              <Sparkles className="h-3.5 w-3.5 text-[color:var(--gold)] shrink-0" />
+              <span className="text-muted-foreground">AI Academic · Career · Gateway</span>
+            </div>
+            <h1 className="mt-5 sm:mt-6 text-3xl sm:text-5xl lg:text-6xl font-bold leading-[1.05]">
+              <span className="lp-shimmer-text">Lan Pwint</span>
+              <br />
+              <span className="text-foreground/90">လမ်းပွင့်</span>
+            </h1>
+            <p className="mt-5 sm:mt-6 text-sm sm:text-lg text-muted-foreground max-w-xl leading-relaxed mx-auto md:mx-0">
+              Your AI-powered gateway to passion, learning, and career.
+            </p>
+            <p className="mt-3 text-xs sm:text-sm text-muted-foreground/80 max-w-xl mx-auto md:mx-0">
+              Academic &amp; Career Gateway for Myanmar students, graduates, and candidates.
+            </p>
+            <div className="mt-7 sm:mt-8 flex flex-col sm:flex-row gap-3 items-stretch sm:items-center md:justify-start justify-center">
+              <a href="#portals" className="lp-gold-btn h-12 px-7 rounded-xl text-sm font-semibold inline-flex items-center justify-center">
+                Choose your portal
+              </a>
+              <a href="#features" className="lp-ghost-btn h-12 px-7 rounded-xl text-sm font-semibold inline-flex items-center justify-center">
+                Discover the path
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Portals */}
+      <section id="portals" className="relative px-4 sm:px-5 py-10">
+        <div className="mx-auto max-w-7xl">
+          <div className="text-center mb-8 sm:mb-10">
+            <div className="lp-divider-gold mx-auto w-28 sm:w-32" />
+            <h2 className="mt-4 text-2xl sm:text-3xl md:text-4xl font-bold">Choose your portal</h2>
+          </div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
+            {(["undergrad", "grad", "candidate"] as PortalKind[]).map((k, i) => (
+              <PortalCard key={k} kind={k} index={i} onChoose={choosePortal} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Features */}
+      <section id="features" className="relative px-4 sm:px-5 py-16 sm:py-24">
+        <div className="mx-auto max-w-7xl">
+          <div className="text-center mb-10 sm:mb-12 lp-animate-in">
+            <div className="lp-divider-gold mx-auto w-28 sm:w-32" />
+            <h2 className="mt-4 text-2xl sm:text-3xl md:text-4xl font-bold">What you get</h2>
+          </div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
+            <Feature icon={<Sparkles />} title="AI Career Mentor" desc="Personalized guidance from interests to next steps." href="/find-passion" />
+            <Feature icon={<FileText />} title="CV Analyzer" desc="Get instant feedback on your CV and how to improve it." />
+            <Feature icon={<BookOpen />} title="Scholarships & Learn" desc="Curated learning paths and funding opportunities." />
+            <Feature icon={<Users />} title="Recruiter Board" desc="Showcase your portfolio. Be discovered by employers." />
+          </div>
+          <div className="mt-10 text-center">
+            <Link to="/find-passion" className="lp-gold-btn h-11 px-6 rounded-xl text-sm font-semibold inline-flex items-center gap-2">
+              Try Career Discovery AI <ArrowRight className="h-4 w-4" />
             </Link>
-          ))}
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+
+      <footer className="px-4 sm:px-5 py-8 sm:py-10 text-center text-xs text-muted-foreground">
+        <div className="lp-divider-gold mx-auto w-32 sm:w-40 mb-4" />
+        © {new Date().getFullYear()} Lan Pwint · All rights reserved.
+      </footer>
+
+      {transitioning && <PortalTransition portal={transitioning} onDone={finishTransition} />}
+      {chosen && null}
+    </div>
   );
 }
 
-const FEATURES = [
-  { icon: Bot, title: "AI Career Assistant", body: "Conversational answers to career questions, concepts, and what-to-learn-next guidance." },
-  { icon: BookOpen, title: "Learning Center", body: "3 courses · 5 weekly lessons each · progress tracking · final assessment · downloadable certificate." },
-  { icon: FileSearch, title: "AI CV Analyzer", body: "Upload your CV. Get instant feedback on formatting, skills, strengths, weaknesses, and suggestions." },
-  { icon: Users, title: "Talent Marketplace", body: "Graduates post professional profiles. Employers filter, save, and message qualified candidates." },
-  { icon: Sparkles, title: "Internship Stories", body: "Read and share real internship experiences and workplace tips from peers and seniors." },
-  { icon: ShieldCheck, title: "Verified Employers", body: "Recruiters are verified before contacting graduates, keeping the platform safe and trustworthy." },
-];
-
-function Features() {
-  return (
-    <section className="border-t border-border bg-background">
-      <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
-        <div className="max-w-2xl">
-          <p className="text-xs uppercase tracking-[0.22em] text-teal">What you get</p>
-          <h2 className="mt-3 font-serif text-3xl text-navy sm:text-4xl">
-            Everything a career journey needs — in one place
-          </h2>
-        </div>
-        <div className="mt-12 grid gap-px overflow-hidden rounded-2xl border border-border bg-border sm:grid-cols-2 lg:grid-cols-3">
-          {FEATURES.map((f) => (
-            <div key={f.title} className="flex flex-col gap-3 bg-card p-7">
-              <f.icon className="h-5 w-5 text-teal" />
-              <h3 className="font-serif text-lg text-navy">{f.title}</h3>
-              <p className="text-sm leading-relaxed text-muted-foreground">{f.body}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
+function Feature({ icon, title, desc, href }: { icon: React.ReactNode; title: string; desc: string; href?: string }) {
+  const inner = (
+    <div className="lp-card p-6 lp-animate-in h-full">
+      <div className="h-11 w-11 rounded-xl lp-glass flex items-center justify-center text-[color:var(--gold)]">{icon}</div>
+      <h3 className="mt-4 font-bold">{title}</h3>
+      <div className="mt-2 lp-divider-gold" />
+      <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{desc}</p>
+    </div>
   );
-}
-
-const STATS = [
-  { value: "5,200+", label: "Students learning" },
-  { value: "320", label: "Graduate profiles" },
-  { value: "140", label: "Verified employers" },
-  { value: "92%", label: "Course completion" },
-];
-
-function Stats() {
-  return (
-    <section className="bg-navy text-navy-foreground">
-      <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
-          {STATS.map((s) => (
-            <div key={s.label}>
-              <div className="font-serif text-5xl leading-none text-mist">{s.value}</div>
-              <div className="mt-3 text-xs uppercase tracking-[0.18em] opacity-80">{s.label}</div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function CallToAction() {
-  return (
-    <section className="border-t border-border bg-background">
-      <div className="mx-auto max-w-5xl px-4 py-20 text-center sm:px-6 lg:px-8">
-        <h2 className="font-serif text-3xl text-navy sm:text-4xl">
-          The road opens here.
-        </h2>
-        <p className="mx-auto mt-4 max-w-xl text-muted-foreground">
-          Whether you're learning, looking for a job, or hiring — Lan Pwint connects the right people at
-          the right moment.
-        </p>
-        <div className="mt-8 flex flex-wrap justify-center gap-3">
-          <Button asChild size="lg" className="bg-navy text-navy-foreground hover:bg-deep">
-            <Link to="/auth" search={{ as: "student" }}>Create a student account</Link>
-          </Button>
-          <Button asChild size="lg" variant="outline">
-            <Link to="/auth" search={{ as: "employer" }}>Sign in as employer</Link>
-          </Button>
-        </div>
-      </div>
-    </section>
-  );
+  return href ? <Link to={href as never} className="block">{inner}</Link> : inner;
 }
