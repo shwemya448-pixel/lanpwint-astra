@@ -16,7 +16,20 @@ import { supabase } from "@/integrations/supabase/client";
 import { Toaster } from "@/components/ui/sonner";
 import { LocaleProvider } from "@/lib/i18n";
 import { ViewRoleProvider } from "@/lib/view-role";
-import { AutoTranslator } from "@/components/auto-translator";
+import { lazy, Suspense } from "react";
+import { useLocale } from "@/lib/i18n";
+const AutoTranslator = lazy(() =>
+  import("@/components/auto-translator").then((m) => ({ default: m.AutoTranslator })),
+);
+function LazyTranslator() {
+  const { lang } = useLocale();
+  if (lang !== "my") return null;
+  return (
+    <Suspense fallback={null}>
+      <AutoTranslator />
+    </Suspense>
+  );
+}
 
 
 function NotFoundComponent() {
@@ -148,7 +161,7 @@ function RootComponent() {
       <LocaleProvider>
         <ViewRoleProvider>
           <QueryClientProvider client={queryClient}>
-            <AutoTranslator />
+            <LazyTranslator />
             <Outlet />
             <Toaster richColors position="top-right" />
           </QueryClientProvider>
