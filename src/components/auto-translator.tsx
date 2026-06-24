@@ -101,6 +101,7 @@ export function AutoTranslator() {
     }
 
     async function translatePage() {
+      if (lang !== "my") return;
       const runId = runIdRef.current;
       if (inFlightRef.current) {
         pendingRef.current = true;
@@ -156,7 +157,7 @@ export function AutoTranslator() {
         }
       } finally {
         inFlightRef.current = false;
-        if (pendingRef.current) {
+        if (pendingRef.current && lang === "my" && runId === runIdRef.current) {
           pendingRef.current = false;
           setTimeout(translatePage, 300);
         }
