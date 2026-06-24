@@ -255,10 +255,7 @@
 }
 
 /* Dark mode readability: legacy pages use text-navy for headings and names. */
-.dark h1.text-navy,
-.dark h2.text-navy,
-.dark h3.text-navy,
-.dark .font-serif.text-navy {
+html.dark .text-navy {
   color: var(--foreground);
 }
 
