@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as UndergraduateRouteImport } from './routes/undergraduate'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as NewsRouteImport } from './routes/news'
 import { Route as GraduatesRouteImport } from './routes/graduates'
 import { Route as FindPassionRouteImport } from './routes/find-passion'
 import { Route as ContactRouteImport } from './routes/contact'
@@ -19,6 +20,7 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as NewsSlugRouteImport } from './routes/news.$slug'
 import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticated/profile'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedApplicationsRouteImport } from './routes/_authenticated/applications'
@@ -27,6 +29,7 @@ import { Route as AuthenticatedJobsIndexRouteImport } from './routes/_authentica
 import { Route as AuthenticatedLessonsLessonIdRouteImport } from './routes/_authenticated/lessons.$lessonId'
 import { Route as AuthenticatedJobsJobIdRouteImport } from './routes/_authenticated/jobs.$jobId'
 import { Route as AuthenticatedEmployerApplicationsRouteImport } from './routes/_authenticated/employer.applications'
+import { Route as AuthenticatedAdminNewsRouteImport } from './routes/_authenticated/admin.news'
 import { Route as AuthenticatedEmployerJobsIndexRouteImport } from './routes/_authenticated/employer.jobs.index'
 import { Route as AuthenticatedEmployerJobsNewRouteImport } from './routes/_authenticated/employer.jobs.new'
 
@@ -38,6 +41,11 @@ const UndergraduateRoute = UndergraduateRouteImport.update({
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NewsRoute = NewsRouteImport.update({
+  id: '/news',
+  path: '/news',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GraduatesRoute = GraduatesRouteImport.update({
@@ -78,6 +86,11 @@ const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const NewsSlugRoute = NewsSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => NewsRoute,
 } as any)
 const AuthenticatedProfileRoute = AuthenticatedProfileRouteImport.update({
   id: '/profile',
@@ -123,6 +136,11 @@ const AuthenticatedEmployerApplicationsRoute =
     path: '/employer/applications',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedAdminNewsRoute = AuthenticatedAdminNewsRouteImport.update({
+  id: '/admin/news',
+  path: '/admin/news',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedEmployerJobsIndexRoute =
   AuthenticatedEmployerJobsIndexRouteImport.update({
     id: '/employer/jobs/',
@@ -144,11 +162,14 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/find-passion': typeof FindPassionRoute
   '/graduates': typeof GraduatesRoute
+  '/news': typeof NewsRouteWithChildren
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/undergraduate': typeof UndergraduateRoute
   '/applications': typeof AuthenticatedApplicationsRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/profile': typeof AuthenticatedProfileRoute
+  '/news/$slug': typeof NewsSlugRoute
+  '/admin/news': typeof AuthenticatedAdminNewsRoute
   '/employer/applications': typeof AuthenticatedEmployerApplicationsRoute
   '/jobs/$jobId': typeof AuthenticatedJobsJobIdRoute
   '/lessons/$lessonId': typeof AuthenticatedLessonsLessonIdRoute
@@ -165,11 +186,14 @@ export interface FileRoutesByTo {
   '/contact': typeof ContactRoute
   '/find-passion': typeof FindPassionRoute
   '/graduates': typeof GraduatesRoute
+  '/news': typeof NewsRouteWithChildren
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/undergraduate': typeof UndergraduateRoute
   '/applications': typeof AuthenticatedApplicationsRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/profile': typeof AuthenticatedProfileRoute
+  '/news/$slug': typeof NewsSlugRoute
+  '/admin/news': typeof AuthenticatedAdminNewsRoute
   '/employer/applications': typeof AuthenticatedEmployerApplicationsRoute
   '/jobs/$jobId': typeof AuthenticatedJobsJobIdRoute
   '/lessons/$lessonId': typeof AuthenticatedLessonsLessonIdRoute
@@ -188,11 +212,14 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/find-passion': typeof FindPassionRoute
   '/graduates': typeof GraduatesRoute
+  '/news': typeof NewsRouteWithChildren
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/undergraduate': typeof UndergraduateRoute
   '/_authenticated/applications': typeof AuthenticatedApplicationsRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/profile': typeof AuthenticatedProfileRoute
+  '/news/$slug': typeof NewsSlugRoute
+  '/_authenticated/admin/news': typeof AuthenticatedAdminNewsRoute
   '/_authenticated/employer/applications': typeof AuthenticatedEmployerApplicationsRoute
   '/_authenticated/jobs/$jobId': typeof AuthenticatedJobsJobIdRoute
   '/_authenticated/lessons/$lessonId': typeof AuthenticatedLessonsLessonIdRoute
@@ -211,11 +238,14 @@ export interface FileRouteTypes {
     | '/contact'
     | '/find-passion'
     | '/graduates'
+    | '/news'
     | '/sitemap.xml'
     | '/undergraduate'
     | '/applications'
     | '/dashboard'
     | '/profile'
+    | '/news/$slug'
+    | '/admin/news'
     | '/employer/applications'
     | '/jobs/$jobId'
     | '/lessons/$lessonId'
@@ -232,11 +262,14 @@ export interface FileRouteTypes {
     | '/contact'
     | '/find-passion'
     | '/graduates'
+    | '/news'
     | '/sitemap.xml'
     | '/undergraduate'
     | '/applications'
     | '/dashboard'
     | '/profile'
+    | '/news/$slug'
+    | '/admin/news'
     | '/employer/applications'
     | '/jobs/$jobId'
     | '/lessons/$lessonId'
@@ -254,11 +287,14 @@ export interface FileRouteTypes {
     | '/contact'
     | '/find-passion'
     | '/graduates'
+    | '/news'
     | '/sitemap.xml'
     | '/undergraduate'
     | '/_authenticated/applications'
     | '/_authenticated/dashboard'
     | '/_authenticated/profile'
+    | '/news/$slug'
+    | '/_authenticated/admin/news'
     | '/_authenticated/employer/applications'
     | '/_authenticated/jobs/$jobId'
     | '/_authenticated/lessons/$lessonId'
@@ -277,6 +313,7 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   FindPassionRoute: typeof FindPassionRoute
   GraduatesRoute: typeof GraduatesRoute
+  NewsRoute: typeof NewsRouteWithChildren
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   UndergraduateRoute: typeof UndergraduateRoute
 }
@@ -295,6 +332,13 @@ declare module '@tanstack/react-router' {
       path: '/sitemap.xml'
       fullPath: '/sitemap.xml'
       preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/news': {
+      id: '/news'
+      path: '/news'
+      fullPath: '/news'
+      preLoaderRoute: typeof NewsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/graduates': {
@@ -353,6 +397,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/news/$slug': {
+      id: '/news/$slug'
+      path: '/$slug'
+      fullPath: '/news/$slug'
+      preLoaderRoute: typeof NewsSlugRouteImport
+      parentRoute: typeof NewsRoute
+    }
     '/_authenticated/profile': {
       id: '/_authenticated/profile'
       path: '/profile'
@@ -409,6 +460,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedEmployerApplicationsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/admin/news': {
+      id: '/_authenticated/admin/news'
+      path: '/admin/news'
+      fullPath: '/admin/news'
+      preLoaderRoute: typeof AuthenticatedAdminNewsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/employer/jobs/': {
       id: '/_authenticated/employer/jobs/'
       path: '/employer/jobs'
@@ -430,6 +488,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedApplicationsRoute: typeof AuthenticatedApplicationsRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedProfileRoute: typeof AuthenticatedProfileRoute
+  AuthenticatedAdminNewsRoute: typeof AuthenticatedAdminNewsRoute
   AuthenticatedEmployerApplicationsRoute: typeof AuthenticatedEmployerApplicationsRoute
   AuthenticatedJobsJobIdRoute: typeof AuthenticatedJobsJobIdRoute
   AuthenticatedLessonsLessonIdRoute: typeof AuthenticatedLessonsLessonIdRoute
@@ -443,6 +502,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedApplicationsRoute: AuthenticatedApplicationsRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedProfileRoute: AuthenticatedProfileRoute,
+  AuthenticatedAdminNewsRoute: AuthenticatedAdminNewsRoute,
   AuthenticatedEmployerApplicationsRoute:
     AuthenticatedEmployerApplicationsRoute,
   AuthenticatedJobsJobIdRoute: AuthenticatedJobsJobIdRoute,
@@ -456,6 +516,16 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
 const AuthenticatedRouteRouteWithChildren =
   AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
 
+interface NewsRouteChildren {
+  NewsSlugRoute: typeof NewsSlugRoute
+}
+
+const NewsRouteChildren: NewsRouteChildren = {
+  NewsSlugRoute: NewsSlugRoute,
+}
+
+const NewsRouteWithChildren = NewsRoute._addFileChildren(NewsRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
@@ -465,6 +535,7 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   FindPassionRoute: FindPassionRoute,
   GraduatesRoute: GraduatesRoute,
+  NewsRoute: NewsRouteWithChildren,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   UndergraduateRoute: UndergraduateRoute,
 }
