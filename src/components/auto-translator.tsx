@@ -140,20 +140,20 @@ export function AutoTranslator() {
     }
 
     if (lang === "my") {
-      translatePage();
-      const obs = new MutationObserver(() => {
+      let obs: MutationObserver | null = null;
+      const wrapped = async () => {
+        obs?.disconnect();
+        try { await translatePage(); } finally {
+          obs?.observe(document.body, { childList: true, subtree: true });
+        }
+      };
+      wrapped();
+      obs = new MutationObserver(() => {
         clearTimeout((window as any).__lpTrTimer);
-        (window as any).__lpTrTimer = setTimeout(translatePage, 500);
+        (window as any).__lpTrTimer = setTimeout(wrapped, 1200);
       });
-      obs.observe(document.body, { childList: true, subtree: true, characterData: true });
-      return () => obs.disconnect();
-    } else {
-      // Restore by reload — simplest reliable path
-      const needsRestore = document.body.innerText.match(/[\u1000-\u109F]/);
-      if (needsRestore) {
-        window.location.reload();
-      }
-      restore();
+      obs.observe(document.body, { childList: true, subtree: true });
+      return () => obs?.disconnect();
     }
   }, [lang]);
 
