@@ -1,10 +1,11 @@
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { useLocale } from "@/lib/i18n";
 import { askGemini } from "@/lib/ai-gemini.functions";
 
 const CACHE_KEY = "lp-translation-cache-my";
 const SKIP_TAGS = new Set(["SCRIPT", "STYLE", "NOSCRIPT", "CODE", "PRE", "TEXTAREA", "INPUT"]);
-const ORIGINAL_ATTR = "data-lp-original";
+const MAX_TEXT_LENGTH = 180;
+const ORIGINAL_TEXT_ATTR = "data-lp-original-text";
 
 function loadCache(): Record<string, string> {
   if (typeof window === "undefined") return {};
@@ -28,10 +29,10 @@ function collectTextNodes(root: Node): Text[] {
     acceptNode(node) {
       const t = node.nodeValue?.trim();
       if (!t || t.length < 2) return NodeFilter.FILTER_REJECT;
+      if (t.length > MAX_TEXT_LENGTH) return NodeFilter.FILTER_REJECT;
       const parent = node.parentElement;
       if (!parent || SKIP_TAGS.has(parent.tagName)) return NodeFilter.FILTER_REJECT;
       if (parent.closest("[data-lp-skip]")) return NodeFilter.FILTER_REJECT;
-      // Skip if already translated (text contains only burmese chars likely)
       return NodeFilter.FILTER_ACCEPT;
     },
   });
@@ -65,44 +66,83 @@ export function AutoTranslator() {
   const cacheRef = useRef<Record<string, string>>({});
   const inFlightRef = useRef(false);
   const pendingRef = useRef(false);
+  const translatedNodesRef = useRef<Set<Text>>(new Set());
+  const observerRef = useRef<MutationObserver | null>(null);
+  const timerRef = useRef<number | null>(null);
+  const runIdRef = useRef(0);
 
   useEffect(() => {
     cacheRef.current = loadCache();
   }, []);
 
+  const restoreEnglish = useCallback(() => {
+    runIdRef.current += 1;
+    observerRef.current?.disconnect();
+    observerRef.current = null;
+    if (timerRef.current !== null) {
+      window.clearTimeout(timerRef.current);
+      timerRef.current = null;
+    }
+
+    translatedNodesRef.current.forEach((node) => {
+      const original = originals.get(node);
+      if (original !== undefined && node.isConnected) node.nodeValue = original;
+    });
+    document.querySelectorAll<HTMLElement>(`[${ORIGINAL_TEXT_ATTR}]`).forEach((el) => {
+      const original = el.getAttribute(ORIGINAL_TEXT_ATTR);
+      if (original !== null) {
+        el.textContent = original;
+        el.removeAttribute(ORIGINAL_TEXT_ATTR);
+      }
+    });
+    translatedNodesRef.current.clear();
+    inFlightRef.current = false;
+    pendingRef.current = false;
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    window.addEventListener("lp-restore-english", restoreEnglish);
+    return () => window.removeEventListener("lp-restore-english", restoreEnglish);
+  }, [restoreEnglish]);
+
   useEffect(() => {
     if (typeof document === "undefined") return;
 
-    function restore() {
-      document.querySelectorAll(`[${ORIGINAL_ATTR}]`).forEach((el) => {
-        const orig = el.getAttribute(ORIGINAL_ATTR);
-        if (orig !== null) {
-          // Restore text nodes by re-collecting from stored originals
-        }
-        el.removeAttribute(ORIGINAL_ATTR);
-      });
-      // Reload page to fully restore (simpler & reliable)
+    if (lang !== "my") {
+      restoreEnglish();
+      return;
     }
 
     async function translatePage() {
+      if (lang !== "my") return;
+      const runId = runIdRef.current;
       if (inFlightRef.current) {
         pendingRef.current = true;
         return;
       }
       inFlightRef.current = true;
       try {
-        const nodes = collectTextNodes(document.body);
+        const nodes = collectTextNodes(document.body).filter((node) => !translatedNodesRef.current.has(node));
         const cache = cacheRef.current;
         const toTranslate: { node: Text; text: string }[] = [];
 
         for (const node of nodes) {
-          const original = originals.get(node) ?? node.nodeValue ?? "";
+          const original = node.nodeValue ?? "";
           if (!originals.has(node)) originals.set(node, original);
+          const parent = node.parentElement;
+          if (parent && parent.childNodes.length === 1 && !parent.hasAttribute(ORIGINAL_TEXT_ATTR)) {
+            parent.setAttribute(ORIGINAL_TEXT_ATTR, original);
+          }
           const key = original.trim();
           if (!key) continue;
           const cached = cache[key];
           if (cached) {
-            if (node.nodeValue !== cached) node.nodeValue = node.nodeValue!.replace(key, cached);
+            if (node.nodeValue !== cached) {
+              if (runId !== runIdRef.current) return;
+              node.nodeValue = original.replace(key, cached);
+              translatedNodesRef.current.add(node);
+            }
           } else {
             toTranslate.push({ node, text: key });
           }
@@ -115,13 +155,16 @@ export function AutoTranslator() {
           const uniqueTexts = Array.from(new Set(chunk.map((c) => c.text)));
           try {
             const translated = await translateBatch(uniqueTexts);
+            if (runId !== runIdRef.current) return;
             const map: Record<string, string> = {};
             uniqueTexts.forEach((t, idx) => (map[t] = translated[idx]));
             for (const { node, text } of chunk) {
               const tr = map[text];
               if (tr && node.nodeValue) {
                 cache[text] = tr;
-                node.nodeValue = node.nodeValue.replace(text, tr);
+                const original = originals.get(node) ?? node.nodeValue;
+                node.nodeValue = original.replace(text, tr);
+                translatedNodesRef.current.add(node);
               }
             }
             saveCache(cache);
@@ -132,30 +175,32 @@ export function AutoTranslator() {
         }
       } finally {
         inFlightRef.current = false;
-        if (pendingRef.current) {
+        if (pendingRef.current && lang === "my" && runId === runIdRef.current) {
           pendingRef.current = false;
           setTimeout(translatePage, 300);
         }
       }
     }
 
-    if (lang === "my") {
-      let obs: MutationObserver | null = null;
-      const wrapped = async () => {
-        obs?.disconnect();
-        try { await translatePage(); } finally {
-          obs?.observe(document.body, { childList: true, subtree: true });
-        }
-      };
-      wrapped();
-      obs = new MutationObserver(() => {
-        clearTimeout((window as any).__lpTrTimer);
-        (window as any).__lpTrTimer = setTimeout(wrapped, 1200);
-      });
-      obs.observe(document.body, { childList: true, subtree: true });
-      return () => obs?.disconnect();
-    }
-  }, [lang]);
+    const wrapped = async () => {
+      observerRef.current?.disconnect();
+      try {
+        await translatePage();
+      } finally {
+        observerRef.current?.observe(document.body, { childList: true, subtree: true });
+      }
+    };
+
+    wrapped();
+    observerRef.current = new MutationObserver((mutations) => {
+      if (!mutations.some((m) => m.addedNodes.length > 0 || m.removedNodes.length > 0)) return;
+      if (timerRef.current !== null) window.clearTimeout(timerRef.current);
+      timerRef.current = window.setTimeout(wrapped, 1800);
+    });
+    observerRef.current.observe(document.body, { childList: true, subtree: true });
+
+    return restoreEnglish;
+  }, [lang, restoreEnglish]);
 
   return null;
 }

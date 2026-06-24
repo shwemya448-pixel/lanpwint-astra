@@ -21,7 +21,7 @@ export function LanguageToggle() {
           <span className="font-medium uppercase">{lang}</span>
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-32">
+      <DropdownMenuContent align="end" className="w-32" data-lp-skip>
         <DropdownMenuItem onSelect={() => setLang("en")} className={lang === "en" ? "font-semibold text-[var(--gold)]" : ""}>
           English
         </DropdownMenuItem>
