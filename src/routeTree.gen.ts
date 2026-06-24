@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as UndergraduateRouteImport } from './routes/undergraduate'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as GraduatesRouteImport } from './routes/graduates'
+import { Route as FindPassionRouteImport } from './routes/find-passion'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CandidatesRouteImport } from './routes/candidates'
 import { Route as AuthRouteImport } from './routes/auth'
@@ -42,6 +43,11 @@ const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
 const GraduatesRoute = GraduatesRouteImport.update({
   id: '/graduates',
   path: '/graduates',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FindPassionRoute = FindPassionRouteImport.update({
+  id: '/find-passion',
+  path: '/find-passion',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -136,6 +142,7 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/candidates': typeof CandidatesRoute
   '/contact': typeof ContactRoute
+  '/find-passion': typeof FindPassionRoute
   '/graduates': typeof GraduatesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/undergraduate': typeof UndergraduateRoute
@@ -156,6 +163,7 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/candidates': typeof CandidatesRoute
   '/contact': typeof ContactRoute
+  '/find-passion': typeof FindPassionRoute
   '/graduates': typeof GraduatesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/undergraduate': typeof UndergraduateRoute
@@ -178,6 +186,7 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/candidates': typeof CandidatesRoute
   '/contact': typeof ContactRoute
+  '/find-passion': typeof FindPassionRoute
   '/graduates': typeof GraduatesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/undergraduate': typeof UndergraduateRoute
@@ -200,6 +209,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/candidates'
     | '/contact'
+    | '/find-passion'
     | '/graduates'
     | '/sitemap.xml'
     | '/undergraduate'
@@ -220,6 +230,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/candidates'
     | '/contact'
+    | '/find-passion'
     | '/graduates'
     | '/sitemap.xml'
     | '/undergraduate'
@@ -241,6 +252,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/candidates'
     | '/contact'
+    | '/find-passion'
     | '/graduates'
     | '/sitemap.xml'
     | '/undergraduate'
@@ -263,6 +275,7 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   CandidatesRoute: typeof CandidatesRoute
   ContactRoute: typeof ContactRoute
+  FindPassionRoute: typeof FindPassionRoute
   GraduatesRoute: typeof GraduatesRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   UndergraduateRoute: typeof UndergraduateRoute
@@ -289,6 +302,13 @@ declare module '@tanstack/react-router' {
       path: '/graduates'
       fullPath: '/graduates'
       preLoaderRoute: typeof GraduatesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/find-passion': {
+      id: '/find-passion'
+      path: '/find-passion'
+      fullPath: '/find-passion'
+      preLoaderRoute: typeof FindPassionRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contact': {
@@ -443,6 +463,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRoute,
   CandidatesRoute: CandidatesRoute,
   ContactRoute: ContactRoute,
+  FindPassionRoute: FindPassionRoute,
   GraduatesRoute: GraduatesRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   UndergraduateRoute: UndergraduateRoute,
