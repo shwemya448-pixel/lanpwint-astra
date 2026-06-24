@@ -125,10 +125,8 @@ function LandingPage() {
         </div>
       </section>
 
-      <footer className="px-4 sm:px-5 py-8 sm:py-10 text-center text-xs text-muted-foreground">
-        <div className="lp-divider-gold mx-auto w-32 sm:w-40 mb-4" />
-        © {new Date().getFullYear()} Lan Pwint · All rights reserved.
-      </footer>
+      <SiteFooter />
+
 
       {transitioning && <PortalTransition portal={transitioning} onDone={finishTransition} />}
       {chosen && null}
