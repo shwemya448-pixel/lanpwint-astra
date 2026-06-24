@@ -16,6 +16,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Toaster } from "@/components/ui/sonner";
 import { LocaleProvider } from "@/lib/i18n";
 import { ViewRoleProvider } from "@/lib/view-role";
+import { ScreenshotGuard } from "@/components/screenshot-guard";
 import { lazy, Suspense } from "react";
 import { useLocale } from "@/lib/i18n";
 const AutoTranslator = lazy(() =>
@@ -161,6 +162,7 @@ function RootComponent() {
         <ViewRoleProvider>
           <QueryClientProvider client={queryClient}>
             <LazyTranslator />
+            <ScreenshotGuard />
             <Outlet />
             <Toaster richColors position="top-right" />
           </QueryClientProvider>
