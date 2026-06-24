@@ -9,38 +9,323 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as UndergraduateRouteImport } from './routes/undergraduate'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as GraduatesRouteImport } from './routes/graduates'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as CandidatesRouteImport } from './routes/candidates'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AboutRouteImport } from './routes/about'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticated/profile'
+import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedApplicationsRouteImport } from './routes/_authenticated/applications'
+import { Route as AuthenticatedLessonsIndexRouteImport } from './routes/_authenticated/lessons.index'
+import { Route as AuthenticatedJobsIndexRouteImport } from './routes/_authenticated/jobs.index'
+import { Route as AuthenticatedLessonsLessonIdRouteImport } from './routes/_authenticated/lessons.$lessonId'
+import { Route as AuthenticatedJobsJobIdRouteImport } from './routes/_authenticated/jobs.$jobId'
+import { Route as AuthenticatedEmployerApplicationsRouteImport } from './routes/_authenticated/employer.applications'
+import { Route as AuthenticatedEmployerJobsIndexRouteImport } from './routes/_authenticated/employer.jobs.index'
+import { Route as AuthenticatedEmployerJobsNewRouteImport } from './routes/_authenticated/employer.jobs.new'
 
+const UndergraduateRoute = UndergraduateRouteImport.update({
+  id: '/undergraduate',
+  path: '/undergraduate',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GraduatesRoute = GraduatesRouteImport.update({
+  id: '/graduates',
+  path: '/graduates',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CandidatesRoute = CandidatesRouteImport.update({
+  id: '/candidates',
+  path: '/candidates',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedProfileRoute = AuthenticatedProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedApplicationsRoute =
+  AuthenticatedApplicationsRouteImport.update({
+    id: '/applications',
+    path: '/applications',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedLessonsIndexRoute =
+  AuthenticatedLessonsIndexRouteImport.update({
+    id: '/lessons/',
+    path: '/lessons/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedJobsIndexRoute = AuthenticatedJobsIndexRouteImport.update({
+  id: '/jobs/',
+  path: '/jobs/',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedLessonsLessonIdRoute =
+  AuthenticatedLessonsLessonIdRouteImport.update({
+    id: '/lessons/$lessonId',
+    path: '/lessons/$lessonId',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedJobsJobIdRoute = AuthenticatedJobsJobIdRouteImport.update({
+  id: '/jobs/$jobId',
+  path: '/jobs/$jobId',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedEmployerApplicationsRoute =
+  AuthenticatedEmployerApplicationsRouteImport.update({
+    id: '/employer/applications',
+    path: '/employer/applications',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedEmployerJobsIndexRoute =
+  AuthenticatedEmployerJobsIndexRouteImport.update({
+    id: '/employer/jobs/',
+    path: '/employer/jobs/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedEmployerJobsNewRoute =
+  AuthenticatedEmployerJobsNewRouteImport.update({
+    id: '/employer/jobs/new',
+    path: '/employer/jobs/new',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/auth': typeof AuthRoute
+  '/candidates': typeof CandidatesRoute
+  '/contact': typeof ContactRoute
+  '/graduates': typeof GraduatesRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/undergraduate': typeof UndergraduateRoute
+  '/applications': typeof AuthenticatedApplicationsRoute
+  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/profile': typeof AuthenticatedProfileRoute
+  '/employer/applications': typeof AuthenticatedEmployerApplicationsRoute
+  '/jobs/$jobId': typeof AuthenticatedJobsJobIdRoute
+  '/lessons/$lessonId': typeof AuthenticatedLessonsLessonIdRoute
+  '/jobs/': typeof AuthenticatedJobsIndexRoute
+  '/lessons/': typeof AuthenticatedLessonsIndexRoute
+  '/employer/jobs/new': typeof AuthenticatedEmployerJobsNewRoute
+  '/employer/jobs/': typeof AuthenticatedEmployerJobsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/auth': typeof AuthRoute
+  '/candidates': typeof CandidatesRoute
+  '/contact': typeof ContactRoute
+  '/graduates': typeof GraduatesRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/undergraduate': typeof UndergraduateRoute
+  '/applications': typeof AuthenticatedApplicationsRoute
+  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/profile': typeof AuthenticatedProfileRoute
+  '/employer/applications': typeof AuthenticatedEmployerApplicationsRoute
+  '/jobs/$jobId': typeof AuthenticatedJobsJobIdRoute
+  '/lessons/$lessonId': typeof AuthenticatedLessonsLessonIdRoute
+  '/jobs': typeof AuthenticatedJobsIndexRoute
+  '/lessons': typeof AuthenticatedLessonsIndexRoute
+  '/employer/jobs/new': typeof AuthenticatedEmployerJobsNewRoute
+  '/employer/jobs': typeof AuthenticatedEmployerJobsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/about': typeof AboutRoute
+  '/auth': typeof AuthRoute
+  '/candidates': typeof CandidatesRoute
+  '/contact': typeof ContactRoute
+  '/graduates': typeof GraduatesRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/undergraduate': typeof UndergraduateRoute
+  '/_authenticated/applications': typeof AuthenticatedApplicationsRoute
+  '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/profile': typeof AuthenticatedProfileRoute
+  '/_authenticated/employer/applications': typeof AuthenticatedEmployerApplicationsRoute
+  '/_authenticated/jobs/$jobId': typeof AuthenticatedJobsJobIdRoute
+  '/_authenticated/lessons/$lessonId': typeof AuthenticatedLessonsLessonIdRoute
+  '/_authenticated/jobs/': typeof AuthenticatedJobsIndexRoute
+  '/_authenticated/lessons/': typeof AuthenticatedLessonsIndexRoute
+  '/_authenticated/employer/jobs/new': typeof AuthenticatedEmployerJobsNewRoute
+  '/_authenticated/employer/jobs/': typeof AuthenticatedEmployerJobsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/auth'
+    | '/candidates'
+    | '/contact'
+    | '/graduates'
+    | '/sitemap.xml'
+    | '/undergraduate'
+    | '/applications'
+    | '/dashboard'
+    | '/profile'
+    | '/employer/applications'
+    | '/jobs/$jobId'
+    | '/lessons/$lessonId'
+    | '/jobs/'
+    | '/lessons/'
+    | '/employer/jobs/new'
+    | '/employer/jobs/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/about'
+    | '/auth'
+    | '/candidates'
+    | '/contact'
+    | '/graduates'
+    | '/sitemap.xml'
+    | '/undergraduate'
+    | '/applications'
+    | '/dashboard'
+    | '/profile'
+    | '/employer/applications'
+    | '/jobs/$jobId'
+    | '/lessons/$lessonId'
+    | '/jobs'
+    | '/lessons'
+    | '/employer/jobs/new'
+    | '/employer/jobs'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authenticated'
+    | '/about'
+    | '/auth'
+    | '/candidates'
+    | '/contact'
+    | '/graduates'
+    | '/sitemap.xml'
+    | '/undergraduate'
+    | '/_authenticated/applications'
+    | '/_authenticated/dashboard'
+    | '/_authenticated/profile'
+    | '/_authenticated/employer/applications'
+    | '/_authenticated/jobs/$jobId'
+    | '/_authenticated/lessons/$lessonId'
+    | '/_authenticated/jobs/'
+    | '/_authenticated/lessons/'
+    | '/_authenticated/employer/jobs/new'
+    | '/_authenticated/employer/jobs/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  AboutRoute: typeof AboutRoute
+  AuthRoute: typeof AuthRoute
+  CandidatesRoute: typeof CandidatesRoute
+  ContactRoute: typeof ContactRoute
+  GraduatesRoute: typeof GraduatesRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  UndergraduateRoute: typeof UndergraduateRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/undergraduate': {
+      id: '/undergraduate'
+      path: '/undergraduate'
+      fullPath: '/undergraduate'
+      preLoaderRoute: typeof UndergraduateRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/graduates': {
+      id: '/graduates'
+      path: '/graduates'
+      fullPath: '/graduates'
+      preLoaderRoute: typeof GraduatesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/candidates': {
+      id: '/candidates'
+      path: '/candidates'
+      fullPath: '/candidates'
+      preLoaderRoute: typeof CandidatesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,22 +333,120 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/profile': {
+      id: '/_authenticated/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof AuthenticatedProfileRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/dashboard': {
+      id: '/_authenticated/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AuthenticatedDashboardRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/applications': {
+      id: '/_authenticated/applications'
+      path: '/applications'
+      fullPath: '/applications'
+      preLoaderRoute: typeof AuthenticatedApplicationsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/lessons/': {
+      id: '/_authenticated/lessons/'
+      path: '/lessons'
+      fullPath: '/lessons/'
+      preLoaderRoute: typeof AuthenticatedLessonsIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/jobs/': {
+      id: '/_authenticated/jobs/'
+      path: '/jobs'
+      fullPath: '/jobs/'
+      preLoaderRoute: typeof AuthenticatedJobsIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/lessons/$lessonId': {
+      id: '/_authenticated/lessons/$lessonId'
+      path: '/lessons/$lessonId'
+      fullPath: '/lessons/$lessonId'
+      preLoaderRoute: typeof AuthenticatedLessonsLessonIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/jobs/$jobId': {
+      id: '/_authenticated/jobs/$jobId'
+      path: '/jobs/$jobId'
+      fullPath: '/jobs/$jobId'
+      preLoaderRoute: typeof AuthenticatedJobsJobIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/employer/applications': {
+      id: '/_authenticated/employer/applications'
+      path: '/employer/applications'
+      fullPath: '/employer/applications'
+      preLoaderRoute: typeof AuthenticatedEmployerApplicationsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/employer/jobs/': {
+      id: '/_authenticated/employer/jobs/'
+      path: '/employer/jobs'
+      fullPath: '/employer/jobs/'
+      preLoaderRoute: typeof AuthenticatedEmployerJobsIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/employer/jobs/new': {
+      id: '/_authenticated/employer/jobs/new'
+      path: '/employer/jobs/new'
+      fullPath: '/employer/jobs/new'
+      preLoaderRoute: typeof AuthenticatedEmployerJobsNewRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedApplicationsRoute: typeof AuthenticatedApplicationsRoute
+  AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedProfileRoute: typeof AuthenticatedProfileRoute
+  AuthenticatedEmployerApplicationsRoute: typeof AuthenticatedEmployerApplicationsRoute
+  AuthenticatedJobsJobIdRoute: typeof AuthenticatedJobsJobIdRoute
+  AuthenticatedLessonsLessonIdRoute: typeof AuthenticatedLessonsLessonIdRoute
+  AuthenticatedJobsIndexRoute: typeof AuthenticatedJobsIndexRoute
+  AuthenticatedLessonsIndexRoute: typeof AuthenticatedLessonsIndexRoute
+  AuthenticatedEmployerJobsNewRoute: typeof AuthenticatedEmployerJobsNewRoute
+  AuthenticatedEmployerJobsIndexRoute: typeof AuthenticatedEmployerJobsIndexRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedApplicationsRoute: AuthenticatedApplicationsRoute,
+  AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedProfileRoute: AuthenticatedProfileRoute,
+  AuthenticatedEmployerApplicationsRoute:
+    AuthenticatedEmployerApplicationsRoute,
+  AuthenticatedJobsJobIdRoute: AuthenticatedJobsJobIdRoute,
+  AuthenticatedLessonsLessonIdRoute: AuthenticatedLessonsLessonIdRoute,
+  AuthenticatedJobsIndexRoute: AuthenticatedJobsIndexRoute,
+  AuthenticatedLessonsIndexRoute: AuthenticatedLessonsIndexRoute,
+  AuthenticatedEmployerJobsNewRoute: AuthenticatedEmployerJobsNewRoute,
+  AuthenticatedEmployerJobsIndexRoute: AuthenticatedEmployerJobsIndexRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  AboutRoute: AboutRoute,
+  AuthRoute: AuthRoute,
+  CandidatesRoute: CandidatesRoute,
+  ContactRoute: ContactRoute,
+  GraduatesRoute: GraduatesRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
+  UndergraduateRoute: UndergraduateRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
