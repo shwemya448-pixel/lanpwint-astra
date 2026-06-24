@@ -148,6 +148,7 @@ function RootComponent() {
       <LocaleProvider>
         <ViewRoleProvider>
           <QueryClientProvider client={queryClient}>
+            <AutoTranslator />
             <Outlet />
             <Toaster richColors position="top-right" />
           </QueryClientProvider>
