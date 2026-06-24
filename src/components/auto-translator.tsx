@@ -68,12 +68,14 @@ export function AutoTranslator() {
   const translatedNodesRef = useRef<Set<Text>>(new Set());
   const observerRef = useRef<MutationObserver | null>(null);
   const timerRef = useRef<number | null>(null);
+  const runIdRef = useRef(0);
 
   useEffect(() => {
     cacheRef.current = loadCache();
   }, []);
 
   const restoreEnglish = useCallback(() => {
+    runIdRef.current += 1;
     observerRef.current?.disconnect();
     observerRef.current = null;
     if (timerRef.current !== null) {
@@ -99,6 +101,7 @@ export function AutoTranslator() {
     }
 
     async function translatePage() {
+      const runId = runIdRef.current;
       if (inFlightRef.current) {
         pendingRef.current = true;
         return;
@@ -117,6 +120,7 @@ export function AutoTranslator() {
           const cached = cache[key];
           if (cached) {
             if (node.nodeValue !== cached) {
+              if (runId !== runIdRef.current) return;
               node.nodeValue = original.replace(key, cached);
               translatedNodesRef.current.add(node);
             }
@@ -132,6 +136,7 @@ export function AutoTranslator() {
           const uniqueTexts = Array.from(new Set(chunk.map((c) => c.text)));
           try {
             const translated = await translateBatch(uniqueTexts);
+            if (runId !== runIdRef.current) return;
             const map: Record<string, string> = {};
             uniqueTexts.forEach((t, idx) => (map[t] = translated[idx]));
             for (const { node, text } of chunk) {
