@@ -5,6 +5,7 @@ import { askGemini } from "@/lib/ai-gemini.functions";
 const CACHE_KEY = "lp-translation-cache-my";
 const SKIP_TAGS = new Set(["SCRIPT", "STYLE", "NOSCRIPT", "CODE", "PRE", "TEXTAREA", "INPUT"]);
 const MAX_TEXT_LENGTH = 180;
+const ORIGINAL_TEXT_ATTR = "data-lp-original-text";
 
 function loadCache(): Record<string, string> {
   if (typeof window === "undefined") return {};
@@ -87,6 +88,13 @@ export function AutoTranslator() {
       const original = originals.get(node);
       if (original !== undefined && node.isConnected) node.nodeValue = original;
     });
+    document.querySelectorAll<HTMLElement>(`[${ORIGINAL_TEXT_ATTR}]`).forEach((el) => {
+      const original = el.getAttribute(ORIGINAL_TEXT_ATTR);
+      if (original !== null) {
+        el.textContent = original;
+        el.removeAttribute(ORIGINAL_TEXT_ATTR);
+      }
+    });
     translatedNodesRef.current.clear();
     inFlightRef.current = false;
     pendingRef.current = false;
@@ -122,6 +130,10 @@ export function AutoTranslator() {
         for (const node of nodes) {
           const original = node.nodeValue ?? "";
           if (!originals.has(node)) originals.set(node, original);
+          const parent = node.parentElement;
+          if (parent && parent.childNodes.length === 1 && !parent.hasAttribute(ORIGINAL_TEXT_ATTR)) {
+            parent.setAttribute(ORIGINAL_TEXT_ATTR, original);
+          }
           const key = original.trim();
           if (!key) continue;
           const cached = cache[key];
