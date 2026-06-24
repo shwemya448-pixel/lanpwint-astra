@@ -164,3 +164,122 @@
 @utility hairline {
   border: 1px solid color-mix(in oklab, var(--foreground) 12%, transparent);
 }
+
+/* =========================================================
+ * Lan Pwint — Gateway brand layer (gold + royal on navy)
+ * ========================================================= */
+
+:root,
+.dark {
+  --gold: oklch(0.86 0.17 95);
+  --gold-soft: oklch(0.86 0.17 95 / 0.18);
+  --royal: oklch(0.55 0.13 265);
+  --royal-soft: oklch(0.55 0.13 265 / 0.18);
+  --glass: oklch(0.28 0.04 265 / 0.55);
+  --glass-border: oklch(0.82 0.06 265 / 0.22);
+}
+
+.dark {
+  --background: oklch(0.18 0.05 265);
+  --foreground: oklch(0.93 0.025 265);
+  --card: oklch(0.28 0.04 265 / 0.8);
+  --card-foreground: oklch(0.93 0.025 265);
+  --muted: oklch(0.3 0.04 265 / 0.6);
+  --muted-foreground: oklch(0.78 0.035 265);
+  --border: oklch(0.82 0.06 265 / 0.18);
+}
+
+.dark body {
+  background-image:
+    radial-gradient(1200px 600px at 10% -10%, color-mix(in oklab, var(--royal) 22%, transparent), transparent 60%),
+    radial-gradient(900px 500px at 110% 10%, color-mix(in oklab, var(--gold) 14%, transparent), transparent 55%),
+    radial-gradient(800px 800px at 50% 120%, color-mix(in oklab, var(--royal) 18%, transparent), transparent 60%);
+  background-attachment: fixed;
+}
+
+@layer components {
+  .lp-glass {
+    background: var(--glass);
+    backdrop-filter: blur(18px) saturate(140%);
+    border: 1px solid var(--glass-border);
+    box-shadow:
+      0 10px 40px -10px color-mix(in oklab, var(--royal) 35%, transparent),
+      inset 0 1px 0 color-mix(in oklab, var(--gold) 12%, transparent);
+  }
+  .lp-card {
+    background: var(--glass);
+    backdrop-filter: blur(18px) saturate(140%);
+    border: 1px solid var(--glass-border);
+    border-radius: 1rem;
+    box-shadow:
+      0 10px 40px -10px color-mix(in oklab, var(--royal) 35%, transparent),
+      inset 0 1px 0 color-mix(in oklab, var(--gold) 12%, transparent);
+  }
+  .lp-gold-text {
+    color: var(--gold);
+    text-shadow: 0 0 24px color-mix(in oklab, var(--gold) 35%, transparent);
+  }
+  .lp-gold-btn {
+    background: linear-gradient(135deg, var(--gold), color-mix(in oklab, var(--gold) 70%, white));
+    color: oklch(0.18 0.05 265);
+    border: 1px solid color-mix(in oklab, var(--gold) 60%, white);
+    box-shadow: 0 8px 24px -8px color-mix(in oklab, var(--gold) 50%, transparent);
+    transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
+  }
+  .lp-gold-btn:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.05);
+    box-shadow: 0 14px 30px -10px color-mix(in oklab, var(--gold) 60%, transparent);
+  }
+  .lp-ghost-btn {
+    border: 1px solid var(--glass-border);
+    background: color-mix(in oklab, var(--royal) 8%, transparent);
+    color: var(--foreground);
+    transition: all .2s ease;
+  }
+  .lp-ghost-btn:hover {
+    background: color-mix(in oklab, var(--royal) 18%, transparent);
+    border-color: color-mix(in oklab, var(--gold) 40%, var(--glass-border));
+  }
+  .lp-divider-gold {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, color-mix(in oklab, var(--gold) 70%, transparent), transparent);
+  }
+}
+
+@keyframes lp-fade-up { from { opacity: 0; transform: translateY(14px); filter: blur(6px); } to { opacity: 1; transform: translateY(0); filter: blur(0); } }
+@keyframes lp-float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+@keyframes lp-shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+@keyframes lp-door-left { 0% { transform: translateX(0) rotateY(0deg); } 100% { transform: translateX(-110%) rotateY(-65deg); } }
+@keyframes lp-door-right { 0% { transform: translateX(0) rotateY(0deg); } 100% { transform: translateX(110%) rotateY(65deg); } }
+@keyframes lp-light-burst { 0% { opacity: 0; transform: scale(0.2); } 60% { opacity: 1; transform: scale(1.4); } 100% { opacity: 1; transform: scale(2.2); } }
+@keyframes lp-shooting-star {
+  0% { transform: translate3d(0,0,0) rotate(var(--angle, 75deg)); opacity: 0; }
+  8% { opacity: 1; }
+  85% { opacity: 1; }
+  100% { transform: translate3d(var(--dx, 200px), var(--dy, 900px), 0) rotate(var(--angle, 75deg)); opacity: 0; }
+}
+.lp-shooting-star {
+  position: absolute; width: 120px; height: 2px; border-radius: 999px;
+  transform-origin: 100% 50%;
+  background: linear-gradient(90deg, transparent 0%, color-mix(in oklab, var(--gold) 40%, transparent) 50%, color-mix(in oklab, var(--gold) 90%, white) 85%, #fff 100%);
+  filter: drop-shadow(0 0 4px var(--gold)) drop-shadow(0 0 10px color-mix(in oklab, var(--gold) 70%, transparent));
+  opacity: 0; pointer-events: none; will-change: transform, opacity;
+  animation: lp-shooting-star 3s cubic-bezier(.4,.0,.7,1) infinite;
+}
+.lp-shooting-star::before {
+  content: ""; position: absolute; right: -2px; top: 50%; width: 6px; height: 6px; border-radius: 999px;
+  background: #fff; transform: translateY(-50%);
+  box-shadow: 0 0 8px #fff, 0 0 16px var(--gold), 0 0 28px color-mix(in oklab, var(--gold) 70%, transparent);
+}
+@media (max-width: 640px) { .lp-shooting-star { width: 80px; } .lp-shooting-star:nth-child(n+4) { display: none; } }
+@media (prefers-reduced-motion: reduce) { .lp-shooting-star { display: none; } }
+.lp-animate-in { animation: lp-fade-up .7s ease-out both; }
+.lp-float { animation: lp-float 4s ease-in-out infinite; }
+.lp-shimmer-text {
+  background: linear-gradient(90deg, var(--gold) 0%, color-mix(in oklab, var(--gold) 60%, white) 40%, var(--gold) 80%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  animation: lp-shimmer 4s linear infinite;
+}
+
