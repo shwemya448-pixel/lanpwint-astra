@@ -6,6 +6,8 @@ import { DoorScene } from "@/components/lp/DoorScene";
 import { ShootingStars } from "@/components/lp/ShootingStars";
 import { PortalCard, type PortalKind } from "@/components/lp/PortalCard";
 import { PortalTransition } from "@/components/lp/PortalTransition";
+import { SiteHeader } from "@/components/site-header";
+import { SiteFooter } from "@/components/site-footer";
 
 export const Route = createFileRoute("/")({
   head: () => ({
