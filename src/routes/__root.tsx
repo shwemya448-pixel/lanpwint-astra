@@ -16,6 +16,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Toaster } from "@/components/ui/sonner";
 import { LocaleProvider } from "@/lib/i18n";
 import { ViewRoleProvider } from "@/lib/view-role";
+import { AutoTranslator } from "@/components/auto-translator";
 
 
 function NotFoundComponent() {
@@ -147,6 +148,7 @@ function RootComponent() {
       <LocaleProvider>
         <ViewRoleProvider>
           <QueryClientProvider client={queryClient}>
+            <AutoTranslator />
             <Outlet />
             <Toaster richColors position="top-right" />
           </QueryClientProvider>
