@@ -160,6 +160,92 @@ export type Database = {
         }
         Relationships: []
       }
+      news_categories: {
+        Row: {
+          created_at: string
+          id: string
+          name_en: string
+          name_my: string
+          slug: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name_en: string
+          name_my: string
+          slug: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name_en?: string
+          name_my?: string
+          slug?: string
+        }
+        Relationships: []
+      }
+      news_posts: {
+        Row: {
+          author_id: string | null
+          body_en: string
+          body_my: string
+          category_id: string | null
+          created_at: string
+          excerpt_en: string | null
+          excerpt_my: string | null
+          id: string
+          image_url: string | null
+          published: boolean
+          published_at: string
+          slug: string
+          title_en: string
+          title_my: string
+          updated_at: string
+        }
+        Insert: {
+          author_id?: string | null
+          body_en: string
+          body_my: string
+          category_id?: string | null
+          created_at?: string
+          excerpt_en?: string | null
+          excerpt_my?: string | null
+          id?: string
+          image_url?: string | null
+          published?: boolean
+          published_at?: string
+          slug: string
+          title_en: string
+          title_my: string
+          updated_at?: string
+        }
+        Update: {
+          author_id?: string | null
+          body_en?: string
+          body_my?: string
+          category_id?: string | null
+          created_at?: string
+          excerpt_en?: string | null
+          excerpt_my?: string | null
+          id?: string
+          image_url?: string | null
+          published?: boolean
+          published_at?: string
+          slug?: string
+          title_en?: string
+          title_my?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "news_posts_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "news_categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       notifications: {
         Row: {
           body: string | null
