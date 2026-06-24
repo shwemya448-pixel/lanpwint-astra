@@ -53,37 +53,12 @@ function LandingPage() {
   };
 
   return (
-    <div className="min-h-screen relative overflow-x-hidden">
+    <div className="min-h-screen relative overflow-x-hidden flex flex-col">
       <ShootingStars />
-
-      {/* Header */}
-      <header className="fixed top-0 inset-x-0 z-40">
-        <div className="mx-auto max-w-7xl px-3 sm:px-5 py-3 sm:py-4 flex items-center justify-between gap-2">
-          <Link to="/" className="flex items-center gap-2 sm:gap-3 min-w-0">
-            <div className="h-9 w-9 sm:h-10 sm:w-10 rounded-xl lp-glass flex items-center justify-center">
-              <span className="lp-gold-text text-base sm:text-lg font-bold">လ</span>
-            </div>
-            <div className="leading-tight min-w-0">
-              <div className="lp-shimmer-text text-sm sm:text-lg font-bold tracking-wide truncate">Lan Pwint</div>
-              <div className="hidden sm:block text-[10px] uppercase tracking-[0.2em] text-muted-foreground truncate">
-                Academic · Career · Gateway
-              </div>
-            </div>
-          </Link>
-          <div className="flex items-center gap-2">
-            <Link to="/about" className="lp-ghost-btn h-10 px-3 rounded-xl hidden sm:inline-flex items-center text-sm font-semibold">About</Link>
-            <Link to="/contact" className="lp-ghost-btn h-10 px-3 rounded-xl hidden sm:inline-flex items-center text-sm font-semibold">Contact</Link>
-            {user ? (
-              <Link to="/undergraduate" className="lp-gold-btn h-10 px-5 rounded-xl text-sm font-semibold inline-flex items-center">Dashboard</Link>
-            ) : (
-              <Link to="/auth" search={{ as: "student" } as never} className="lp-gold-btn h-10 px-5 rounded-xl text-sm font-semibold inline-flex items-center">Sign in</Link>
-            )}
-          </div>
-        </div>
-      </header>
+      <SiteHeader />
 
       {/* Hero */}
-      <section className="relative pt-24 sm:pt-28 pb-12 sm:pb-16 px-4 sm:px-5">
+      <section className="relative pt-10 sm:pt-14 pb-12 sm:pb-16 px-4 sm:px-5">
         <div className="mx-auto max-w-6xl grid md:grid-cols-2 gap-8 md:gap-10 items-center lp-animate-in">
           <DoorScene />
           <div className="text-center md:text-left">
