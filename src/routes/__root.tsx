@@ -22,8 +22,7 @@ const AutoTranslator = lazy(() =>
   import("@/components/auto-translator").then((m) => ({ default: m.AutoTranslator })),
 );
 function LazyTranslator() {
-  const { lang } = useLocale();
-  if (lang !== "my") return null;
+  useLocale();
   return (
     <Suspense fallback={null}>
       <AutoTranslator />

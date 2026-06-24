@@ -256,7 +256,7 @@
 
 /* Dark mode readability: legacy pages use text-navy for headings and names. */
 html.dark .text-navy {
-  color: var(--foreground);
+  color: var(--foreground) !important;
 }
 
 .dark .text-teal {
