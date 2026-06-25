@@ -91,6 +91,8 @@ function AdminUsers() {
                     </td>
                     <td className="px-4 py-3 text-muted-foreground">{u.position || "—"}</td>
                     <td className="px-4 py-3 text-muted-foreground">{u.company_name || "—"}</td>
+                    <td className="px-4 py-3 text-muted-foreground">{u.school || "—"}</td>
+                    <td className="px-4 py-3 text-muted-foreground">{u.location || "—"}</td>
                     <td className="px-4 py-3">
                       {isEmployer ? (
                         <Badge
@@ -115,12 +117,17 @@ function AdminUsers() {
                     <td className="px-4 py-3">
                       {isEmployer ? (
                         <div className="flex justify-end gap-2">
-                          {status !== "approved" && (
-                            <Button size="sm" variant="default" disabled={setStatus.isPending} onClick={() => setStatus.mutate({ id: u.id, status: "approved" })}>
-                              <Check className="mr-1 h-3.5 w-3.5" /> Approve
-                            </Button>
+                          {status === "pending" && (
+                            <>
+                              <Button size="sm" variant="default" disabled={setStatus.isPending} onClick={() => setStatus.mutate({ id: u.id, status: "approved" })}>
+                                <Check className="mr-1 h-3.5 w-3.5" /> Approve
+                              </Button>
+                              <Button size="sm" variant="outline" disabled={setStatus.isPending} onClick={() => setStatus.mutate({ id: u.id, status: "rejected" })}>
+                                <X className="mr-1 h-3.5 w-3.5" /> Reject
+                              </Button>
+                            </>
                           )}
-                          {status !== "rejected" && (
+                          {status === "approved" && (
                             <Button size="sm" variant="outline" disabled={setStatus.isPending} onClick={() => setStatus.mutate({ id: u.id, status: "rejected" })}>
                               <X className="mr-1 h-3.5 w-3.5" /> Reject
                             </Button>
