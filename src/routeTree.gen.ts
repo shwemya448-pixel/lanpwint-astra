@@ -31,11 +31,15 @@ import { Route as AuthenticatedStudentMyCvRouteImport } from './routes/_authenti
 import { Route as AuthenticatedStudentMessagesRouteImport } from './routes/_authenticated/student.messages'
 import { Route as AuthenticatedStudentLearnRouteImport } from './routes/_authenticated/student.learn'
 import { Route as AuthenticatedStudentJobMapRouteImport } from './routes/_authenticated/student.job-map'
+import { Route as AuthenticatedStudentDashboardRouteImport } from './routes/_authenticated/student.dashboard'
 import { Route as AuthenticatedStudentCvAnalyzerRouteImport } from './routes/_authenticated/student.cv-analyzer'
 import { Route as AuthenticatedStudentApplicationsRouteImport } from './routes/_authenticated/student.applications'
+import { Route as AuthenticatedEmployerMessagesRouteImport } from './routes/_authenticated/employer.messages'
+import { Route as AuthenticatedEmployerDashboardRouteImport } from './routes/_authenticated/employer.dashboard'
 import { Route as AuthenticatedEmployerCvBoardRouteImport } from './routes/_authenticated/employer.cv-board'
 import { Route as AuthenticatedEmployerApplicationsRouteImport } from './routes/_authenticated/employer.applications'
 import { Route as AuthenticatedAdminNewsRouteImport } from './routes/_authenticated/admin.news'
+import { Route as AuthenticatedAdminDashboardRouteImport } from './routes/_authenticated/admin.dashboard'
 import { Route as AuthenticatedStudentLessonsIndexRouteImport } from './routes/_authenticated/student.lessons.index'
 import { Route as AuthenticatedStudentJobsIndexRouteImport } from './routes/_authenticated/student.jobs.index'
 import { Route as AuthenticatedEmployerJobsIndexRouteImport } from './routes/_authenticated/employer.jobs.index'
@@ -157,6 +161,12 @@ const AuthenticatedStudentJobMapRoute =
     path: '/job-map',
     getParentRoute: () => AuthenticatedStudentRoute,
   } as any)
+const AuthenticatedStudentDashboardRoute =
+  AuthenticatedStudentDashboardRouteImport.update({
+    id: '/dashboard',
+    path: '/dashboard',
+    getParentRoute: () => AuthenticatedStudentRoute,
+  } as any)
 const AuthenticatedStudentCvAnalyzerRoute =
   AuthenticatedStudentCvAnalyzerRouteImport.update({
     id: '/cv-analyzer',
@@ -168,6 +178,18 @@ const AuthenticatedStudentApplicationsRoute =
     id: '/applications',
     path: '/applications',
     getParentRoute: () => AuthenticatedStudentRoute,
+  } as any)
+const AuthenticatedEmployerMessagesRoute =
+  AuthenticatedEmployerMessagesRouteImport.update({
+    id: '/messages',
+    path: '/messages',
+    getParentRoute: () => AuthenticatedEmployerRoute,
+  } as any)
+const AuthenticatedEmployerDashboardRoute =
+  AuthenticatedEmployerDashboardRouteImport.update({
+    id: '/dashboard',
+    path: '/dashboard',
+    getParentRoute: () => AuthenticatedEmployerRoute,
   } as any)
 const AuthenticatedEmployerCvBoardRoute =
   AuthenticatedEmployerCvBoardRouteImport.update({
@@ -186,6 +208,12 @@ const AuthenticatedAdminNewsRoute = AuthenticatedAdminNewsRouteImport.update({
   path: '/news',
   getParentRoute: () => AuthenticatedAdminRoute,
 } as any)
+const AuthenticatedAdminDashboardRoute =
+  AuthenticatedAdminDashboardRouteImport.update({
+    id: '/dashboard',
+    path: '/dashboard',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
 const AuthenticatedStudentLessonsIndexRoute =
   AuthenticatedStudentLessonsIndexRouteImport.update({
     id: '/lessons/',
@@ -241,11 +269,15 @@ export interface FileRoutesByFullPath {
   '/student': typeof AuthenticatedStudentRouteWithChildren
   '/unauthorized': typeof AuthenticatedUnauthorizedRoute
   '/news/$slug': typeof NewsSlugRoute
+  '/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
   '/admin/news': typeof AuthenticatedAdminNewsRoute
   '/employer/applications': typeof AuthenticatedEmployerApplicationsRoute
   '/employer/cv-board': typeof AuthenticatedEmployerCvBoardRoute
+  '/employer/dashboard': typeof AuthenticatedEmployerDashboardRoute
+  '/employer/messages': typeof AuthenticatedEmployerMessagesRoute
   '/student/applications': typeof AuthenticatedStudentApplicationsRoute
   '/student/cv-analyzer': typeof AuthenticatedStudentCvAnalyzerRoute
+  '/student/dashboard': typeof AuthenticatedStudentDashboardRoute
   '/student/job-map': typeof AuthenticatedStudentJobMapRoute
   '/student/learn': typeof AuthenticatedStudentLearnRoute
   '/student/messages': typeof AuthenticatedStudentMessagesRoute
@@ -275,11 +307,15 @@ export interface FileRoutesByTo {
   '/student': typeof AuthenticatedStudentRouteWithChildren
   '/unauthorized': typeof AuthenticatedUnauthorizedRoute
   '/news/$slug': typeof NewsSlugRoute
+  '/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
   '/admin/news': typeof AuthenticatedAdminNewsRoute
   '/employer/applications': typeof AuthenticatedEmployerApplicationsRoute
   '/employer/cv-board': typeof AuthenticatedEmployerCvBoardRoute
+  '/employer/dashboard': typeof AuthenticatedEmployerDashboardRoute
+  '/employer/messages': typeof AuthenticatedEmployerMessagesRoute
   '/student/applications': typeof AuthenticatedStudentApplicationsRoute
   '/student/cv-analyzer': typeof AuthenticatedStudentCvAnalyzerRoute
+  '/student/dashboard': typeof AuthenticatedStudentDashboardRoute
   '/student/job-map': typeof AuthenticatedStudentJobMapRoute
   '/student/learn': typeof AuthenticatedStudentLearnRoute
   '/student/messages': typeof AuthenticatedStudentMessagesRoute
@@ -311,11 +347,15 @@ export interface FileRoutesById {
   '/_authenticated/student': typeof AuthenticatedStudentRouteWithChildren
   '/_authenticated/unauthorized': typeof AuthenticatedUnauthorizedRoute
   '/news/$slug': typeof NewsSlugRoute
+  '/_authenticated/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
   '/_authenticated/admin/news': typeof AuthenticatedAdminNewsRoute
   '/_authenticated/employer/applications': typeof AuthenticatedEmployerApplicationsRoute
   '/_authenticated/employer/cv-board': typeof AuthenticatedEmployerCvBoardRoute
+  '/_authenticated/employer/dashboard': typeof AuthenticatedEmployerDashboardRoute
+  '/_authenticated/employer/messages': typeof AuthenticatedEmployerMessagesRoute
   '/_authenticated/student/applications': typeof AuthenticatedStudentApplicationsRoute
   '/_authenticated/student/cv-analyzer': typeof AuthenticatedStudentCvAnalyzerRoute
+  '/_authenticated/student/dashboard': typeof AuthenticatedStudentDashboardRoute
   '/_authenticated/student/job-map': typeof AuthenticatedStudentJobMapRoute
   '/_authenticated/student/learn': typeof AuthenticatedStudentLearnRoute
   '/_authenticated/student/messages': typeof AuthenticatedStudentMessagesRoute
@@ -347,11 +387,15 @@ export interface FileRouteTypes {
     | '/student'
     | '/unauthorized'
     | '/news/$slug'
+    | '/admin/dashboard'
     | '/admin/news'
     | '/employer/applications'
     | '/employer/cv-board'
+    | '/employer/dashboard'
+    | '/employer/messages'
     | '/student/applications'
     | '/student/cv-analyzer'
+    | '/student/dashboard'
     | '/student/job-map'
     | '/student/learn'
     | '/student/messages'
@@ -381,11 +425,15 @@ export interface FileRouteTypes {
     | '/student'
     | '/unauthorized'
     | '/news/$slug'
+    | '/admin/dashboard'
     | '/admin/news'
     | '/employer/applications'
     | '/employer/cv-board'
+    | '/employer/dashboard'
+    | '/employer/messages'
     | '/student/applications'
     | '/student/cv-analyzer'
+    | '/student/dashboard'
     | '/student/job-map'
     | '/student/learn'
     | '/student/messages'
@@ -416,11 +464,15 @@ export interface FileRouteTypes {
     | '/_authenticated/student'
     | '/_authenticated/unauthorized'
     | '/news/$slug'
+    | '/_authenticated/admin/dashboard'
     | '/_authenticated/admin/news'
     | '/_authenticated/employer/applications'
     | '/_authenticated/employer/cv-board'
+    | '/_authenticated/employer/dashboard'
+    | '/_authenticated/employer/messages'
     | '/_authenticated/student/applications'
     | '/_authenticated/student/cv-analyzer'
+    | '/_authenticated/student/dashboard'
     | '/_authenticated/student/job-map'
     | '/_authenticated/student/learn'
     | '/_authenticated/student/messages'
@@ -603,6 +655,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedStudentJobMapRouteImport
       parentRoute: typeof AuthenticatedStudentRoute
     }
+    '/_authenticated/student/dashboard': {
+      id: '/_authenticated/student/dashboard'
+      path: '/dashboard'
+      fullPath: '/student/dashboard'
+      preLoaderRoute: typeof AuthenticatedStudentDashboardRouteImport
+      parentRoute: typeof AuthenticatedStudentRoute
+    }
     '/_authenticated/student/cv-analyzer': {
       id: '/_authenticated/student/cv-analyzer'
       path: '/cv-analyzer'
@@ -616,6 +675,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/student/applications'
       preLoaderRoute: typeof AuthenticatedStudentApplicationsRouteImport
       parentRoute: typeof AuthenticatedStudentRoute
+    }
+    '/_authenticated/employer/messages': {
+      id: '/_authenticated/employer/messages'
+      path: '/messages'
+      fullPath: '/employer/messages'
+      preLoaderRoute: typeof AuthenticatedEmployerMessagesRouteImport
+      parentRoute: typeof AuthenticatedEmployerRoute
+    }
+    '/_authenticated/employer/dashboard': {
+      id: '/_authenticated/employer/dashboard'
+      path: '/dashboard'
+      fullPath: '/employer/dashboard'
+      preLoaderRoute: typeof AuthenticatedEmployerDashboardRouteImport
+      parentRoute: typeof AuthenticatedEmployerRoute
     }
     '/_authenticated/employer/cv-board': {
       id: '/_authenticated/employer/cv-board'
@@ -636,6 +709,13 @@ declare module '@tanstack/react-router' {
       path: '/news'
       fullPath: '/admin/news'
       preLoaderRoute: typeof AuthenticatedAdminNewsRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/dashboard': {
+      id: '/_authenticated/admin/dashboard'
+      path: '/dashboard'
+      fullPath: '/admin/dashboard'
+      preLoaderRoute: typeof AuthenticatedAdminDashboardRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
     '/_authenticated/student/lessons/': {
@@ -684,10 +764,12 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedAdminRouteChildren {
+  AuthenticatedAdminDashboardRoute: typeof AuthenticatedAdminDashboardRoute
   AuthenticatedAdminNewsRoute: typeof AuthenticatedAdminNewsRoute
 }
 
 const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
+  AuthenticatedAdminDashboardRoute: AuthenticatedAdminDashboardRoute,
   AuthenticatedAdminNewsRoute: AuthenticatedAdminNewsRoute,
 }
 
@@ -697,6 +779,8 @@ const AuthenticatedAdminRouteWithChildren =
 interface AuthenticatedEmployerRouteChildren {
   AuthenticatedEmployerApplicationsRoute: typeof AuthenticatedEmployerApplicationsRoute
   AuthenticatedEmployerCvBoardRoute: typeof AuthenticatedEmployerCvBoardRoute
+  AuthenticatedEmployerDashboardRoute: typeof AuthenticatedEmployerDashboardRoute
+  AuthenticatedEmployerMessagesRoute: typeof AuthenticatedEmployerMessagesRoute
   AuthenticatedEmployerJobsNewRoute: typeof AuthenticatedEmployerJobsNewRoute
   AuthenticatedEmployerJobsIndexRoute: typeof AuthenticatedEmployerJobsIndexRoute
 }
@@ -705,6 +789,8 @@ const AuthenticatedEmployerRouteChildren: AuthenticatedEmployerRouteChildren = {
   AuthenticatedEmployerApplicationsRoute:
     AuthenticatedEmployerApplicationsRoute,
   AuthenticatedEmployerCvBoardRoute: AuthenticatedEmployerCvBoardRoute,
+  AuthenticatedEmployerDashboardRoute: AuthenticatedEmployerDashboardRoute,
+  AuthenticatedEmployerMessagesRoute: AuthenticatedEmployerMessagesRoute,
   AuthenticatedEmployerJobsNewRoute: AuthenticatedEmployerJobsNewRoute,
   AuthenticatedEmployerJobsIndexRoute: AuthenticatedEmployerJobsIndexRoute,
 }
@@ -717,6 +803,7 @@ const AuthenticatedEmployerRouteWithChildren =
 interface AuthenticatedStudentRouteChildren {
   AuthenticatedStudentApplicationsRoute: typeof AuthenticatedStudentApplicationsRoute
   AuthenticatedStudentCvAnalyzerRoute: typeof AuthenticatedStudentCvAnalyzerRoute
+  AuthenticatedStudentDashboardRoute: typeof AuthenticatedStudentDashboardRoute
   AuthenticatedStudentJobMapRoute: typeof AuthenticatedStudentJobMapRoute
   AuthenticatedStudentLearnRoute: typeof AuthenticatedStudentLearnRoute
   AuthenticatedStudentMessagesRoute: typeof AuthenticatedStudentMessagesRoute
@@ -730,6 +817,7 @@ interface AuthenticatedStudentRouteChildren {
 const AuthenticatedStudentRouteChildren: AuthenticatedStudentRouteChildren = {
   AuthenticatedStudentApplicationsRoute: AuthenticatedStudentApplicationsRoute,
   AuthenticatedStudentCvAnalyzerRoute: AuthenticatedStudentCvAnalyzerRoute,
+  AuthenticatedStudentDashboardRoute: AuthenticatedStudentDashboardRoute,
   AuthenticatedStudentJobMapRoute: AuthenticatedStudentJobMapRoute,
   AuthenticatedStudentLearnRoute: AuthenticatedStudentLearnRoute,
   AuthenticatedStudentMessagesRoute: AuthenticatedStudentMessagesRoute,
