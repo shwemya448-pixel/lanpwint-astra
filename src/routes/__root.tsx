@@ -105,7 +105,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "Lan Pwint (လမ်းပွင့်) helps students and graduates build successful careers through learning, internships, and employment opportunities.",
       },
       { name: "author", content: "Lan Pwint" },
-      { property: "og:title", content: "Lan Pwint — Open the road to your career" },
+      { property: "og:title", content: "Lan Pwint — Build a career through learning, internships, and employment" },
       {
         property: "og:description",
         content:
@@ -113,6 +113,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Lan Pwint — Build a career through learning, internships, and employment" },
+      { name: "description", content: "Design Reimagined is a web application for creating and editing digital designs." },
+      { property: "og:description", content: "Design Reimagined is a web application for creating and editing digital designs." },
+      { name: "twitter:description", content: "Design Reimagined is a web application for creating and editing digital designs." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/5339001c-b374-4fc5-89bb-9925e967643b/id-preview-d1085c39--c788b291-74e2-4af9-8669-825e18f373bb.lovable.app-1782381403304.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/5339001c-b374-4fc5-89bb-9925e967643b/id-preview-d1085c39--c788b291-74e2-4af9-8669-825e18f373bb.lovable.app-1782381403304.png" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
