@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { Plus, Trash2, Upload } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
-import { useSession } from "@/lib/auth";
+import { useSession, useUserRoles } from "@/lib/auth";
 import { PageShell, PageHeader } from "@/components/page-shell";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -21,6 +21,8 @@ type CertItem = { name: string; issuer: string; year: string; file?: string };
 
 function ProfilePage() {
   const { user } = useSession();
+  const roles = useUserRoles(user);
+  const isEmployer = roles.includes("employer");
   const qc = useQueryClient();
 
   const { data, isLoading } = useQuery({
@@ -42,6 +44,8 @@ function ProfilePage() {
     phone: "",
     bio: "",
     skillsText: "",
+    company_name: "",
+    position: "",
   });
   const [education, setEducation] = useState<EduItem[]>([]);
   const [certificates, setCertificates] = useState<CertItem[]>([]);
@@ -61,6 +65,8 @@ function ProfilePage() {
       phone: data.phone ?? "",
       bio: data.bio ?? "",
       skillsText: (data.skills ?? []).join(", "),
+      company_name: (data as any).company_name ?? "",
+      position: (data as any).position ?? "",
     });
     setEducation(Array.isArray(data.education) ? (data.education as any) : []);
     setCertificates(Array.isArray(data.certificates) ? (data.certificates as any) : []);
@@ -94,7 +100,9 @@ function ProfilePage() {
       education: education as any,
       certificates: certificates as any,
       cv_url: cvUrl,
-    }).eq("id", user.id);
+      company_name: form.company_name || null,
+      position: form.position || null,
+    } as any).eq("id", user.id);
     setSaving(false);
     if (error) toast.error(error.message);
     else {
