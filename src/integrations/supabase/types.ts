@@ -311,6 +311,7 @@ export type Database = {
           avatar_url: string | null
           bio: string | null
           certificates: Json | null
+          company_name: string | null
           contact_email: string | null
           created_at: string
           cv_url: string | null
@@ -322,6 +323,7 @@ export type Database = {
           id: string
           location: string | null
           phone: string | null
+          position: string | null
           school: string | null
           skills: string[] | null
           updated_at: string
@@ -330,6 +332,7 @@ export type Database = {
           avatar_url?: string | null
           bio?: string | null
           certificates?: Json | null
+          company_name?: string | null
           contact_email?: string | null
           created_at?: string
           cv_url?: string | null
@@ -341,6 +344,7 @@ export type Database = {
           id: string
           location?: string | null
           phone?: string | null
+          position?: string | null
           school?: string | null
           skills?: string[] | null
           updated_at?: string
@@ -349,6 +353,7 @@ export type Database = {
           avatar_url?: string | null
           bio?: string | null
           certificates?: Json | null
+          company_name?: string | null
           contact_email?: string | null
           created_at?: string
           cv_url?: string | null
@@ -360,6 +365,7 @@ export type Database = {
           id?: string
           location?: string | null
           phone?: string | null
+          position?: string | null
           school?: string | null
           skills?: string[] | null
           updated_at?: string

@@ -11,6 +11,7 @@ import { useEffect, type ReactNode } from "react";
 import { ThemeProvider } from "next-themes";
 
 import appCss from "../styles.css?url";
+import faviconUrl from "@/assets/logo-mark.png?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { supabase } from "@/integrations/supabase/client";
 import { Toaster } from "@/components/ui/sonner";
@@ -115,6 +116,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     ],
     links: [
       { rel: "stylesheet", href: appCss },
+      { rel: "icon", type: "image/png", href: faviconUrl },
+      { rel: "apple-touch-icon", href: faviconUrl },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {

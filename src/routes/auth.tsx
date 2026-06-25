@@ -123,7 +123,7 @@ function AuthPage() {
           <div className="mt-6">
             <Label className="text-xs uppercase tracking-[0.18em] text-muted-foreground">I am a</Label>
             <div className="mt-2 grid grid-cols-2 gap-2">
-              <RoleButton active={role === "student"} onClick={() => setRole("student")} icon={GraduationCap} label="Student / Graduate" />
+              <RoleButton active={role === "student"} onClick={() => setRole("student")} icon={GraduationCap} label="Candidate" />
               <RoleButton active={role === "employer"} onClick={() => setRole("employer")} icon={Briefcase} label="Candidate / Employer" />
             </div>
           </div>

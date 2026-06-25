@@ -24,6 +24,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { LanguageToggle } from "@/components/language-toggle";
 import { cn } from "@/lib/utils";
+import logoMark from "@/assets/logo-mark.png";
 
 /** When set, `PageShell` skips the marketing SiteHeader so the role nav owns the top bar. */
 export const RoleShellContext = createContext<AppRole | null>(null);
@@ -42,6 +43,7 @@ const STUDENT_NAV: NavItem[] = [
   { to: "/student/cv-analyzer", label: "CV Analyzer", icon: Sparkles },
   { to: "/student/my-cv", label: "My CV", icon: User },
   { to: "/student/messages", label: "Messages", icon: MessageSquare },
+  { to: "/news", label: "News feed", icon: Newspaper },
 ];
 
 const EMPLOYER_NAV: NavItem[] = [
@@ -49,9 +51,9 @@ const EMPLOYER_NAV: NavItem[] = [
   { to: "/employer/jobs/new", label: "Post job", icon: Plus },
   { to: "/employer/jobs", label: "My jobs", icon: Briefcase },
   { to: "/employer/job-map", label: "Job map", icon: MapPin },
-  
   { to: "/employer/applications", label: "Applications", icon: FileText },
   { to: "/employer/messages", label: "Messages", icon: MessageSquare },
+  { to: "/news", label: "News feed", icon: Newspaper },
 ];
 
 const ADMIN_NAV: NavItem[] = [
@@ -66,7 +68,7 @@ const NAV_BY_ROLE: Record<AppRole, NavItem[]> = {
 };
 
 const ROLE_LABEL: Record<AppRole, string> = {
-  student: "Student workspace",
+  student: "Candidate workspace",
   employer: "Employer workspace",
   admin: "Admin workspace",
 };
@@ -107,9 +109,13 @@ export function RoleNav({ role }: { role: AppRole }) {
       <div className={cn("bg-gradient-to-b", ROLE_TINT[role])}>
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 sm:px-6 lg:px-8">
           <Link to="/" className="flex items-center gap-2.5 shrink-0">
-            <span className="grid h-9 w-9 place-items-center rounded-md bg-[color:var(--gold)] text-[color:var(--navy)] font-serif text-lg leading-none">
-              L
-            </span>
+            <img
+              src={logoMark}
+              alt="Lan Pwint"
+              width={36}
+              height={36}
+              className="h-9 w-9 rounded-md object-contain"
+            />
             <div className="leading-tight">
               <div className="font-serif text-base text-foreground">Lan Pwint</div>
               <div className="text-[10px] uppercase tracking-[0.18em] text-[color:var(--gold)]/85">
