@@ -19,6 +19,7 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as NewsIndexRouteImport } from './routes/news.index'
 import { Route as GraduatesIndexRouteImport } from './routes/graduates.index'
 import { Route as CandidatesIndexRouteImport } from './routes/candidates.index'
 import { Route as NewsSlugRouteImport } from './routes/news.$slug'
@@ -107,6 +108,11 @@ const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const NewsIndexRoute = NewsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => NewsRoute,
 } as any)
 const GraduatesIndexRoute = GraduatesIndexRouteImport.update({
   id: '/',
@@ -351,6 +357,7 @@ export interface FileRoutesByFullPath {
   '/news/$slug': typeof NewsSlugRoute
   '/candidates/': typeof CandidatesIndexRoute
   '/graduates/': typeof GraduatesIndexRoute
+  '/news/': typeof NewsIndexRoute
   '/admin/applications': typeof AuthenticatedAdminApplicationsRoute
   '/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
   '/admin/learn': typeof AuthenticatedAdminLearnRoute
@@ -383,7 +390,6 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
   '/find-passion': typeof FindPassionRoute
-  '/news': typeof NewsRouteWithChildren
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/profile': typeof AuthenticatedProfileRoute
@@ -396,6 +402,7 @@ export interface FileRoutesByTo {
   '/news/$slug': typeof NewsSlugRoute
   '/candidates': typeof CandidatesIndexRoute
   '/graduates': typeof GraduatesIndexRoute
+  '/news': typeof NewsIndexRoute
   '/admin/applications': typeof AuthenticatedAdminApplicationsRoute
   '/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
   '/admin/learn': typeof AuthenticatedAdminLearnRoute
@@ -448,6 +455,7 @@ export interface FileRoutesById {
   '/news/$slug': typeof NewsSlugRoute
   '/candidates/': typeof CandidatesIndexRoute
   '/graduates/': typeof GraduatesIndexRoute
+  '/news/': typeof NewsIndexRoute
   '/_authenticated/admin/applications': typeof AuthenticatedAdminApplicationsRoute
   '/_authenticated/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
   '/_authenticated/admin/learn': typeof AuthenticatedAdminLearnRoute
@@ -500,6 +508,7 @@ export interface FileRouteTypes {
     | '/news/$slug'
     | '/candidates/'
     | '/graduates/'
+    | '/news/'
     | '/admin/applications'
     | '/admin/dashboard'
     | '/admin/learn'
@@ -532,7 +541,6 @@ export interface FileRouteTypes {
     | '/auth'
     | '/contact'
     | '/find-passion'
-    | '/news'
     | '/sitemap.xml'
     | '/dashboard'
     | '/profile'
@@ -545,6 +553,7 @@ export interface FileRouteTypes {
     | '/news/$slug'
     | '/candidates'
     | '/graduates'
+    | '/news'
     | '/admin/applications'
     | '/admin/dashboard'
     | '/admin/learn'
@@ -596,6 +605,7 @@ export interface FileRouteTypes {
     | '/news/$slug'
     | '/candidates/'
     | '/graduates/'
+    | '/news/'
     | '/_authenticated/admin/applications'
     | '/_authenticated/admin/dashboard'
     | '/_authenticated/admin/learn'
@@ -707,6 +717,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/news/': {
+      id: '/news/'
+      path: '/'
+      fullPath: '/news/'
+      preLoaderRoute: typeof NewsIndexRouteImport
+      parentRoute: typeof NewsRoute
     }
     '/graduates/': {
       id: '/graduates/'
@@ -1121,10 +1138,12 @@ const GraduatesRouteWithChildren = GraduatesRoute._addFileChildren(
 
 interface NewsRouteChildren {
   NewsSlugRoute: typeof NewsSlugRoute
+  NewsIndexRoute: typeof NewsIndexRoute
 }
 
 const NewsRouteChildren: NewsRouteChildren = {
   NewsSlugRoute: NewsSlugRoute,
+  NewsIndexRoute: NewsIndexRoute,
 }
 
 const NewsRouteWithChildren = NewsRoute._addFileChildren(NewsRouteChildren)
