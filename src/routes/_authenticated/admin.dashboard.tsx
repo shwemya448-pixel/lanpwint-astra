@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import {
   Briefcase,
@@ -7,6 +7,7 @@ import {
   GraduationCap,
   Newspaper,
   Shield,
+  Sparkles,
   TrendingUp,
   UserCheck,
   Users,
@@ -29,12 +30,12 @@ import {
 import { supabase } from "@/integrations/supabase/client";
 import { useViewRole } from "@/lib/view-role";
 import type { AppRole } from "@/lib/auth";
-import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/_authenticated/admin/dashboard")({
   head: () => ({ meta: [{ title: "Admin Dashboard — Lan Pwint" }] }),
   component: AdminDashboard,
 });
+
 
 type Insights = {
   totalUsers: number;
