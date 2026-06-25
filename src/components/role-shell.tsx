@@ -34,7 +34,7 @@ export function useRoleShell() {
 type NavItem = { to: string; label: string; icon: any; params?: Record<string, string> };
 
 const STUDENT_NAV: NavItem[] = [
-  { to: "/student/dashboard", label: "Dashboard", icon: LayoutDashboard },
+  { to: "/student/dashboard", label: "Overview", icon: LayoutDashboard },
   { to: "/student/jobs", label: "Browse jobs", icon: Briefcase },
   { to: "/student/applications", label: "Applications", icon: FileText },
   { to: "/student/learn", label: "Learn", icon: BookOpen },
