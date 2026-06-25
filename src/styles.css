@@ -411,3 +411,88 @@ html.dark .text-navy {
   .lp-reveal, .lp-reveal-stagger > * { animation: none !important; }
   .rounded-2xl.border:hover, .rounded-xl.border:hover { transform: none; }
 }
+
+/* =========================================================
+ * Lan Pwint — Card magic: tilt, sheen sweep, glow ring
+ * ========================================================= */
+.lp-tilt {
+  transform-style: preserve-3d;
+  transition: transform .5s cubic-bezier(.2,.7,.2,1), box-shadow .5s ease;
+  will-change: transform;
+}
+.lp-tilt:hover {
+  transform: perspective(900px) rotateX(2deg) rotateY(-3deg) translateY(-4px);
+  box-shadow:
+    0 30px 60px -25px color-mix(in oklab, var(--gold) 60%, transparent),
+    0 0 0 1px color-mix(in oklab, var(--gold) 70%, transparent),
+    inset 0 1px 0 color-mix(in oklab, var(--gold) 35%, transparent);
+}
+
+/* Diagonal light sheen that sweeps across on hover */
+.lp-sheen {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  overflow: hidden;
+}
+.lp-sheen::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -75%;
+  width: 50%;
+  height: 200%;
+  background: linear-gradient(120deg,
+    transparent 0%,
+    color-mix(in oklab, var(--gold) 45%, transparent) 50%,
+    transparent 100%);
+  transform: skewX(-20deg);
+  transition: left .9s cubic-bezier(.2,.7,.2,1);
+}
+.lp-tilt:hover .lp-sheen::before,
+.group:hover .lp-sheen::before,
+.lp-card:hover .lp-sheen::before {
+  left: 125%;
+}
+
+/* Conic shimmering gold border ring — wrap content to use */
+@keyframes lp-ring-spin { to { transform: rotate(1turn); } }
+.lp-magic-ring {
+  position: relative;
+  border-radius: 1rem;
+  isolation: isolate;
+}
+.lp-magic-ring::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: conic-gradient(from 0deg,
+    color-mix(in oklab, var(--gold) 90%, transparent),
+    transparent 30%,
+    color-mix(in oklab, var(--royal) 80%, transparent) 55%,
+    transparent 75%,
+    color-mix(in oklab, var(--gold) 90%, transparent));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  opacity: 0;
+  transition: opacity .35s ease;
+  animation: lp-ring-spin 6s linear infinite;
+}
+.lp-magic-ring:hover::before { opacity: 1; }
+
+/* Soft halo behind cute mascot */
+@keyframes lp-pulse-glow {
+  0%, 100% { opacity: .45; transform: scale(1); }
+  50% { opacity: .8; transform: scale(1.08); }
+}
+.lp-pulse-glow { animation: lp-pulse-glow 3.2s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .lp-tilt:hover { transform: none; }
+  .lp-magic-ring::before { animation: none; }
+  .lp-float { animation: none; }
+}
