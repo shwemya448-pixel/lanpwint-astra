@@ -9,7 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { formatSalary, jobTypeLabel, timeAgo } from "@/lib/format";
 
-export const Route = createFileRoute("/_authenticated/jobs/")({
+export const Route = createFileRoute("/_authenticated/student/jobs/")({
   head: () => ({ meta: [{ title: "Browse jobs — Lan Pwint" }] }),
   component: JobsList,
 });

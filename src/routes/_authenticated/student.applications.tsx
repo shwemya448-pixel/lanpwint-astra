@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { timeAgo } from "@/lib/format";
 
-export const Route = createFileRoute("/_authenticated/applications")({
+export const Route = createFileRoute("/_authenticated/student/applications")({
   head: () => ({ meta: [{ title: "My applications — Lan Pwint" }] }),
   component: MyApplications,
 });

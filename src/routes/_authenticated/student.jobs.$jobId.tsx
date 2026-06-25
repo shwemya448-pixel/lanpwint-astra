@@ -12,7 +12,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { formatSalary, jobTypeLabel, timeAgo } from "@/lib/format";
 
-export const Route = createFileRoute("/_authenticated/jobs/$jobId")({
+export const Route = createFileRoute("/_authenticated/student/jobs/$jobId")({
   head: () => ({ meta: [{ title: "Job — Lan Pwint" }] }),
   component: JobDetail,
 });

@@ -22,21 +22,21 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as NewsSlugRouteImport } from './routes/news.$slug'
 import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticated/profile'
-import { Route as AuthenticatedMyCvRouteImport } from './routes/_authenticated/my-cv'
-import { Route as AuthenticatedMessagesRouteImport } from './routes/_authenticated/messages'
-import { Route as AuthenticatedLearnRouteImport } from './routes/_authenticated/learn'
-import { Route as AuthenticatedJobMapRouteImport } from './routes/_authenticated/job-map'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
-import { Route as AuthenticatedCvBoardRouteImport } from './routes/_authenticated/cv-board'
-import { Route as AuthenticatedCvAnalyzerRouteImport } from './routes/_authenticated/cv-analyzer'
-import { Route as AuthenticatedApplicationsRouteImport } from './routes/_authenticated/applications'
-import { Route as AuthenticatedLessonsIndexRouteImport } from './routes/_authenticated/lessons.index'
-import { Route as AuthenticatedJobsIndexRouteImport } from './routes/_authenticated/jobs.index'
-import { Route as AuthenticatedLessonsLessonIdRouteImport } from './routes/_authenticated/lessons.$lessonId'
-import { Route as AuthenticatedJobsJobIdRouteImport } from './routes/_authenticated/jobs.$jobId'
+import { Route as AuthenticatedStudentMyCvRouteImport } from './routes/_authenticated/student.my-cv'
+import { Route as AuthenticatedStudentMessagesRouteImport } from './routes/_authenticated/student.messages'
+import { Route as AuthenticatedStudentLearnRouteImport } from './routes/_authenticated/student.learn'
+import { Route as AuthenticatedStudentJobMapRouteImport } from './routes/_authenticated/student.job-map'
+import { Route as AuthenticatedStudentCvAnalyzerRouteImport } from './routes/_authenticated/student.cv-analyzer'
+import { Route as AuthenticatedStudentApplicationsRouteImport } from './routes/_authenticated/student.applications'
+import { Route as AuthenticatedEmployerCvBoardRouteImport } from './routes/_authenticated/employer.cv-board'
 import { Route as AuthenticatedEmployerApplicationsRouteImport } from './routes/_authenticated/employer.applications'
 import { Route as AuthenticatedAdminNewsRouteImport } from './routes/_authenticated/admin.news'
+import { Route as AuthenticatedStudentLessonsIndexRouteImport } from './routes/_authenticated/student.lessons.index'
+import { Route as AuthenticatedStudentJobsIndexRouteImport } from './routes/_authenticated/student.jobs.index'
 import { Route as AuthenticatedEmployerJobsIndexRouteImport } from './routes/_authenticated/employer.jobs.index'
+import { Route as AuthenticatedStudentLessonsLessonIdRouteImport } from './routes/_authenticated/student.lessons.$lessonId'
+import { Route as AuthenticatedStudentJobsJobIdRouteImport } from './routes/_authenticated/student.jobs.$jobId'
 import { Route as AuthenticatedEmployerJobsNewRouteImport } from './routes/_authenticated/employer.jobs.new'
 
 const UndergraduateRoute = UndergraduateRouteImport.update({
@@ -103,69 +103,53 @@ const AuthenticatedProfileRoute = AuthenticatedProfileRouteImport.update({
   path: '/profile',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
-const AuthenticatedMyCvRoute = AuthenticatedMyCvRouteImport.update({
-  id: '/my-cv',
-  path: '/my-cv',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
-const AuthenticatedMessagesRoute = AuthenticatedMessagesRouteImport.update({
-  id: '/messages',
-  path: '/messages',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
-const AuthenticatedLearnRoute = AuthenticatedLearnRouteImport.update({
-  id: '/learn',
-  path: '/learn',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
-const AuthenticatedJobMapRoute = AuthenticatedJobMapRouteImport.update({
-  id: '/job-map',
-  path: '/job-map',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
 const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
-const AuthenticatedCvBoardRoute = AuthenticatedCvBoardRouteImport.update({
-  id: '/cv-board',
-  path: '/cv-board',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
-const AuthenticatedCvAnalyzerRoute = AuthenticatedCvAnalyzerRouteImport.update({
-  id: '/cv-analyzer',
-  path: '/cv-analyzer',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
-const AuthenticatedApplicationsRoute =
-  AuthenticatedApplicationsRouteImport.update({
-    id: '/applications',
-    path: '/applications',
+const AuthenticatedStudentMyCvRoute =
+  AuthenticatedStudentMyCvRouteImport.update({
+    id: '/student/my-cv',
+    path: '/student/my-cv',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
-const AuthenticatedLessonsIndexRoute =
-  AuthenticatedLessonsIndexRouteImport.update({
-    id: '/lessons/',
-    path: '/lessons/',
+const AuthenticatedStudentMessagesRoute =
+  AuthenticatedStudentMessagesRouteImport.update({
+    id: '/student/messages',
+    path: '/student/messages',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
-const AuthenticatedJobsIndexRoute = AuthenticatedJobsIndexRouteImport.update({
-  id: '/jobs/',
-  path: '/jobs/',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
-const AuthenticatedLessonsLessonIdRoute =
-  AuthenticatedLessonsLessonIdRouteImport.update({
-    id: '/lessons/$lessonId',
-    path: '/lessons/$lessonId',
+const AuthenticatedStudentLearnRoute =
+  AuthenticatedStudentLearnRouteImport.update({
+    id: '/student/learn',
+    path: '/student/learn',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
-const AuthenticatedJobsJobIdRoute = AuthenticatedJobsJobIdRouteImport.update({
-  id: '/jobs/$jobId',
-  path: '/jobs/$jobId',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
+const AuthenticatedStudentJobMapRoute =
+  AuthenticatedStudentJobMapRouteImport.update({
+    id: '/student/job-map',
+    path: '/student/job-map',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedStudentCvAnalyzerRoute =
+  AuthenticatedStudentCvAnalyzerRouteImport.update({
+    id: '/student/cv-analyzer',
+    path: '/student/cv-analyzer',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedStudentApplicationsRoute =
+  AuthenticatedStudentApplicationsRouteImport.update({
+    id: '/student/applications',
+    path: '/student/applications',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedEmployerCvBoardRoute =
+  AuthenticatedEmployerCvBoardRouteImport.update({
+    id: '/employer/cv-board',
+    path: '/employer/cv-board',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedEmployerApplicationsRoute =
   AuthenticatedEmployerApplicationsRouteImport.update({
     id: '/employer/applications',
@@ -177,10 +161,34 @@ const AuthenticatedAdminNewsRoute = AuthenticatedAdminNewsRouteImport.update({
   path: '/admin/news',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedStudentLessonsIndexRoute =
+  AuthenticatedStudentLessonsIndexRouteImport.update({
+    id: '/student/lessons/',
+    path: '/student/lessons/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedStudentJobsIndexRoute =
+  AuthenticatedStudentJobsIndexRouteImport.update({
+    id: '/student/jobs/',
+    path: '/student/jobs/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedEmployerJobsIndexRoute =
   AuthenticatedEmployerJobsIndexRouteImport.update({
     id: '/employer/jobs/',
     path: '/employer/jobs/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedStudentLessonsLessonIdRoute =
+  AuthenticatedStudentLessonsLessonIdRouteImport.update({
+    id: '/student/lessons/$lessonId',
+    path: '/student/lessons/$lessonId',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedStudentJobsJobIdRoute =
+  AuthenticatedStudentJobsJobIdRouteImport.update({
+    id: '/student/jobs/$jobId',
+    path: '/student/jobs/$jobId',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const AuthenticatedEmployerJobsNewRoute =
@@ -201,24 +209,24 @@ export interface FileRoutesByFullPath {
   '/news': typeof NewsRouteWithChildren
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/undergraduate': typeof UndergraduateRoute
-  '/applications': typeof AuthenticatedApplicationsRoute
-  '/cv-analyzer': typeof AuthenticatedCvAnalyzerRoute
-  '/cv-board': typeof AuthenticatedCvBoardRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
-  '/job-map': typeof AuthenticatedJobMapRoute
-  '/learn': typeof AuthenticatedLearnRoute
-  '/messages': typeof AuthenticatedMessagesRoute
-  '/my-cv': typeof AuthenticatedMyCvRoute
   '/profile': typeof AuthenticatedProfileRoute
   '/news/$slug': typeof NewsSlugRoute
   '/admin/news': typeof AuthenticatedAdminNewsRoute
   '/employer/applications': typeof AuthenticatedEmployerApplicationsRoute
-  '/jobs/$jobId': typeof AuthenticatedJobsJobIdRoute
-  '/lessons/$lessonId': typeof AuthenticatedLessonsLessonIdRoute
-  '/jobs/': typeof AuthenticatedJobsIndexRoute
-  '/lessons/': typeof AuthenticatedLessonsIndexRoute
+  '/employer/cv-board': typeof AuthenticatedEmployerCvBoardRoute
+  '/student/applications': typeof AuthenticatedStudentApplicationsRoute
+  '/student/cv-analyzer': typeof AuthenticatedStudentCvAnalyzerRoute
+  '/student/job-map': typeof AuthenticatedStudentJobMapRoute
+  '/student/learn': typeof AuthenticatedStudentLearnRoute
+  '/student/messages': typeof AuthenticatedStudentMessagesRoute
+  '/student/my-cv': typeof AuthenticatedStudentMyCvRoute
   '/employer/jobs/new': typeof AuthenticatedEmployerJobsNewRoute
+  '/student/jobs/$jobId': typeof AuthenticatedStudentJobsJobIdRoute
+  '/student/lessons/$lessonId': typeof AuthenticatedStudentLessonsLessonIdRoute
   '/employer/jobs/': typeof AuthenticatedEmployerJobsIndexRoute
+  '/student/jobs/': typeof AuthenticatedStudentJobsIndexRoute
+  '/student/lessons/': typeof AuthenticatedStudentLessonsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -231,24 +239,24 @@ export interface FileRoutesByTo {
   '/news': typeof NewsRouteWithChildren
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/undergraduate': typeof UndergraduateRoute
-  '/applications': typeof AuthenticatedApplicationsRoute
-  '/cv-analyzer': typeof AuthenticatedCvAnalyzerRoute
-  '/cv-board': typeof AuthenticatedCvBoardRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
-  '/job-map': typeof AuthenticatedJobMapRoute
-  '/learn': typeof AuthenticatedLearnRoute
-  '/messages': typeof AuthenticatedMessagesRoute
-  '/my-cv': typeof AuthenticatedMyCvRoute
   '/profile': typeof AuthenticatedProfileRoute
   '/news/$slug': typeof NewsSlugRoute
   '/admin/news': typeof AuthenticatedAdminNewsRoute
   '/employer/applications': typeof AuthenticatedEmployerApplicationsRoute
-  '/jobs/$jobId': typeof AuthenticatedJobsJobIdRoute
-  '/lessons/$lessonId': typeof AuthenticatedLessonsLessonIdRoute
-  '/jobs': typeof AuthenticatedJobsIndexRoute
-  '/lessons': typeof AuthenticatedLessonsIndexRoute
+  '/employer/cv-board': typeof AuthenticatedEmployerCvBoardRoute
+  '/student/applications': typeof AuthenticatedStudentApplicationsRoute
+  '/student/cv-analyzer': typeof AuthenticatedStudentCvAnalyzerRoute
+  '/student/job-map': typeof AuthenticatedStudentJobMapRoute
+  '/student/learn': typeof AuthenticatedStudentLearnRoute
+  '/student/messages': typeof AuthenticatedStudentMessagesRoute
+  '/student/my-cv': typeof AuthenticatedStudentMyCvRoute
   '/employer/jobs/new': typeof AuthenticatedEmployerJobsNewRoute
+  '/student/jobs/$jobId': typeof AuthenticatedStudentJobsJobIdRoute
+  '/student/lessons/$lessonId': typeof AuthenticatedStudentLessonsLessonIdRoute
   '/employer/jobs': typeof AuthenticatedEmployerJobsIndexRoute
+  '/student/jobs': typeof AuthenticatedStudentJobsIndexRoute
+  '/student/lessons': typeof AuthenticatedStudentLessonsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -263,24 +271,24 @@ export interface FileRoutesById {
   '/news': typeof NewsRouteWithChildren
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/undergraduate': typeof UndergraduateRoute
-  '/_authenticated/applications': typeof AuthenticatedApplicationsRoute
-  '/_authenticated/cv-analyzer': typeof AuthenticatedCvAnalyzerRoute
-  '/_authenticated/cv-board': typeof AuthenticatedCvBoardRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
-  '/_authenticated/job-map': typeof AuthenticatedJobMapRoute
-  '/_authenticated/learn': typeof AuthenticatedLearnRoute
-  '/_authenticated/messages': typeof AuthenticatedMessagesRoute
-  '/_authenticated/my-cv': typeof AuthenticatedMyCvRoute
   '/_authenticated/profile': typeof AuthenticatedProfileRoute
   '/news/$slug': typeof NewsSlugRoute
   '/_authenticated/admin/news': typeof AuthenticatedAdminNewsRoute
   '/_authenticated/employer/applications': typeof AuthenticatedEmployerApplicationsRoute
-  '/_authenticated/jobs/$jobId': typeof AuthenticatedJobsJobIdRoute
-  '/_authenticated/lessons/$lessonId': typeof AuthenticatedLessonsLessonIdRoute
-  '/_authenticated/jobs/': typeof AuthenticatedJobsIndexRoute
-  '/_authenticated/lessons/': typeof AuthenticatedLessonsIndexRoute
+  '/_authenticated/employer/cv-board': typeof AuthenticatedEmployerCvBoardRoute
+  '/_authenticated/student/applications': typeof AuthenticatedStudentApplicationsRoute
+  '/_authenticated/student/cv-analyzer': typeof AuthenticatedStudentCvAnalyzerRoute
+  '/_authenticated/student/job-map': typeof AuthenticatedStudentJobMapRoute
+  '/_authenticated/student/learn': typeof AuthenticatedStudentLearnRoute
+  '/_authenticated/student/messages': typeof AuthenticatedStudentMessagesRoute
+  '/_authenticated/student/my-cv': typeof AuthenticatedStudentMyCvRoute
   '/_authenticated/employer/jobs/new': typeof AuthenticatedEmployerJobsNewRoute
+  '/_authenticated/student/jobs/$jobId': typeof AuthenticatedStudentJobsJobIdRoute
+  '/_authenticated/student/lessons/$lessonId': typeof AuthenticatedStudentLessonsLessonIdRoute
   '/_authenticated/employer/jobs/': typeof AuthenticatedEmployerJobsIndexRoute
+  '/_authenticated/student/jobs/': typeof AuthenticatedStudentJobsIndexRoute
+  '/_authenticated/student/lessons/': typeof AuthenticatedStudentLessonsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -295,24 +303,24 @@ export interface FileRouteTypes {
     | '/news'
     | '/sitemap.xml'
     | '/undergraduate'
-    | '/applications'
-    | '/cv-analyzer'
-    | '/cv-board'
     | '/dashboard'
-    | '/job-map'
-    | '/learn'
-    | '/messages'
-    | '/my-cv'
     | '/profile'
     | '/news/$slug'
     | '/admin/news'
     | '/employer/applications'
-    | '/jobs/$jobId'
-    | '/lessons/$lessonId'
-    | '/jobs/'
-    | '/lessons/'
+    | '/employer/cv-board'
+    | '/student/applications'
+    | '/student/cv-analyzer'
+    | '/student/job-map'
+    | '/student/learn'
+    | '/student/messages'
+    | '/student/my-cv'
     | '/employer/jobs/new'
+    | '/student/jobs/$jobId'
+    | '/student/lessons/$lessonId'
     | '/employer/jobs/'
+    | '/student/jobs/'
+    | '/student/lessons/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -325,24 +333,24 @@ export interface FileRouteTypes {
     | '/news'
     | '/sitemap.xml'
     | '/undergraduate'
-    | '/applications'
-    | '/cv-analyzer'
-    | '/cv-board'
     | '/dashboard'
-    | '/job-map'
-    | '/learn'
-    | '/messages'
-    | '/my-cv'
     | '/profile'
     | '/news/$slug'
     | '/admin/news'
     | '/employer/applications'
-    | '/jobs/$jobId'
-    | '/lessons/$lessonId'
-    | '/jobs'
-    | '/lessons'
+    | '/employer/cv-board'
+    | '/student/applications'
+    | '/student/cv-analyzer'
+    | '/student/job-map'
+    | '/student/learn'
+    | '/student/messages'
+    | '/student/my-cv'
     | '/employer/jobs/new'
+    | '/student/jobs/$jobId'
+    | '/student/lessons/$lessonId'
     | '/employer/jobs'
+    | '/student/jobs'
+    | '/student/lessons'
   id:
     | '__root__'
     | '/'
@@ -356,24 +364,24 @@ export interface FileRouteTypes {
     | '/news'
     | '/sitemap.xml'
     | '/undergraduate'
-    | '/_authenticated/applications'
-    | '/_authenticated/cv-analyzer'
-    | '/_authenticated/cv-board'
     | '/_authenticated/dashboard'
-    | '/_authenticated/job-map'
-    | '/_authenticated/learn'
-    | '/_authenticated/messages'
-    | '/_authenticated/my-cv'
     | '/_authenticated/profile'
     | '/news/$slug'
     | '/_authenticated/admin/news'
     | '/_authenticated/employer/applications'
-    | '/_authenticated/jobs/$jobId'
-    | '/_authenticated/lessons/$lessonId'
-    | '/_authenticated/jobs/'
-    | '/_authenticated/lessons/'
+    | '/_authenticated/employer/cv-board'
+    | '/_authenticated/student/applications'
+    | '/_authenticated/student/cv-analyzer'
+    | '/_authenticated/student/job-map'
+    | '/_authenticated/student/learn'
+    | '/_authenticated/student/messages'
+    | '/_authenticated/student/my-cv'
     | '/_authenticated/employer/jobs/new'
+    | '/_authenticated/student/jobs/$jobId'
+    | '/_authenticated/student/lessons/$lessonId'
     | '/_authenticated/employer/jobs/'
+    | '/_authenticated/student/jobs/'
+    | '/_authenticated/student/lessons/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -483,34 +491,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedProfileRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/my-cv': {
-      id: '/_authenticated/my-cv'
-      path: '/my-cv'
-      fullPath: '/my-cv'
-      preLoaderRoute: typeof AuthenticatedMyCvRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/messages': {
-      id: '/_authenticated/messages'
-      path: '/messages'
-      fullPath: '/messages'
-      preLoaderRoute: typeof AuthenticatedMessagesRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/learn': {
-      id: '/_authenticated/learn'
-      path: '/learn'
-      fullPath: '/learn'
-      preLoaderRoute: typeof AuthenticatedLearnRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/job-map': {
-      id: '/_authenticated/job-map'
-      path: '/job-map'
-      fullPath: '/job-map'
-      preLoaderRoute: typeof AuthenticatedJobMapRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
     '/_authenticated/dashboard': {
       id: '/_authenticated/dashboard'
       path: '/dashboard'
@@ -518,53 +498,53 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/cv-board': {
-      id: '/_authenticated/cv-board'
-      path: '/cv-board'
-      fullPath: '/cv-board'
-      preLoaderRoute: typeof AuthenticatedCvBoardRouteImport
+    '/_authenticated/student/my-cv': {
+      id: '/_authenticated/student/my-cv'
+      path: '/student/my-cv'
+      fullPath: '/student/my-cv'
+      preLoaderRoute: typeof AuthenticatedStudentMyCvRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/cv-analyzer': {
-      id: '/_authenticated/cv-analyzer'
-      path: '/cv-analyzer'
-      fullPath: '/cv-analyzer'
-      preLoaderRoute: typeof AuthenticatedCvAnalyzerRouteImport
+    '/_authenticated/student/messages': {
+      id: '/_authenticated/student/messages'
+      path: '/student/messages'
+      fullPath: '/student/messages'
+      preLoaderRoute: typeof AuthenticatedStudentMessagesRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/applications': {
-      id: '/_authenticated/applications'
-      path: '/applications'
-      fullPath: '/applications'
-      preLoaderRoute: typeof AuthenticatedApplicationsRouteImport
+    '/_authenticated/student/learn': {
+      id: '/_authenticated/student/learn'
+      path: '/student/learn'
+      fullPath: '/student/learn'
+      preLoaderRoute: typeof AuthenticatedStudentLearnRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/lessons/': {
-      id: '/_authenticated/lessons/'
-      path: '/lessons'
-      fullPath: '/lessons/'
-      preLoaderRoute: typeof AuthenticatedLessonsIndexRouteImport
+    '/_authenticated/student/job-map': {
+      id: '/_authenticated/student/job-map'
+      path: '/student/job-map'
+      fullPath: '/student/job-map'
+      preLoaderRoute: typeof AuthenticatedStudentJobMapRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/jobs/': {
-      id: '/_authenticated/jobs/'
-      path: '/jobs'
-      fullPath: '/jobs/'
-      preLoaderRoute: typeof AuthenticatedJobsIndexRouteImport
+    '/_authenticated/student/cv-analyzer': {
+      id: '/_authenticated/student/cv-analyzer'
+      path: '/student/cv-analyzer'
+      fullPath: '/student/cv-analyzer'
+      preLoaderRoute: typeof AuthenticatedStudentCvAnalyzerRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/lessons/$lessonId': {
-      id: '/_authenticated/lessons/$lessonId'
-      path: '/lessons/$lessonId'
-      fullPath: '/lessons/$lessonId'
-      preLoaderRoute: typeof AuthenticatedLessonsLessonIdRouteImport
+    '/_authenticated/student/applications': {
+      id: '/_authenticated/student/applications'
+      path: '/student/applications'
+      fullPath: '/student/applications'
+      preLoaderRoute: typeof AuthenticatedStudentApplicationsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/jobs/$jobId': {
-      id: '/_authenticated/jobs/$jobId'
-      path: '/jobs/$jobId'
-      fullPath: '/jobs/$jobId'
-      preLoaderRoute: typeof AuthenticatedJobsJobIdRouteImport
+    '/_authenticated/employer/cv-board': {
+      id: '/_authenticated/employer/cv-board'
+      path: '/employer/cv-board'
+      fullPath: '/employer/cv-board'
+      preLoaderRoute: typeof AuthenticatedEmployerCvBoardRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/employer/applications': {
@@ -581,11 +561,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminNewsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/student/lessons/': {
+      id: '/_authenticated/student/lessons/'
+      path: '/student/lessons'
+      fullPath: '/student/lessons/'
+      preLoaderRoute: typeof AuthenticatedStudentLessonsIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/student/jobs/': {
+      id: '/_authenticated/student/jobs/'
+      path: '/student/jobs'
+      fullPath: '/student/jobs/'
+      preLoaderRoute: typeof AuthenticatedStudentJobsIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/employer/jobs/': {
       id: '/_authenticated/employer/jobs/'
       path: '/employer/jobs'
       fullPath: '/employer/jobs/'
       preLoaderRoute: typeof AuthenticatedEmployerJobsIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/student/lessons/$lessonId': {
+      id: '/_authenticated/student/lessons/$lessonId'
+      path: '/student/lessons/$lessonId'
+      fullPath: '/student/lessons/$lessonId'
+      preLoaderRoute: typeof AuthenticatedStudentLessonsLessonIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/student/jobs/$jobId': {
+      id: '/_authenticated/student/jobs/$jobId'
+      path: '/student/jobs/$jobId'
+      fullPath: '/student/jobs/$jobId'
+      preLoaderRoute: typeof AuthenticatedStudentJobsJobIdRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/employer/jobs/new': {
@@ -599,44 +607,45 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedRouteRouteChildren {
-  AuthenticatedApplicationsRoute: typeof AuthenticatedApplicationsRoute
-  AuthenticatedCvAnalyzerRoute: typeof AuthenticatedCvAnalyzerRoute
-  AuthenticatedCvBoardRoute: typeof AuthenticatedCvBoardRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
-  AuthenticatedJobMapRoute: typeof AuthenticatedJobMapRoute
-  AuthenticatedLearnRoute: typeof AuthenticatedLearnRoute
-  AuthenticatedMessagesRoute: typeof AuthenticatedMessagesRoute
-  AuthenticatedMyCvRoute: typeof AuthenticatedMyCvRoute
   AuthenticatedProfileRoute: typeof AuthenticatedProfileRoute
   AuthenticatedAdminNewsRoute: typeof AuthenticatedAdminNewsRoute
   AuthenticatedEmployerApplicationsRoute: typeof AuthenticatedEmployerApplicationsRoute
-  AuthenticatedJobsJobIdRoute: typeof AuthenticatedJobsJobIdRoute
-  AuthenticatedLessonsLessonIdRoute: typeof AuthenticatedLessonsLessonIdRoute
-  AuthenticatedJobsIndexRoute: typeof AuthenticatedJobsIndexRoute
-  AuthenticatedLessonsIndexRoute: typeof AuthenticatedLessonsIndexRoute
+  AuthenticatedEmployerCvBoardRoute: typeof AuthenticatedEmployerCvBoardRoute
+  AuthenticatedStudentApplicationsRoute: typeof AuthenticatedStudentApplicationsRoute
+  AuthenticatedStudentCvAnalyzerRoute: typeof AuthenticatedStudentCvAnalyzerRoute
+  AuthenticatedStudentJobMapRoute: typeof AuthenticatedStudentJobMapRoute
+  AuthenticatedStudentLearnRoute: typeof AuthenticatedStudentLearnRoute
+  AuthenticatedStudentMessagesRoute: typeof AuthenticatedStudentMessagesRoute
+  AuthenticatedStudentMyCvRoute: typeof AuthenticatedStudentMyCvRoute
   AuthenticatedEmployerJobsNewRoute: typeof AuthenticatedEmployerJobsNewRoute
+  AuthenticatedStudentJobsJobIdRoute: typeof AuthenticatedStudentJobsJobIdRoute
+  AuthenticatedStudentLessonsLessonIdRoute: typeof AuthenticatedStudentLessonsLessonIdRoute
   AuthenticatedEmployerJobsIndexRoute: typeof AuthenticatedEmployerJobsIndexRoute
+  AuthenticatedStudentJobsIndexRoute: typeof AuthenticatedStudentJobsIndexRoute
+  AuthenticatedStudentLessonsIndexRoute: typeof AuthenticatedStudentLessonsIndexRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
-  AuthenticatedApplicationsRoute: AuthenticatedApplicationsRoute,
-  AuthenticatedCvAnalyzerRoute: AuthenticatedCvAnalyzerRoute,
-  AuthenticatedCvBoardRoute: AuthenticatedCvBoardRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
-  AuthenticatedJobMapRoute: AuthenticatedJobMapRoute,
-  AuthenticatedLearnRoute: AuthenticatedLearnRoute,
-  AuthenticatedMessagesRoute: AuthenticatedMessagesRoute,
-  AuthenticatedMyCvRoute: AuthenticatedMyCvRoute,
   AuthenticatedProfileRoute: AuthenticatedProfileRoute,
   AuthenticatedAdminNewsRoute: AuthenticatedAdminNewsRoute,
   AuthenticatedEmployerApplicationsRoute:
     AuthenticatedEmployerApplicationsRoute,
-  AuthenticatedJobsJobIdRoute: AuthenticatedJobsJobIdRoute,
-  AuthenticatedLessonsLessonIdRoute: AuthenticatedLessonsLessonIdRoute,
-  AuthenticatedJobsIndexRoute: AuthenticatedJobsIndexRoute,
-  AuthenticatedLessonsIndexRoute: AuthenticatedLessonsIndexRoute,
+  AuthenticatedEmployerCvBoardRoute: AuthenticatedEmployerCvBoardRoute,
+  AuthenticatedStudentApplicationsRoute: AuthenticatedStudentApplicationsRoute,
+  AuthenticatedStudentCvAnalyzerRoute: AuthenticatedStudentCvAnalyzerRoute,
+  AuthenticatedStudentJobMapRoute: AuthenticatedStudentJobMapRoute,
+  AuthenticatedStudentLearnRoute: AuthenticatedStudentLearnRoute,
+  AuthenticatedStudentMessagesRoute: AuthenticatedStudentMessagesRoute,
+  AuthenticatedStudentMyCvRoute: AuthenticatedStudentMyCvRoute,
   AuthenticatedEmployerJobsNewRoute: AuthenticatedEmployerJobsNewRoute,
+  AuthenticatedStudentJobsJobIdRoute: AuthenticatedStudentJobsJobIdRoute,
+  AuthenticatedStudentLessonsLessonIdRoute:
+    AuthenticatedStudentLessonsLessonIdRoute,
   AuthenticatedEmployerJobsIndexRoute: AuthenticatedEmployerJobsIndexRoute,
+  AuthenticatedStudentJobsIndexRoute: AuthenticatedStudentJobsIndexRoute,
+  AuthenticatedStudentLessonsIndexRoute: AuthenticatedStudentLessonsIndexRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =

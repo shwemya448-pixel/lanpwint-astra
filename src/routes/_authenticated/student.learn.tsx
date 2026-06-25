@@ -3,7 +3,7 @@ import { useState } from "react";
 import { PageShell } from "@/components/page-shell";
 import { cn } from "@/lib/utils";
 
-export const Route = createFileRoute("/_authenticated/learn")({
+export const Route = createFileRoute("/_authenticated/student/learn")({
   head: () => ({ meta: [{ title: "Learn & Earn — Lan Pwint" }] }),
   component: LearnPage,
 });

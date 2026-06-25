@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageShell } from "@/components/page-shell";
 
-export const Route = createFileRoute("/_authenticated/messages")({
+export const Route = createFileRoute("/_authenticated/student/messages")({
   head: () => ({ meta: [{ title: "Messages — Lan Pwint" }] }),
   component: MessagesPage,
 });
