@@ -66,6 +66,7 @@ function AdminUsers() {
                 <th className="px-4 py-3">Name</th>
                 <th className="px-4 py-3">Email</th>
                 <th className="px-4 py-3">Roles</th>
+                <th className="px-4 py-3">Position</th>
                 <th className="px-4 py-3">Company</th>
                 <th className="px-4 py-3">Employer status</th>
                 <th className="px-4 py-3 text-right">Actions</th>
