@@ -13,26 +13,38 @@ export const Route = createFileRoute("/_authenticated/student/cv-analyzer")({
   component: CVAnalyzerPage,
 });
 
-const SYSTEM = `You are a senior recruiter and career coach.
-Given a candidate's CV (text or image), produce a clean markdown report with:
+const SYSTEM = `You are a senior recruiter. Analyze the candidate's CV (text or image) and reply with STRICT JSON only — no markdown, no commentary.
 
-## Overall score
-A single number 0-100 and one-line verdict.
+Schema:
+{
+  "overall_score": number (0-100),
+  "verdict": string (one short sentence),
+  "scores": {
+    "clarity": number (0-100),
+    "experience": number (0-100),
+    "skills": number (0-100),
+    "education": number (0-100),
+    "impact": number (0-100)
+  },
+  "strengths": string[] (max 4, each <= 14 words),
+  "weaknesses": string[] (max 4, each <= 14 words),
+  "improvements": string[] (max 4, each <= 18 words, actionable),
+  "role_match": number | null (0-100, only if a target role is given, else null),
+  "role_match_reason": string | null
+}
 
-## Strengths
-- bullet points
+Keep each bullet short and concrete. Reply in the CV's language (English or Burmese).`;
 
-## Weaknesses
-- bullet points
-
-## Suggested improvements
-- specific, actionable rewrites where possible
-
-## Summary
-2-3 lines.
-
-If a target role is provided, end with **Match for this role: <0-100>%** and one line on why.
-Reply in the language of the CV (English or Burmese).`;
+type CVReport = {
+  overall_score: number;
+  verdict: string;
+  scores: Record<string, number>;
+  strengths: string[];
+  weaknesses: string[];
+  improvements: string[];
+  role_match: number | null;
+  role_match_reason: string | null;
+};
 
 function fileToDataUrl(file: File): Promise<string> {
   return new Promise((resolve, reject) => {
@@ -49,7 +61,7 @@ function CVAnalyzerPage() {
   const [target, setTarget] = useState("");
   const [imageDataUrl, setImageDataUrl] = useState<string | null>(null);
   const [imageName, setImageName] = useState<string | null>(null);
-  const [result, setResult] = useState("");
+  const [result, setResult] = useState<CVReport | null>(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
