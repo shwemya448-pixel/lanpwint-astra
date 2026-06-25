@@ -27,6 +27,9 @@ import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticate
 import { Route as AuthenticatedEmployerRouteImport } from './routes/_authenticated/employer'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
+import { Route as AuthenticatedStudentIndexRouteImport } from './routes/_authenticated/student.index'
+import { Route as AuthenticatedEmployerIndexRouteImport } from './routes/_authenticated/employer.index'
+import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
 import { Route as AuthenticatedStudentMyCvRouteImport } from './routes/_authenticated/student.my-cv'
 import { Route as AuthenticatedStudentMessagesRouteImport } from './routes/_authenticated/student.messages'
 import { Route as AuthenticatedStudentLearnRouteImport } from './routes/_authenticated/student.learn'
@@ -136,6 +139,23 @@ const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
   id: '/admin',
   path: '/admin',
   getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedStudentIndexRoute =
+  AuthenticatedStudentIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => AuthenticatedStudentRoute,
+  } as any)
+const AuthenticatedEmployerIndexRoute =
+  AuthenticatedEmployerIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => AuthenticatedEmployerRoute,
+  } as any)
+const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AuthenticatedAdminRoute,
 } as any)
 const AuthenticatedStudentMyCvRoute =
   AuthenticatedStudentMyCvRouteImport.update({
@@ -282,6 +302,9 @@ export interface FileRoutesByFullPath {
   '/student/learn': typeof AuthenticatedStudentLearnRoute
   '/student/messages': typeof AuthenticatedStudentMessagesRoute
   '/student/my-cv': typeof AuthenticatedStudentMyCvRoute
+  '/admin/': typeof AuthenticatedAdminIndexRoute
+  '/employer/': typeof AuthenticatedEmployerIndexRoute
+  '/student/': typeof AuthenticatedStudentIndexRoute
   '/employer/jobs/new': typeof AuthenticatedEmployerJobsNewRoute
   '/student/jobs/$jobId': typeof AuthenticatedStudentJobsJobIdRoute
   '/student/lessons/$lessonId': typeof AuthenticatedStudentLessonsLessonIdRoute
@@ -300,11 +323,8 @@ export interface FileRoutesByTo {
   '/news': typeof NewsRouteWithChildren
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/undergraduate': typeof UndergraduateRoute
-  '/admin': typeof AuthenticatedAdminRouteWithChildren
   '/dashboard': typeof AuthenticatedDashboardRoute
-  '/employer': typeof AuthenticatedEmployerRouteWithChildren
   '/profile': typeof AuthenticatedProfileRoute
-  '/student': typeof AuthenticatedStudentRouteWithChildren
   '/unauthorized': typeof AuthenticatedUnauthorizedRoute
   '/news/$slug': typeof NewsSlugRoute
   '/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
@@ -320,6 +340,9 @@ export interface FileRoutesByTo {
   '/student/learn': typeof AuthenticatedStudentLearnRoute
   '/student/messages': typeof AuthenticatedStudentMessagesRoute
   '/student/my-cv': typeof AuthenticatedStudentMyCvRoute
+  '/admin': typeof AuthenticatedAdminIndexRoute
+  '/employer': typeof AuthenticatedEmployerIndexRoute
+  '/student': typeof AuthenticatedStudentIndexRoute
   '/employer/jobs/new': typeof AuthenticatedEmployerJobsNewRoute
   '/student/jobs/$jobId': typeof AuthenticatedStudentJobsJobIdRoute
   '/student/lessons/$lessonId': typeof AuthenticatedStudentLessonsLessonIdRoute
@@ -360,6 +383,9 @@ export interface FileRoutesById {
   '/_authenticated/student/learn': typeof AuthenticatedStudentLearnRoute
   '/_authenticated/student/messages': typeof AuthenticatedStudentMessagesRoute
   '/_authenticated/student/my-cv': typeof AuthenticatedStudentMyCvRoute
+  '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
+  '/_authenticated/employer/': typeof AuthenticatedEmployerIndexRoute
+  '/_authenticated/student/': typeof AuthenticatedStudentIndexRoute
   '/_authenticated/employer/jobs/new': typeof AuthenticatedEmployerJobsNewRoute
   '/_authenticated/student/jobs/$jobId': typeof AuthenticatedStudentJobsJobIdRoute
   '/_authenticated/student/lessons/$lessonId': typeof AuthenticatedStudentLessonsLessonIdRoute
@@ -400,6 +426,9 @@ export interface FileRouteTypes {
     | '/student/learn'
     | '/student/messages'
     | '/student/my-cv'
+    | '/admin/'
+    | '/employer/'
+    | '/student/'
     | '/employer/jobs/new'
     | '/student/jobs/$jobId'
     | '/student/lessons/$lessonId'
@@ -418,11 +447,8 @@ export interface FileRouteTypes {
     | '/news'
     | '/sitemap.xml'
     | '/undergraduate'
-    | '/admin'
     | '/dashboard'
-    | '/employer'
     | '/profile'
-    | '/student'
     | '/unauthorized'
     | '/news/$slug'
     | '/admin/dashboard'
@@ -438,6 +464,9 @@ export interface FileRouteTypes {
     | '/student/learn'
     | '/student/messages'
     | '/student/my-cv'
+    | '/admin'
+    | '/employer'
+    | '/student'
     | '/employer/jobs/new'
     | '/student/jobs/$jobId'
     | '/student/lessons/$lessonId'
@@ -477,6 +506,9 @@ export interface FileRouteTypes {
     | '/_authenticated/student/learn'
     | '/_authenticated/student/messages'
     | '/_authenticated/student/my-cv'
+    | '/_authenticated/admin/'
+    | '/_authenticated/employer/'
+    | '/_authenticated/student/'
     | '/_authenticated/employer/jobs/new'
     | '/_authenticated/student/jobs/$jobId'
     | '/_authenticated/student/lessons/$lessonId'
@@ -627,6 +659,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/student/': {
+      id: '/_authenticated/student/'
+      path: '/'
+      fullPath: '/student/'
+      preLoaderRoute: typeof AuthenticatedStudentIndexRouteImport
+      parentRoute: typeof AuthenticatedStudentRoute
+    }
+    '/_authenticated/employer/': {
+      id: '/_authenticated/employer/'
+      path: '/'
+      fullPath: '/employer/'
+      preLoaderRoute: typeof AuthenticatedEmployerIndexRouteImport
+      parentRoute: typeof AuthenticatedEmployerRoute
+    }
+    '/_authenticated/admin/': {
+      id: '/_authenticated/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AuthenticatedAdminIndexRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
     '/_authenticated/student/my-cv': {
       id: '/_authenticated/student/my-cv'
       path: '/my-cv'
@@ -766,11 +819,13 @@ declare module '@tanstack/react-router' {
 interface AuthenticatedAdminRouteChildren {
   AuthenticatedAdminDashboardRoute: typeof AuthenticatedAdminDashboardRoute
   AuthenticatedAdminNewsRoute: typeof AuthenticatedAdminNewsRoute
+  AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
 }
 
 const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
   AuthenticatedAdminDashboardRoute: AuthenticatedAdminDashboardRoute,
   AuthenticatedAdminNewsRoute: AuthenticatedAdminNewsRoute,
+  AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
 }
 
 const AuthenticatedAdminRouteWithChildren =
@@ -781,6 +836,7 @@ interface AuthenticatedEmployerRouteChildren {
   AuthenticatedEmployerCvBoardRoute: typeof AuthenticatedEmployerCvBoardRoute
   AuthenticatedEmployerDashboardRoute: typeof AuthenticatedEmployerDashboardRoute
   AuthenticatedEmployerMessagesRoute: typeof AuthenticatedEmployerMessagesRoute
+  AuthenticatedEmployerIndexRoute: typeof AuthenticatedEmployerIndexRoute
   AuthenticatedEmployerJobsNewRoute: typeof AuthenticatedEmployerJobsNewRoute
   AuthenticatedEmployerJobsIndexRoute: typeof AuthenticatedEmployerJobsIndexRoute
 }
@@ -791,6 +847,7 @@ const AuthenticatedEmployerRouteChildren: AuthenticatedEmployerRouteChildren = {
   AuthenticatedEmployerCvBoardRoute: AuthenticatedEmployerCvBoardRoute,
   AuthenticatedEmployerDashboardRoute: AuthenticatedEmployerDashboardRoute,
   AuthenticatedEmployerMessagesRoute: AuthenticatedEmployerMessagesRoute,
+  AuthenticatedEmployerIndexRoute: AuthenticatedEmployerIndexRoute,
   AuthenticatedEmployerJobsNewRoute: AuthenticatedEmployerJobsNewRoute,
   AuthenticatedEmployerJobsIndexRoute: AuthenticatedEmployerJobsIndexRoute,
 }
@@ -808,6 +865,7 @@ interface AuthenticatedStudentRouteChildren {
   AuthenticatedStudentLearnRoute: typeof AuthenticatedStudentLearnRoute
   AuthenticatedStudentMessagesRoute: typeof AuthenticatedStudentMessagesRoute
   AuthenticatedStudentMyCvRoute: typeof AuthenticatedStudentMyCvRoute
+  AuthenticatedStudentIndexRoute: typeof AuthenticatedStudentIndexRoute
   AuthenticatedStudentJobsJobIdRoute: typeof AuthenticatedStudentJobsJobIdRoute
   AuthenticatedStudentLessonsLessonIdRoute: typeof AuthenticatedStudentLessonsLessonIdRoute
   AuthenticatedStudentJobsIndexRoute: typeof AuthenticatedStudentJobsIndexRoute
@@ -822,6 +880,7 @@ const AuthenticatedStudentRouteChildren: AuthenticatedStudentRouteChildren = {
   AuthenticatedStudentLearnRoute: AuthenticatedStudentLearnRoute,
   AuthenticatedStudentMessagesRoute: AuthenticatedStudentMessagesRoute,
   AuthenticatedStudentMyCvRoute: AuthenticatedStudentMyCvRoute,
+  AuthenticatedStudentIndexRoute: AuthenticatedStudentIndexRoute,
   AuthenticatedStudentJobsJobIdRoute: AuthenticatedStudentJobsJobIdRoute,
   AuthenticatedStudentLessonsLessonIdRoute:
     AuthenticatedStudentLessonsLessonIdRoute,
