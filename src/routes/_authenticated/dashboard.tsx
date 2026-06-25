@@ -1,6 +1,7 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { BookOpen, Briefcase, FileText, LogOut, MapPin, MessageSquare, Newspaper, Plus, Sparkles, User, Users } from "lucide-react";
+import { BookOpen, Briefcase, FileText, LogOut, MapPin, MessageSquare, Newspaper, Plus, Shield, Sparkles, User, Users, Eye } from "lucide-react";
+
 import { supabase } from "@/integrations/supabase/client";
 import { useSession, useUserRoles, type AppRole } from "@/lib/auth";
 import { useViewRole } from "@/lib/view-role";
