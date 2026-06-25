@@ -7,8 +7,7 @@ const STORAGE_KEY = "lp-lang";
 const dict = {
   en: {
     "nav.home": "Home",
-    "nav.undergraduate": "Undergraduate",
-    "nav.graduates": "Graduates",
+    "nav.students": "Students",
     "nav.candidates": "Candidates",
     "nav.about": "About",
     "nav.contact": "Contact",
@@ -59,8 +58,7 @@ const dict = {
   },
   my: {
     "nav.home": "ပင်မ",
-    "nav.undergraduate": "ဘွဲ့မရသေးသူ",
-    "nav.graduates": "ဘွဲ့ရ",
+    "nav.students": "ကျောင်းသားများ",
     "nav.candidates": "လျှောက်ထားသူ",
     "nav.about": "အကြောင်း",
     "nav.contact": "ဆက်သွယ်ရန်",
