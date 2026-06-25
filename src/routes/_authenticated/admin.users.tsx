@@ -127,11 +127,6 @@ function AdminUsers() {
                               </Button>
                             </>
                           )}
-                          {status === "approved" && (
-                            <Button size="sm" variant="outline" disabled={setStatus.isPending} onClick={() => setStatus.mutate({ id: u.id, status: "rejected" })}>
-                              <X className="mr-1 h-3.5 w-3.5" /> Reject
-                            </Button>
-                          )}
                         </div>
                       ) : null}
                     </td>
