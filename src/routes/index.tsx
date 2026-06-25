@@ -29,8 +29,7 @@ export const Route = createFileRoute("/")({
 });
 
 const PORTAL_TO_ROUTE: Record<PortalKind, string> = {
-  undergrad: "/undergraduate",
-  grad: "/graduates",
+  student: "/undergraduate",
   candidate: "/candidates",
 };
 
@@ -47,7 +46,7 @@ function LandingPage() {
   };
 
   const finishTransition = () => {
-    const target = PORTAL_TO_ROUTE[transitioning ?? "undergrad"];
+    const target = PORTAL_TO_ROUTE[transitioning ?? "student"];
     setTransitioning(null);
     navigate({ to: target as never }).catch(() => {});
   };
@@ -96,8 +95,8 @@ function LandingPage() {
             <div className="lp-divider-gold mx-auto w-28 sm:w-32" />
             <h2 className="mt-4 text-2xl sm:text-3xl md:text-4xl font-bold">Choose your portal</h2>
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
-            {(["undergrad", "grad", "candidate"] as PortalKind[]).map((k, i) => (
+          <div className="grid sm:grid-cols-2 gap-5 sm:gap-6 max-w-3xl mx-auto">
+            {(["student", "candidate"] as PortalKind[]).map((k, i) => (
               <PortalCard key={k} kind={k} index={i} onChoose={choosePortal} />
             ))}
           </div>
