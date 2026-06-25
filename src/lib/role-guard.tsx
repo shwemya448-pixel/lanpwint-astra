@@ -62,6 +62,5 @@ export function RoleGuard({
     return <>{children}</>;
   }
 
-  if (list.includes(required)) return <>{children}</>;
   return <Navigate to="/unauthorized" />;
 }
