@@ -115,18 +115,14 @@ function AdminUsers() {
                       )}
                     </td>
                     <td className="px-4 py-3">
-                      {isEmployer ? (
+                      {isEmployer && status === "pending" ? (
                         <div className="flex justify-end gap-2">
-                          {status === "pending" && (
-                            <>
-                              <Button size="sm" variant="default" disabled={setStatus.isPending} onClick={() => setStatus.mutate({ id: u.id, status: "approved" })}>
-                                <Check className="mr-1 h-3.5 w-3.5" /> Approve
-                              </Button>
-                              <Button size="sm" variant="outline" disabled={setStatus.isPending} onClick={() => setStatus.mutate({ id: u.id, status: "rejected" })}>
-                                <X className="mr-1 h-3.5 w-3.5" /> Reject
-                              </Button>
-                            </>
-                          )}
+                          <Button size="sm" variant="default" disabled={setStatus.isPending} onClick={() => setStatus.mutate({ id: u.id, status: "approved" })}>
+                            <Check className="mr-1 h-3.5 w-3.5" /> Approve
+                          </Button>
+                          <Button size="sm" variant="outline" disabled={setStatus.isPending} onClick={() => setStatus.mutate({ id: u.id, status: "rejected" })}>
+                            <X className="mr-1 h-3.5 w-3.5" /> Reject
+                          </Button>
                         </div>
                       ) : null}
                     </td>
