@@ -32,7 +32,7 @@ function MyApplications() {
     queryFn: async () => {
       const { data } = await supabase
         .from("applications")
-        .select("id, status, created_at, employer_note, job:jobs(id, title, company, location)")
+        .select("id, status, created_at, employer_note, job:jobs(id, title, company, location, employer_id, employer:profiles!jobs_employer_id_fkey(id, full_name, contact_email, headline, avatar_url))")
         .eq("student_id", user!.id)
         .order("created_at", { ascending: false });
       return data ?? [];
