@@ -20,7 +20,19 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as UndergraduateIndexRouteImport } from './routes/undergraduate.index'
+import { Route as GraduatesIndexRouteImport } from './routes/graduates.index'
+import { Route as CandidatesIndexRouteImport } from './routes/candidates.index'
+import { Route as UndergraduateLearningCenterRouteImport } from './routes/undergraduate.learning-center'
+import { Route as UndergraduateInternshipStoriesRouteImport } from './routes/undergraduate.internship-stories'
+import { Route as UndergraduateAiAssistantRouteImport } from './routes/undergraduate.ai-assistant'
 import { Route as NewsSlugRouteImport } from './routes/news.$slug'
+import { Route as GraduatesProfileRouteImport } from './routes/graduates.profile'
+import { Route as GraduatesMessagingRouteImport } from './routes/graduates.messaging'
+import { Route as GraduatesCvAnalyzerRouteImport } from './routes/graduates.cv-analyzer'
+import { Route as CandidatesRecruiterDashboardRouteImport } from './routes/candidates.recruiter-dashboard'
+import { Route as CandidatesFeaturesRouteImport } from './routes/candidates.features'
+import { Route as CandidatesBrowseRouteImport } from './routes/candidates.browse'
 import { Route as AuthenticatedUnauthorizedRouteImport } from './routes/_authenticated/unauthorized'
 import { Route as AuthenticatedStudentRouteImport } from './routes/_authenticated/student'
 import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticated/profile'
@@ -104,10 +116,74 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const UndergraduateIndexRoute = UndergraduateIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => UndergraduateRoute,
+} as any)
+const GraduatesIndexRoute = GraduatesIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => GraduatesRoute,
+} as any)
+const CandidatesIndexRoute = CandidatesIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => CandidatesRoute,
+} as any)
+const UndergraduateLearningCenterRoute =
+  UndergraduateLearningCenterRouteImport.update({
+    id: '/learning-center',
+    path: '/learning-center',
+    getParentRoute: () => UndergraduateRoute,
+  } as any)
+const UndergraduateInternshipStoriesRoute =
+  UndergraduateInternshipStoriesRouteImport.update({
+    id: '/internship-stories',
+    path: '/internship-stories',
+    getParentRoute: () => UndergraduateRoute,
+  } as any)
+const UndergraduateAiAssistantRoute =
+  UndergraduateAiAssistantRouteImport.update({
+    id: '/ai-assistant',
+    path: '/ai-assistant',
+    getParentRoute: () => UndergraduateRoute,
+  } as any)
 const NewsSlugRoute = NewsSlugRouteImport.update({
   id: '/$slug',
   path: '/$slug',
   getParentRoute: () => NewsRoute,
+} as any)
+const GraduatesProfileRoute = GraduatesProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => GraduatesRoute,
+} as any)
+const GraduatesMessagingRoute = GraduatesMessagingRouteImport.update({
+  id: '/messaging',
+  path: '/messaging',
+  getParentRoute: () => GraduatesRoute,
+} as any)
+const GraduatesCvAnalyzerRoute = GraduatesCvAnalyzerRouteImport.update({
+  id: '/cv-analyzer',
+  path: '/cv-analyzer',
+  getParentRoute: () => GraduatesRoute,
+} as any)
+const CandidatesRecruiterDashboardRoute =
+  CandidatesRecruiterDashboardRouteImport.update({
+    id: '/recruiter-dashboard',
+    path: '/recruiter-dashboard',
+    getParentRoute: () => CandidatesRoute,
+  } as any)
+const CandidatesFeaturesRoute = CandidatesFeaturesRouteImport.update({
+  id: '/features',
+  path: '/features',
+  getParentRoute: () => CandidatesRoute,
+} as any)
+const CandidatesBrowseRoute = CandidatesBrowseRouteImport.update({
+  id: '/browse',
+  path: '/browse',
+  getParentRoute: () => CandidatesRoute,
 } as any)
 const AuthenticatedUnauthorizedRoute =
   AuthenticatedUnauthorizedRouteImport.update({
@@ -275,20 +351,32 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
-  '/candidates': typeof CandidatesRoute
+  '/candidates': typeof CandidatesRouteWithChildren
   '/contact': typeof ContactRoute
   '/find-passion': typeof FindPassionRoute
-  '/graduates': typeof GraduatesRoute
+  '/graduates': typeof GraduatesRouteWithChildren
   '/news': typeof NewsRouteWithChildren
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/undergraduate': typeof UndergraduateRoute
+  '/undergraduate': typeof UndergraduateRouteWithChildren
   '/admin': typeof AuthenticatedAdminRouteWithChildren
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/employer': typeof AuthenticatedEmployerRouteWithChildren
   '/profile': typeof AuthenticatedProfileRoute
   '/student': typeof AuthenticatedStudentRouteWithChildren
   '/unauthorized': typeof AuthenticatedUnauthorizedRoute
+  '/candidates/browse': typeof CandidatesBrowseRoute
+  '/candidates/features': typeof CandidatesFeaturesRoute
+  '/candidates/recruiter-dashboard': typeof CandidatesRecruiterDashboardRoute
+  '/graduates/cv-analyzer': typeof GraduatesCvAnalyzerRoute
+  '/graduates/messaging': typeof GraduatesMessagingRoute
+  '/graduates/profile': typeof GraduatesProfileRoute
   '/news/$slug': typeof NewsSlugRoute
+  '/undergraduate/ai-assistant': typeof UndergraduateAiAssistantRoute
+  '/undergraduate/internship-stories': typeof UndergraduateInternshipStoriesRoute
+  '/undergraduate/learning-center': typeof UndergraduateLearningCenterRoute
+  '/candidates/': typeof CandidatesIndexRoute
+  '/graduates/': typeof GraduatesIndexRoute
+  '/undergraduate/': typeof UndergraduateIndexRoute
   '/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
   '/admin/news': typeof AuthenticatedAdminNewsRoute
   '/employer/applications': typeof AuthenticatedEmployerApplicationsRoute
@@ -316,17 +404,26 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
-  '/candidates': typeof CandidatesRoute
   '/contact': typeof ContactRoute
   '/find-passion': typeof FindPassionRoute
-  '/graduates': typeof GraduatesRoute
   '/news': typeof NewsRouteWithChildren
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/undergraduate': typeof UndergraduateRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/profile': typeof AuthenticatedProfileRoute
   '/unauthorized': typeof AuthenticatedUnauthorizedRoute
+  '/candidates/browse': typeof CandidatesBrowseRoute
+  '/candidates/features': typeof CandidatesFeaturesRoute
+  '/candidates/recruiter-dashboard': typeof CandidatesRecruiterDashboardRoute
+  '/graduates/cv-analyzer': typeof GraduatesCvAnalyzerRoute
+  '/graduates/messaging': typeof GraduatesMessagingRoute
+  '/graduates/profile': typeof GraduatesProfileRoute
   '/news/$slug': typeof NewsSlugRoute
+  '/undergraduate/ai-assistant': typeof UndergraduateAiAssistantRoute
+  '/undergraduate/internship-stories': typeof UndergraduateInternshipStoriesRoute
+  '/undergraduate/learning-center': typeof UndergraduateLearningCenterRoute
+  '/candidates': typeof CandidatesIndexRoute
+  '/graduates': typeof GraduatesIndexRoute
+  '/undergraduate': typeof UndergraduateIndexRoute
   '/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
   '/admin/news': typeof AuthenticatedAdminNewsRoute
   '/employer/applications': typeof AuthenticatedEmployerApplicationsRoute
@@ -356,20 +453,32 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
-  '/candidates': typeof CandidatesRoute
+  '/candidates': typeof CandidatesRouteWithChildren
   '/contact': typeof ContactRoute
   '/find-passion': typeof FindPassionRoute
-  '/graduates': typeof GraduatesRoute
+  '/graduates': typeof GraduatesRouteWithChildren
   '/news': typeof NewsRouteWithChildren
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/undergraduate': typeof UndergraduateRoute
+  '/undergraduate': typeof UndergraduateRouteWithChildren
   '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/employer': typeof AuthenticatedEmployerRouteWithChildren
   '/_authenticated/profile': typeof AuthenticatedProfileRoute
   '/_authenticated/student': typeof AuthenticatedStudentRouteWithChildren
   '/_authenticated/unauthorized': typeof AuthenticatedUnauthorizedRoute
+  '/candidates/browse': typeof CandidatesBrowseRoute
+  '/candidates/features': typeof CandidatesFeaturesRoute
+  '/candidates/recruiter-dashboard': typeof CandidatesRecruiterDashboardRoute
+  '/graduates/cv-analyzer': typeof GraduatesCvAnalyzerRoute
+  '/graduates/messaging': typeof GraduatesMessagingRoute
+  '/graduates/profile': typeof GraduatesProfileRoute
   '/news/$slug': typeof NewsSlugRoute
+  '/undergraduate/ai-assistant': typeof UndergraduateAiAssistantRoute
+  '/undergraduate/internship-stories': typeof UndergraduateInternshipStoriesRoute
+  '/undergraduate/learning-center': typeof UndergraduateLearningCenterRoute
+  '/candidates/': typeof CandidatesIndexRoute
+  '/graduates/': typeof GraduatesIndexRoute
+  '/undergraduate/': typeof UndergraduateIndexRoute
   '/_authenticated/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
   '/_authenticated/admin/news': typeof AuthenticatedAdminNewsRoute
   '/_authenticated/employer/applications': typeof AuthenticatedEmployerApplicationsRoute
@@ -412,7 +521,19 @@ export interface FileRouteTypes {
     | '/profile'
     | '/student'
     | '/unauthorized'
+    | '/candidates/browse'
+    | '/candidates/features'
+    | '/candidates/recruiter-dashboard'
+    | '/graduates/cv-analyzer'
+    | '/graduates/messaging'
+    | '/graduates/profile'
     | '/news/$slug'
+    | '/undergraduate/ai-assistant'
+    | '/undergraduate/internship-stories'
+    | '/undergraduate/learning-center'
+    | '/candidates/'
+    | '/graduates/'
+    | '/undergraduate/'
     | '/admin/dashboard'
     | '/admin/news'
     | '/employer/applications'
@@ -440,17 +561,26 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/auth'
-    | '/candidates'
     | '/contact'
     | '/find-passion'
-    | '/graduates'
     | '/news'
     | '/sitemap.xml'
-    | '/undergraduate'
     | '/dashboard'
     | '/profile'
     | '/unauthorized'
+    | '/candidates/browse'
+    | '/candidates/features'
+    | '/candidates/recruiter-dashboard'
+    | '/graduates/cv-analyzer'
+    | '/graduates/messaging'
+    | '/graduates/profile'
     | '/news/$slug'
+    | '/undergraduate/ai-assistant'
+    | '/undergraduate/internship-stories'
+    | '/undergraduate/learning-center'
+    | '/candidates'
+    | '/graduates'
+    | '/undergraduate'
     | '/admin/dashboard'
     | '/admin/news'
     | '/employer/applications'
@@ -492,7 +622,19 @@ export interface FileRouteTypes {
     | '/_authenticated/profile'
     | '/_authenticated/student'
     | '/_authenticated/unauthorized'
+    | '/candidates/browse'
+    | '/candidates/features'
+    | '/candidates/recruiter-dashboard'
+    | '/graduates/cv-analyzer'
+    | '/graduates/messaging'
+    | '/graduates/profile'
     | '/news/$slug'
+    | '/undergraduate/ai-assistant'
+    | '/undergraduate/internship-stories'
+    | '/undergraduate/learning-center'
+    | '/candidates/'
+    | '/graduates/'
+    | '/undergraduate/'
     | '/_authenticated/admin/dashboard'
     | '/_authenticated/admin/news'
     | '/_authenticated/employer/applications'
@@ -522,13 +664,13 @@ export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AboutRoute: typeof AboutRoute
   AuthRoute: typeof AuthRoute
-  CandidatesRoute: typeof CandidatesRoute
+  CandidatesRoute: typeof CandidatesRouteWithChildren
   ContactRoute: typeof ContactRoute
   FindPassionRoute: typeof FindPassionRoute
-  GraduatesRoute: typeof GraduatesRoute
+  GraduatesRoute: typeof GraduatesRouteWithChildren
   NewsRoute: typeof NewsRouteWithChildren
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
-  UndergraduateRoute: typeof UndergraduateRoute
+  UndergraduateRoute: typeof UndergraduateRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -610,12 +752,96 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/undergraduate/': {
+      id: '/undergraduate/'
+      path: '/'
+      fullPath: '/undergraduate/'
+      preLoaderRoute: typeof UndergraduateIndexRouteImport
+      parentRoute: typeof UndergraduateRoute
+    }
+    '/graduates/': {
+      id: '/graduates/'
+      path: '/'
+      fullPath: '/graduates/'
+      preLoaderRoute: typeof GraduatesIndexRouteImport
+      parentRoute: typeof GraduatesRoute
+    }
+    '/candidates/': {
+      id: '/candidates/'
+      path: '/'
+      fullPath: '/candidates/'
+      preLoaderRoute: typeof CandidatesIndexRouteImport
+      parentRoute: typeof CandidatesRoute
+    }
+    '/undergraduate/learning-center': {
+      id: '/undergraduate/learning-center'
+      path: '/learning-center'
+      fullPath: '/undergraduate/learning-center'
+      preLoaderRoute: typeof UndergraduateLearningCenterRouteImport
+      parentRoute: typeof UndergraduateRoute
+    }
+    '/undergraduate/internship-stories': {
+      id: '/undergraduate/internship-stories'
+      path: '/internship-stories'
+      fullPath: '/undergraduate/internship-stories'
+      preLoaderRoute: typeof UndergraduateInternshipStoriesRouteImport
+      parentRoute: typeof UndergraduateRoute
+    }
+    '/undergraduate/ai-assistant': {
+      id: '/undergraduate/ai-assistant'
+      path: '/ai-assistant'
+      fullPath: '/undergraduate/ai-assistant'
+      preLoaderRoute: typeof UndergraduateAiAssistantRouteImport
+      parentRoute: typeof UndergraduateRoute
+    }
     '/news/$slug': {
       id: '/news/$slug'
       path: '/$slug'
       fullPath: '/news/$slug'
       preLoaderRoute: typeof NewsSlugRouteImport
       parentRoute: typeof NewsRoute
+    }
+    '/graduates/profile': {
+      id: '/graduates/profile'
+      path: '/profile'
+      fullPath: '/graduates/profile'
+      preLoaderRoute: typeof GraduatesProfileRouteImport
+      parentRoute: typeof GraduatesRoute
+    }
+    '/graduates/messaging': {
+      id: '/graduates/messaging'
+      path: '/messaging'
+      fullPath: '/graduates/messaging'
+      preLoaderRoute: typeof GraduatesMessagingRouteImport
+      parentRoute: typeof GraduatesRoute
+    }
+    '/graduates/cv-analyzer': {
+      id: '/graduates/cv-analyzer'
+      path: '/cv-analyzer'
+      fullPath: '/graduates/cv-analyzer'
+      preLoaderRoute: typeof GraduatesCvAnalyzerRouteImport
+      parentRoute: typeof GraduatesRoute
+    }
+    '/candidates/recruiter-dashboard': {
+      id: '/candidates/recruiter-dashboard'
+      path: '/recruiter-dashboard'
+      fullPath: '/candidates/recruiter-dashboard'
+      preLoaderRoute: typeof CandidatesRecruiterDashboardRouteImport
+      parentRoute: typeof CandidatesRoute
+    }
+    '/candidates/features': {
+      id: '/candidates/features'
+      path: '/features'
+      fullPath: '/candidates/features'
+      preLoaderRoute: typeof CandidatesFeaturesRouteImport
+      parentRoute: typeof CandidatesRoute
+    }
+    '/candidates/browse': {
+      id: '/candidates/browse'
+      path: '/browse'
+      fullPath: '/candidates/browse'
+      preLoaderRoute: typeof CandidatesBrowseRouteImport
+      parentRoute: typeof CandidatesRoute
     }
     '/_authenticated/unauthorized': {
       id: '/_authenticated/unauthorized'
@@ -912,6 +1138,42 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
 const AuthenticatedRouteRouteWithChildren =
   AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
 
+interface CandidatesRouteChildren {
+  CandidatesBrowseRoute: typeof CandidatesBrowseRoute
+  CandidatesFeaturesRoute: typeof CandidatesFeaturesRoute
+  CandidatesRecruiterDashboardRoute: typeof CandidatesRecruiterDashboardRoute
+  CandidatesIndexRoute: typeof CandidatesIndexRoute
+}
+
+const CandidatesRouteChildren: CandidatesRouteChildren = {
+  CandidatesBrowseRoute: CandidatesBrowseRoute,
+  CandidatesFeaturesRoute: CandidatesFeaturesRoute,
+  CandidatesRecruiterDashboardRoute: CandidatesRecruiterDashboardRoute,
+  CandidatesIndexRoute: CandidatesIndexRoute,
+}
+
+const CandidatesRouteWithChildren = CandidatesRoute._addFileChildren(
+  CandidatesRouteChildren,
+)
+
+interface GraduatesRouteChildren {
+  GraduatesCvAnalyzerRoute: typeof GraduatesCvAnalyzerRoute
+  GraduatesMessagingRoute: typeof GraduatesMessagingRoute
+  GraduatesProfileRoute: typeof GraduatesProfileRoute
+  GraduatesIndexRoute: typeof GraduatesIndexRoute
+}
+
+const GraduatesRouteChildren: GraduatesRouteChildren = {
+  GraduatesCvAnalyzerRoute: GraduatesCvAnalyzerRoute,
+  GraduatesMessagingRoute: GraduatesMessagingRoute,
+  GraduatesProfileRoute: GraduatesProfileRoute,
+  GraduatesIndexRoute: GraduatesIndexRoute,
+}
+
+const GraduatesRouteWithChildren = GraduatesRoute._addFileChildren(
+  GraduatesRouteChildren,
+)
+
 interface NewsRouteChildren {
   NewsSlugRoute: typeof NewsSlugRoute
 }
@@ -922,18 +1184,36 @@ const NewsRouteChildren: NewsRouteChildren = {
 
 const NewsRouteWithChildren = NewsRoute._addFileChildren(NewsRouteChildren)
 
+interface UndergraduateRouteChildren {
+  UndergraduateAiAssistantRoute: typeof UndergraduateAiAssistantRoute
+  UndergraduateInternshipStoriesRoute: typeof UndergraduateInternshipStoriesRoute
+  UndergraduateLearningCenterRoute: typeof UndergraduateLearningCenterRoute
+  UndergraduateIndexRoute: typeof UndergraduateIndexRoute
+}
+
+const UndergraduateRouteChildren: UndergraduateRouteChildren = {
+  UndergraduateAiAssistantRoute: UndergraduateAiAssistantRoute,
+  UndergraduateInternshipStoriesRoute: UndergraduateInternshipStoriesRoute,
+  UndergraduateLearningCenterRoute: UndergraduateLearningCenterRoute,
+  UndergraduateIndexRoute: UndergraduateIndexRoute,
+}
+
+const UndergraduateRouteWithChildren = UndergraduateRoute._addFileChildren(
+  UndergraduateRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AboutRoute: AboutRoute,
   AuthRoute: AuthRoute,
-  CandidatesRoute: CandidatesRoute,
+  CandidatesRoute: CandidatesRouteWithChildren,
   ContactRoute: ContactRoute,
   FindPassionRoute: FindPassionRoute,
-  GraduatesRoute: GraduatesRoute,
+  GraduatesRoute: GraduatesRouteWithChildren,
   NewsRoute: NewsRouteWithChildren,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
-  UndergraduateRoute: UndergraduateRoute,
+  UndergraduateRoute: UndergraduateRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
