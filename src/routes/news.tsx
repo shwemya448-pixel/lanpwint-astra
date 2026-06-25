@@ -84,13 +84,18 @@ function NewsPage() {
                 {p.video_url ? (
                   <div className="aspect-video overflow-hidden bg-background">
                     <video
-                      src={p.video_url}
                       controls
                       playsInline
                       preload="metadata"
                       controlsList="nodownload"
                       className="h-full w-full bg-background object-contain"
-                    />
+                    >
+                      <source src={p.video_url} type="video/mp4" />
+                      {Array.isArray(p.media_urls) &&
+                        p.media_urls.map((url: string) => (
+                          <source key={url} src={url} type={url.endsWith(".webm") ? "video/webm" : "video/mp4"} />
+                        ))}
+                    </video>
                   </div>
                 ) : p.image_url ? (
                   <div className="aspect-video overflow-hidden bg-muted">

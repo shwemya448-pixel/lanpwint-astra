@@ -157,7 +157,7 @@ function NewsPreview() {
     queryFn: async () => {
       const { data } = await supabase
         .from("news_posts")
-        .select("id,slug,title_en,title_my,excerpt_en,excerpt_my,image_url,video_url,published_at,news_categories(name_en,name_my)")
+        .select("id,slug,title_en,title_my,excerpt_en,excerpt_my,image_url,video_url,media_urls,published_at,news_categories(name_en,name_my)")
         .eq("published", true)
         .order("published_at", { ascending: false })
         .limit(3);
@@ -192,13 +192,18 @@ function NewsPreview() {
               {p.video_url ? (
                 <div className="aspect-video overflow-hidden bg-background">
                   <video
-                    src={p.video_url}
                     controls
                     playsInline
                     preload="metadata"
                     controlsList="nodownload"
                     className="h-full w-full bg-background object-contain"
-                  />
+                  >
+                    <source src={p.video_url} type="video/mp4" />
+                    {Array.isArray(p.media_urls) &&
+                      p.media_urls.map((url: string) => (
+                        <source key={url} src={url} type={url.endsWith(".webm") ? "video/webm" : "video/mp4"} />
+                      ))}
+                  </video>
                 </div>
               ) : p.image_url ? (
                 <div className="aspect-video overflow-hidden bg-muted">
