@@ -120,16 +120,18 @@ function NewsVideo({ url }: { url: string }) {
       </div>
     );
   }
+  const type = /\.webm(\?|$)/i.test(url) ? "video/webm" : "video/mp4";
   return (
-    <div className="mt-6 w-full overflow-hidden rounded-xl border border-border bg-black">
+    <div className="mt-6 aspect-video w-full overflow-hidden rounded-xl border border-border bg-black">
       <video
-        src={url}
+        key={url}
         controls
         playsInline
         preload="metadata"
+        crossOrigin="anonymous"
         className="h-full w-full"
       >
-        <source src={url} type="video/mp4" />
+        <source src={url} type={type} />
         Your browser does not support the video tag.
       </video>
     </div>
