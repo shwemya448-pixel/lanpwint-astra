@@ -41,7 +41,7 @@
   --color-ring: var(--ring);
 
   /* Brand tokens */
-  --color-navy: light-dark(var(--navy), var(--foreground));
+  --color-navy: var(--navy);
   --color-navy-foreground: var(--navy-foreground);
   --color-deep: var(--deep);
   --color-teal: var(--teal);
