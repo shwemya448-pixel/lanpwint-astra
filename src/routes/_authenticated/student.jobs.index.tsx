@@ -35,7 +35,7 @@ function JobsList() {
   const filtered = (data ?? []).filter((j) => {
     if (type && j.job_type !== type) return false;
     if (!q) return true;
-    const hay = `${j.title} ${j.company ?? ""} ${j.location ?? ""} ${(j.skills ?? []).join(" ")}`.toLowerCase();
+    const hay = `${j.title} ${j.company ?? ""} ${j.location ?? ""} ${j.description ?? ""} ${(j.skills ?? []).join(" ")}`.toLowerCase();
     return hay.includes(q.toLowerCase());
   });
 
