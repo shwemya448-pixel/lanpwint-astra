@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { FileSearch, MessageCircle, Sparkles, UserCircle2 } from "lucide-react";
+import { PageNav } from "@/components/page-nav";
 import { PageHeader, PageShell } from "@/components/page-shell";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -38,9 +39,14 @@ function GraduatesPage() {
         title="Get hired faster, with help that's actually useful"
         description="Analyze your CV with AI, build a professional job-seeking post, and let verified employers find you directly."
       />
+      <PageNav items={[
+        { id: "cv-analyzer", label: "CV Analyzer" },
+        { id: "profile", label: "Job-Seeking Profile" },
+        { id: "messaging", label: "Messaging" },
+      ]} />
 
       {/* CV Analyzer */}
-      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+      <section id="cv-analyzer" className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
         <div className="grid gap-8 lg:grid-cols-5">
           <div className="lg:col-span-3">
             <Badge variant="secondary" className="bg-teal/15 text-teal hover:bg-teal/20">
@@ -83,7 +89,7 @@ function GraduatesPage() {
       </section>
 
       {/* Profile */}
-      <section className="border-y border-border bg-muted/40">
+      <section id="profile" className="border-y border-border bg-muted/40">
         <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
           <div className="grid items-center gap-10 lg:grid-cols-2">
             <div>
@@ -116,7 +122,7 @@ function GraduatesPage() {
       </section>
 
       {/* Messaging */}
-      <section className="mx-auto max-w-5xl px-4 py-20 text-center sm:px-6 lg:px-8">
+      <section id="messaging" className="mx-auto max-w-5xl px-4 py-20 text-center sm:px-6 lg:px-8">
         <MessageCircle className="mx-auto h-6 w-6 text-teal" />
         <h2 className="mt-4 font-serif text-3xl text-navy">Direct messaging with employers</h2>
         <p className="mx-auto mt-3 max-w-2xl text-muted-foreground">

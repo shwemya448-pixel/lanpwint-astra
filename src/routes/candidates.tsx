@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Bookmark, Filter, MessagesSquare, Search, ShieldCheck } from "lucide-react";
+import { PageNav } from "@/components/page-nav";
 import { PageHeader, PageShell } from "@/components/page-shell";
 import { Button } from "@/components/ui/button";
 
@@ -44,9 +45,14 @@ function CandidatesPage() {
         title="Find the people who can build what's next"
         description="Browse profiles, search with precise filters, and reach out to candidates directly through Lan Pwint."
       />
+      <PageNav items={[
+        { id: "features", label: "Features" },
+        { id: "browse-candidates", label: "Browse Candidates" },
+        { id: "recruiter-dashboard", label: "Recruiter Dashboard" },
+      ]} />
 
       <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-        <div className="grid gap-px overflow-hidden rounded-2xl border border-border bg-border sm:grid-cols-2 lg:grid-cols-4">
+        <div id="features" className="grid gap-px overflow-hidden rounded-2xl border border-border bg-border sm:grid-cols-2 lg:grid-cols-4">
           {FEATURES.map((f) => (
             <div key={f.title} className="bg-card p-6">
               <f.icon className="h-5 w-5 text-teal" />
@@ -57,7 +63,7 @@ function CandidatesPage() {
         </div>
 
         {/* Browse */}
-        <div className="mt-16 rounded-2xl border border-border bg-card overflow-hidden">
+        <div id="browse-candidates" className="mt-16 rounded-2xl border border-border bg-card overflow-hidden">
           <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border p-5">
             <div className="flex items-center gap-2 text-sm">
               <Filter className="h-4 w-4 text-teal" />
@@ -89,7 +95,7 @@ function CandidatesPage() {
           </div>
         </div>
 
-        <div className="mt-10 rounded-2xl bg-gradient-to-br from-navy to-deep p-10 text-navy-foreground">
+        <div id="recruiter-dashboard" className="mt-10 rounded-2xl bg-gradient-to-br from-navy to-deep p-10 text-navy-foreground">
           <div className="grid items-center gap-6 lg:grid-cols-3">
             <div className="lg:col-span-2">
               <h2 className="font-serif text-2xl sm:text-3xl">A dashboard built for recruiters</h2>
