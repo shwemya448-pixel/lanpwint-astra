@@ -9,7 +9,6 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as UndergraduateRouteImport } from './routes/undergraduate'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as NewsRouteImport } from './routes/news'
 import { Route as GraduatesRouteImport } from './routes/graduates'
@@ -20,12 +19,8 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as UndergraduateIndexRouteImport } from './routes/undergraduate.index'
 import { Route as GraduatesIndexRouteImport } from './routes/graduates.index'
 import { Route as CandidatesIndexRouteImport } from './routes/candidates.index'
-import { Route as UndergraduateLearningCenterRouteImport } from './routes/undergraduate.learning-center'
-import { Route as UndergraduateInternshipStoriesRouteImport } from './routes/undergraduate.internship-stories'
-import { Route as UndergraduateAiAssistantRouteImport } from './routes/undergraduate.ai-assistant'
 import { Route as NewsSlugRouteImport } from './routes/news.$slug'
 import { Route as GraduatesProfileRouteImport } from './routes/graduates.profile'
 import { Route as GraduatesMessagingRouteImport } from './routes/graduates.messaging'
@@ -62,11 +57,6 @@ import { Route as AuthenticatedStudentLessonsLessonIdRouteImport } from './route
 import { Route as AuthenticatedStudentJobsJobIdRouteImport } from './routes/_authenticated/student.jobs.$jobId'
 import { Route as AuthenticatedEmployerJobsNewRouteImport } from './routes/_authenticated/employer.jobs.new'
 
-const UndergraduateRoute = UndergraduateRouteImport.update({
-  id: '/undergraduate',
-  path: '/undergraduate',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
@@ -116,11 +106,6 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const UndergraduateIndexRoute = UndergraduateIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => UndergraduateRoute,
-} as any)
 const GraduatesIndexRoute = GraduatesIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -131,24 +116,6 @@ const CandidatesIndexRoute = CandidatesIndexRouteImport.update({
   path: '/',
   getParentRoute: () => CandidatesRoute,
 } as any)
-const UndergraduateLearningCenterRoute =
-  UndergraduateLearningCenterRouteImport.update({
-    id: '/learning-center',
-    path: '/learning-center',
-    getParentRoute: () => UndergraduateRoute,
-  } as any)
-const UndergraduateInternshipStoriesRoute =
-  UndergraduateInternshipStoriesRouteImport.update({
-    id: '/internship-stories',
-    path: '/internship-stories',
-    getParentRoute: () => UndergraduateRoute,
-  } as any)
-const UndergraduateAiAssistantRoute =
-  UndergraduateAiAssistantRouteImport.update({
-    id: '/ai-assistant',
-    path: '/ai-assistant',
-    getParentRoute: () => UndergraduateRoute,
-  } as any)
 const NewsSlugRoute = NewsSlugRouteImport.update({
   id: '/$slug',
   path: '/$slug',
@@ -357,7 +324,6 @@ export interface FileRoutesByFullPath {
   '/graduates': typeof GraduatesRouteWithChildren
   '/news': typeof NewsRouteWithChildren
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/undergraduate': typeof UndergraduateRouteWithChildren
   '/admin': typeof AuthenticatedAdminRouteWithChildren
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/employer': typeof AuthenticatedEmployerRouteWithChildren
@@ -371,12 +337,8 @@ export interface FileRoutesByFullPath {
   '/graduates/messaging': typeof GraduatesMessagingRoute
   '/graduates/profile': typeof GraduatesProfileRoute
   '/news/$slug': typeof NewsSlugRoute
-  '/undergraduate/ai-assistant': typeof UndergraduateAiAssistantRoute
-  '/undergraduate/internship-stories': typeof UndergraduateInternshipStoriesRoute
-  '/undergraduate/learning-center': typeof UndergraduateLearningCenterRoute
   '/candidates/': typeof CandidatesIndexRoute
   '/graduates/': typeof GraduatesIndexRoute
-  '/undergraduate/': typeof UndergraduateIndexRoute
   '/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
   '/admin/news': typeof AuthenticatedAdminNewsRoute
   '/employer/applications': typeof AuthenticatedEmployerApplicationsRoute
@@ -418,12 +380,8 @@ export interface FileRoutesByTo {
   '/graduates/messaging': typeof GraduatesMessagingRoute
   '/graduates/profile': typeof GraduatesProfileRoute
   '/news/$slug': typeof NewsSlugRoute
-  '/undergraduate/ai-assistant': typeof UndergraduateAiAssistantRoute
-  '/undergraduate/internship-stories': typeof UndergraduateInternshipStoriesRoute
-  '/undergraduate/learning-center': typeof UndergraduateLearningCenterRoute
   '/candidates': typeof CandidatesIndexRoute
   '/graduates': typeof GraduatesIndexRoute
-  '/undergraduate': typeof UndergraduateIndexRoute
   '/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
   '/admin/news': typeof AuthenticatedAdminNewsRoute
   '/employer/applications': typeof AuthenticatedEmployerApplicationsRoute
@@ -459,7 +417,6 @@ export interface FileRoutesById {
   '/graduates': typeof GraduatesRouteWithChildren
   '/news': typeof NewsRouteWithChildren
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/undergraduate': typeof UndergraduateRouteWithChildren
   '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/employer': typeof AuthenticatedEmployerRouteWithChildren
@@ -473,12 +430,8 @@ export interface FileRoutesById {
   '/graduates/messaging': typeof GraduatesMessagingRoute
   '/graduates/profile': typeof GraduatesProfileRoute
   '/news/$slug': typeof NewsSlugRoute
-  '/undergraduate/ai-assistant': typeof UndergraduateAiAssistantRoute
-  '/undergraduate/internship-stories': typeof UndergraduateInternshipStoriesRoute
-  '/undergraduate/learning-center': typeof UndergraduateLearningCenterRoute
   '/candidates/': typeof CandidatesIndexRoute
   '/graduates/': typeof GraduatesIndexRoute
-  '/undergraduate/': typeof UndergraduateIndexRoute
   '/_authenticated/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
   '/_authenticated/admin/news': typeof AuthenticatedAdminNewsRoute
   '/_authenticated/employer/applications': typeof AuthenticatedEmployerApplicationsRoute
@@ -514,7 +467,6 @@ export interface FileRouteTypes {
     | '/graduates'
     | '/news'
     | '/sitemap.xml'
-    | '/undergraduate'
     | '/admin'
     | '/dashboard'
     | '/employer'
@@ -528,12 +480,8 @@ export interface FileRouteTypes {
     | '/graduates/messaging'
     | '/graduates/profile'
     | '/news/$slug'
-    | '/undergraduate/ai-assistant'
-    | '/undergraduate/internship-stories'
-    | '/undergraduate/learning-center'
     | '/candidates/'
     | '/graduates/'
-    | '/undergraduate/'
     | '/admin/dashboard'
     | '/admin/news'
     | '/employer/applications'
@@ -575,12 +523,8 @@ export interface FileRouteTypes {
     | '/graduates/messaging'
     | '/graduates/profile'
     | '/news/$slug'
-    | '/undergraduate/ai-assistant'
-    | '/undergraduate/internship-stories'
-    | '/undergraduate/learning-center'
     | '/candidates'
     | '/graduates'
-    | '/undergraduate'
     | '/admin/dashboard'
     | '/admin/news'
     | '/employer/applications'
@@ -615,7 +559,6 @@ export interface FileRouteTypes {
     | '/graduates'
     | '/news'
     | '/sitemap.xml'
-    | '/undergraduate'
     | '/_authenticated/admin'
     | '/_authenticated/dashboard'
     | '/_authenticated/employer'
@@ -629,12 +572,8 @@ export interface FileRouteTypes {
     | '/graduates/messaging'
     | '/graduates/profile'
     | '/news/$slug'
-    | '/undergraduate/ai-assistant'
-    | '/undergraduate/internship-stories'
-    | '/undergraduate/learning-center'
     | '/candidates/'
     | '/graduates/'
-    | '/undergraduate/'
     | '/_authenticated/admin/dashboard'
     | '/_authenticated/admin/news'
     | '/_authenticated/employer/applications'
@@ -670,18 +609,10 @@ export interface RootRouteChildren {
   GraduatesRoute: typeof GraduatesRouteWithChildren
   NewsRoute: typeof NewsRouteWithChildren
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
-  UndergraduateRoute: typeof UndergraduateRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/undergraduate': {
-      id: '/undergraduate'
-      path: '/undergraduate'
-      fullPath: '/undergraduate'
-      preLoaderRoute: typeof UndergraduateRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/sitemap.xml': {
       id: '/sitemap.xml'
       path: '/sitemap.xml'
@@ -752,13 +683,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/undergraduate/': {
-      id: '/undergraduate/'
-      path: '/'
-      fullPath: '/undergraduate/'
-      preLoaderRoute: typeof UndergraduateIndexRouteImport
-      parentRoute: typeof UndergraduateRoute
-    }
     '/graduates/': {
       id: '/graduates/'
       path: '/'
@@ -772,27 +696,6 @@ declare module '@tanstack/react-router' {
       fullPath: '/candidates/'
       preLoaderRoute: typeof CandidatesIndexRouteImport
       parentRoute: typeof CandidatesRoute
-    }
-    '/undergraduate/learning-center': {
-      id: '/undergraduate/learning-center'
-      path: '/learning-center'
-      fullPath: '/undergraduate/learning-center'
-      preLoaderRoute: typeof UndergraduateLearningCenterRouteImport
-      parentRoute: typeof UndergraduateRoute
-    }
-    '/undergraduate/internship-stories': {
-      id: '/undergraduate/internship-stories'
-      path: '/internship-stories'
-      fullPath: '/undergraduate/internship-stories'
-      preLoaderRoute: typeof UndergraduateInternshipStoriesRouteImport
-      parentRoute: typeof UndergraduateRoute
-    }
-    '/undergraduate/ai-assistant': {
-      id: '/undergraduate/ai-assistant'
-      path: '/ai-assistant'
-      fullPath: '/undergraduate/ai-assistant'
-      preLoaderRoute: typeof UndergraduateAiAssistantRouteImport
-      parentRoute: typeof UndergraduateRoute
     }
     '/news/$slug': {
       id: '/news/$slug'
@@ -1184,24 +1087,6 @@ const NewsRouteChildren: NewsRouteChildren = {
 
 const NewsRouteWithChildren = NewsRoute._addFileChildren(NewsRouteChildren)
 
-interface UndergraduateRouteChildren {
-  UndergraduateAiAssistantRoute: typeof UndergraduateAiAssistantRoute
-  UndergraduateInternshipStoriesRoute: typeof UndergraduateInternshipStoriesRoute
-  UndergraduateLearningCenterRoute: typeof UndergraduateLearningCenterRoute
-  UndergraduateIndexRoute: typeof UndergraduateIndexRoute
-}
-
-const UndergraduateRouteChildren: UndergraduateRouteChildren = {
-  UndergraduateAiAssistantRoute: UndergraduateAiAssistantRoute,
-  UndergraduateInternshipStoriesRoute: UndergraduateInternshipStoriesRoute,
-  UndergraduateLearningCenterRoute: UndergraduateLearningCenterRoute,
-  UndergraduateIndexRoute: UndergraduateIndexRoute,
-}
-
-const UndergraduateRouteWithChildren = UndergraduateRoute._addFileChildren(
-  UndergraduateRouteChildren,
-)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
@@ -1213,7 +1098,6 @@ const rootRouteChildren: RootRouteChildren = {
   GraduatesRoute: GraduatesRouteWithChildren,
   NewsRoute: NewsRouteWithChildren,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
-  UndergraduateRoute: UndergraduateRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

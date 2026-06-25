@@ -3,7 +3,7 @@ import { BookOpen, Briefcase, FileText, MapPin, MessageSquare, Sparkles, User } 
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/_authenticated/student/dashboard")({
-  head: () => ({ meta: [{ title: "Student dashboard — Lan Pwint" }] }),
+  head: () => ({ meta: [{ title: "Overview — Lan Pwint" }] }),
   component: StudentDashboard,
 });
 
@@ -21,7 +21,7 @@ const TILES = [
 function StudentDashboard() {
   return (
     <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-      <p className="text-xs uppercase tracking-[0.22em] text-teal">Student workspace</p>
+      <p className="text-xs uppercase tracking-[0.22em] text-teal">Overview</p>
       <h1 className="mt-2 font-serif text-3xl text-navy sm:text-4xl">Your career, one step at a time</h1>
       <p className="mt-3 max-w-2xl text-muted-foreground">
         Everything you need to learn, apply, and grow — built just for students.

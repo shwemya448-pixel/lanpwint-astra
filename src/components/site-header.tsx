@@ -10,7 +10,7 @@ import { useLocale, type TKey } from "@/lib/i18n";
 
 const NAV: { to: string; key: TKey }[] = [
   { to: "/", key: "nav.home" },
-  { to: "/undergraduate", key: "nav.students" },
+  { to: "/student/dashboard", key: "nav.students" },
   { to: "/candidates", key: "nav.candidates" },
   { to: "/news", key: "nav.news" },
   { to: "/find-passion", key: "nav.findPassion" },
