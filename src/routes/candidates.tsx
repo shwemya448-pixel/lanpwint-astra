@@ -27,13 +27,12 @@ function EmployersLayout() {
       <PageHeader
         eyebrow="For employers"
         title="Hire the next generation of Myanmar talent"
-        description="Post jobs, drop them on the map so students can find you, browse the CV board, and start a conversation in one click."
+        description="Post jobs, drop them on the map so students can find you, and start a conversation as soon as a candidate applies."
       />
       <PageNav
         items={[
           { to: "/candidates", label: "Overview" },
           { to: "/candidates/features", label: "What you get" },
-          { to: "/candidates/browse", label: "How CV Board works" },
           { to: "/candidates/recruiter-dashboard", label: "Open employer workspace" },
         ]}
       />

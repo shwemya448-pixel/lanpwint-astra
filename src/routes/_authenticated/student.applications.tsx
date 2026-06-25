@@ -30,12 +30,29 @@ function MyApplications() {
     queryKey: ["my-applications", user?.id],
     enabled: !!user,
     queryFn: async () => {
-      const { data } = await supabase
+      const { data: apps } = await supabase
         .from("applications")
-        .select("id, status, created_at, employer_note, job:jobs(id, title, company, location)")
+        .select("id, status, created_at, employer_note, job:jobs(id, title, company, location, employer_id)")
         .eq("student_id", user!.id)
         .order("created_at", { ascending: false });
-      return data ?? [];
+      const list = apps ?? [];
+      const unlockedEmployerIds = Array.from(
+        new Set(
+          list
+            .filter((a: any) => a.status === "offered" || a.status === "accepted")
+            .map((a: any) => a.job?.employer_id)
+            .filter(Boolean),
+        ),
+      );
+      let employers: Record<string, any> = {};
+      if (unlockedEmployerIds.length) {
+        const { data: profs } = await supabase
+          .from("profiles")
+          .select("id, full_name, contact_email, headline, avatar_url")
+          .in("id", unlockedEmployerIds);
+        employers = Object.fromEntries((profs ?? []).map((p: any) => [p.id, p]));
+      }
+      return list.map((a: any) => ({ ...a, employer: employers[a.job?.employer_id] ?? null }));
     },
   });
 
@@ -84,6 +101,28 @@ function MyApplications() {
                   <p className="mt-3 rounded-md bg-muted/60 p-3 text-sm">
                     <span className="font-medium text-navy">Employer note:</span> {a.employer_note}
                   </p>
+                )}
+                {(a.status === "offered" || a.status === "accepted") && a.employer && (
+                  <div className="mt-3 rounded-md border border-teal/30 bg-teal/5 p-3 text-sm">
+                    <p className="font-medium text-teal">Employer contact unlocked</p>
+                    <p className="mt-1">
+                      <span className="font-medium">{a.employer.full_name ?? a.job?.company ?? "Employer"}</span>
+                      {a.employer.headline ? ` — ${a.employer.headline}` : ""}
+                    </p>
+                    {a.employer.contact_email && (
+                      <p className="mt-0.5 text-muted-foreground">
+                        Email:{" "}
+                        <a className="text-navy underline" href={`mailto:${a.employer.contact_email}`}>
+                          {a.employer.contact_email}
+                        </a>
+                      </p>
+                    )}
+                    <Button asChild size="sm" variant="outline" className="mt-2">
+                      <Link to="/student/messages" search={{ to: a.employer.contact_email ?? "" } as never}>
+                        Message employer
+                      </Link>
+                    </Button>
+                  </div>
                 )}
                 {a.status === "offered" && (
                   <div className="mt-4 flex gap-2">
