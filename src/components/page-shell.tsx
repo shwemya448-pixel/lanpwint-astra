@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { SiteHeader } from "./site-header";
 import { SiteFooter } from "./site-footer";
+import { BackButton } from "./back-button";
 import { useRoleShell } from "./role-shell";
 
 export function PageShell({ children }: { children: ReactNode }) {
@@ -11,7 +12,8 @@ export function PageShell({ children }: { children: ReactNode }) {
   return (
     <div className="flex min-h-screen flex-col bg-background lp-aurora lp-aurora-grain">
       <SiteHeader />
-      <main key={typeof window !== "undefined" ? window.location.pathname : "ssr"} className="flex-1 lp-page-enter">{children}</main>
+      <BackButton />
+      <main className="flex-1 lp-page-enter">{children}</main>
       <SiteFooter />
     </div>
   );

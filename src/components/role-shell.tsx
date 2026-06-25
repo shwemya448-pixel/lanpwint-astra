@@ -21,6 +21,7 @@ import { supabase } from "@/integrations/supabase/client";
 import type { AppRole } from "@/lib/auth";
 import { Button } from "@/components/ui/button";
 import { SiteFooter } from "@/components/site-footer";
+import { BackButton } from "@/components/back-button";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { LanguageToggle } from "@/components/language-toggle";
 import { cn } from "@/lib/utils";
@@ -84,7 +85,8 @@ export function RoleLayout({ role, children }: { role: AppRole; children: ReactN
     <RoleShellContext.Provider value={role}>
       <div className="flex min-h-screen flex-col bg-background lp-aurora lp-aurora-grain">
         <RoleNav role={role} />
-        <main className="flex-1">{children}</main>
+        <BackButton />
+        <main className="flex-1 lp-page-enter">{children}</main>
         <SiteFooter />
       </div>
     </RoleShellContext.Provider>
