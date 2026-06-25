@@ -30,7 +30,7 @@ export const Route = createFileRoute("/")({
 
 const PORTAL_TO_ROUTE: Record<PortalKind, string> = {
   student: "/student/dashboard",
-  candidate: "/candidates",
+  candidate: "/employer/dashboard",
 };
 
 function LandingPage() {
