@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { supabase } from "@/integrations/supabase/client";
 import { formatSalary, jobTypeLabel, timeAgo } from "@/lib/format";
 import { cn } from "@/lib/utils";
+import { MYWORLD_JOBS } from "@/lib/myworld-jobs";
 
 export const Route = createFileRoute("/_authenticated/student/job-map")({
   head: () => ({ meta: [{ title: "Job Map — Lan Pwint" }] }),
@@ -55,10 +56,19 @@ function JobMapPage() {
   });
 
   const grouped = useMemo(() => {
-    const map: Record<CityKey, typeof jobs> = {
+    const map: Record<CityKey, any[]> = {
       yangon: [], mandalay: [], naypyitaw: [], bago: [], taunggyi: [], mawlamyine: [], remote: [], other: [],
     };
-    for (const j of jobs) map[classifyCity(j.location)].push(j);
+    for (const j of jobs) map[classifyCity(j.location)].push({ ...j, source: "Lan Pwint" });
+    for (const m of MYWORLD_JOBS) {
+      map[classifyCity(m.location)].push({
+        id: m.id, title: m.title, company: m.company, location: m.location,
+        job_type: m.job_type, salary_min: m.salary_min, salary_max: m.salary_max,
+        salary_currency: m.salary_currency,
+        created_at: new Date(Date.now() - m.posted_days_ago * 86_400_000).toISOString(),
+        external_url: m.source_url, source: m.source,
+      });
+    }
     return map;
   }, [jobs]);
 
@@ -131,30 +141,41 @@ function JobMapPage() {
               </p>
             ) : (
               <ul className="mt-4 max-h-[400px] space-y-3 overflow-y-auto pr-1 lp-reveal-stagger">
-                {grouped[active].map((j) => (
-                  <li key={j.id}>
-                    <Link
-                      to="/student/jobs/$jobId"
-                      params={{ jobId: j.id }}
-                      className="block rounded-xl border bg-background/40 p-3"
-                    >
-                      <div className="flex items-start justify-between gap-2">
-                        <div>
-                          <p className="font-serif text-base text-navy">{j.title}</p>
-                          {j.company && <p className="text-xs text-muted-foreground">{j.company}</p>}
+                {grouped[active].map((j: any) => {
+                  const isExt = !!j.external_url;
+                  const Wrap: any = isExt ? "a" : Link;
+                  const props: any = isExt
+                    ? { href: j.external_url, target: "_blank", rel: "noopener noreferrer" }
+                    : { to: "/student/jobs/$jobId", params: { jobId: j.id } };
+                  return (
+                    <li key={j.id}>
+                      <Wrap {...props} className="block rounded-xl border bg-background/40 p-3">
+                        <div className="flex items-start justify-between gap-2">
+                          <div>
+                            <p className="font-serif text-base text-navy">{j.title}</p>
+                            {j.company && <p className="text-xs text-muted-foreground">{j.company}</p>}
+                          </div>
+                          <div className="flex flex-col items-end gap-1">
+                            <Badge variant="secondary" className="bg-[color:var(--gold-soft)] text-[color:var(--gold)]">
+                              {jobTypeLabel(j.job_type ?? "")}
+                            </Badge>
+                            {j.source && (
+                              <span className="rounded-full border border-border px-1.5 py-0.5 text-[9px] uppercase tracking-wider text-muted-foreground">
+                                {j.source}
+                              </span>
+                            )}
+                          </div>
                         </div>
-                        <Badge variant="secondary" className="bg-[color:var(--gold-soft)] text-[color:var(--gold)]">
-                          {jobTypeLabel(j.job_type)}
-                        </Badge>
-                      </div>
-                      <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] text-muted-foreground">
-                        {j.location && <span className="inline-flex items-center gap-1"><MapPin className="h-3 w-3" />{j.location}</span>}
-                        <span>{formatSalary(j.salary_min, j.salary_max, j.salary_currency ?? "MMK")}</span>
-                        <span>{timeAgo(j.created_at)}</span>
-                      </div>
-                    </Link>
-                  </li>
-                ))}
+                        <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] text-muted-foreground">
+                          {j.location && <span className="inline-flex items-center gap-1"><MapPin className="h-3 w-3" />{j.location}</span>}
+                          <span>{formatSalary(j.salary_min, j.salary_max, j.salary_currency ?? "MMK")}</span>
+                          <span>{timeAgo(j.created_at)}</span>
+                          {isExt && <span className="inline-flex items-center gap-0.5 text-[color:var(--gold)]">MyWorld <ExternalLink className="h-2.5 w-2.5" /></span>}
+                        </div>
+                      </Wrap>
+                    </li>
+                  );
+                })}
               </ul>
             )}
             <div className="mt-4 border-t pt-3">
