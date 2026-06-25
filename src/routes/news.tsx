@@ -4,6 +4,7 @@ import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
+import { BackButton } from "@/components/back-button";
 import { useLocale } from "@/lib/i18n";
 
 export const Route = createFileRoute("/news")({
@@ -39,6 +40,7 @@ function NewsPage() {
   return (
     <div className="min-h-screen flex flex-col inner-page">
       <SiteHeader />
+      <BackButton />
       <main className="flex-1 mx-auto w-full max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
         <header className="mb-8">
           <h1 className="font-serif text-4xl md:text-5xl page-gold">{t("news.title")}</h1>

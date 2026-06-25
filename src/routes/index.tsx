@@ -1,7 +1,10 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
-import { Sparkles, BookOpen, FileText, Users, ArrowRight } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { Sparkles, BookOpen, FileText, Users, ArrowRight, Newspaper } from "lucide-react";
 import { useSession } from "@/lib/auth";
+import { supabase } from "@/integrations/supabase/client";
+import { useLocale } from "@/lib/i18n";
 import { DoorScene } from "@/components/lp/DoorScene";
 import { ShootingStars } from "@/components/lp/ShootingStars";
 import { PortalCard, type PortalKind } from "@/components/lp/PortalCard";
@@ -124,6 +127,8 @@ function LandingPage() {
         </div>
       </section>
 
+      <NewsPreview />
+
       <SiteFooter />
 
 
@@ -143,4 +148,78 @@ function Feature({ icon, title, desc, href }: { icon: React.ReactNode; title: st
     </div>
   );
   return href ? <Link to={href as never} className="block">{inner}</Link> : inner;
+}
+
+function NewsPreview() {
+  const { lang } = useLocale();
+  const { data: posts = [] } = useQuery({
+    queryKey: ["home_news_preview"],
+    queryFn: async () => {
+      const { data } = await supabase
+        .from("news_posts")
+        .select("id,slug,title_en,title_my,excerpt_en,excerpt_my,image_url,video_url,published_at,news_categories(name_en,name_my)")
+        .eq("published", true)
+        .order("published_at", { ascending: false })
+        .limit(3);
+      return data ?? [];
+    },
+  });
+
+  if (posts.length === 0) return null;
+
+  return (
+    <section id="news" className="relative px-4 sm:px-5 py-16 sm:py-20">
+      <div className="mx-auto max-w-7xl">
+        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-8">
+          <div>
+            <div className="lp-divider-gold w-20" />
+            <h2 className="mt-3 text-2xl sm:text-3xl md:text-4xl font-bold inline-flex items-center gap-2">
+              <Newspaper className="h-6 w-6 text-[color:var(--gold)]" /> Latest news
+            </h2>
+            <p className="mt-1 text-sm text-muted-foreground">Quick reads from the Lan Pwint community.</p>
+          </div>
+          <Link to="/news" className="lp-ghost-btn h-10 px-4 rounded-xl text-sm font-semibold inline-flex items-center gap-2 self-start sm:self-auto">
+            See all news <ArrowRight className="h-4 w-4" />
+          </Link>
+        </div>
+
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {posts.map((p: any) => (
+            <Link
+              key={p.id}
+              to="/news/$slug"
+              params={{ slug: p.slug }}
+              className="group rounded-xl border border-border bg-card overflow-hidden transition-all hover:border-[color:var(--gold)]/60 hover:shadow-[0_8px_30px_-12px_color-mix(in_oklab,var(--gold)_30%,transparent)]"
+            >
+              {p.image_url ? (
+                <div className="aspect-video overflow-hidden bg-muted">
+                  <img src={p.image_url} alt="" className="h-full w-full object-cover transition-transform group-hover:scale-105" />
+                </div>
+              ) : p.video_url ? (
+                <div className="aspect-video overflow-hidden bg-black">
+                  <video src={p.video_url} muted playsInline preload="metadata" className="h-full w-full object-cover" />
+                </div>
+              ) : null}
+              <div className="p-5">
+                {p.news_categories && (
+                  <div className="text-xs uppercase tracking-wider text-[color:var(--gold)]">
+                    {lang === "my" ? p.news_categories.name_my : p.news_categories.name_en}
+                  </div>
+                )}
+                <h3 className="mt-2 font-serif text-lg text-foreground group-hover:text-[color:var(--gold)] transition-colors line-clamp-2">
+                  {lang === "my" ? p.title_my : p.title_en}
+                </h3>
+                <p className="mt-2 text-sm text-muted-foreground line-clamp-3">
+                  {lang === "my" ? p.excerpt_my : p.excerpt_en}
+                </p>
+                <div className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-[color:var(--gold)]">
+                  See more <ArrowRight className="h-3.5 w-3.5" />
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
 }
