@@ -104,6 +104,10 @@ function AdminDashboard() {
         </div>
       </div>
 
+      <PendingEmployers />
+
+
+
 
       {error ? (
         <ErrorBox message={(error as Error).message} />
