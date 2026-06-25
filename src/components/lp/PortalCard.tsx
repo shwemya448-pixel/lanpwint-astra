@@ -1,17 +1,12 @@
-import { ArrowRight, GraduationCap, Briefcase, UserCheck } from "lucide-react";
+import { ArrowRight, GraduationCap, UserCheck } from "lucide-react";
 
-export type PortalKind = "undergrad" | "grad" | "candidate";
+export type PortalKind = "student" | "candidate";
 
 const META: Record<PortalKind, { title: string; desc: string; icon: typeof GraduationCap }> = {
-  undergrad: {
-    title: "Undergraduate",
-    desc: "Discover your passion, build skills, find scholarships, and craft a winning CV.",
+  student: {
+    title: "Students",
+    desc: "Discover your passion, build skills, find scholarships, craft a winning CV, and transition into your career.",
     icon: GraduationCap,
-  },
-  grad: {
-    title: "Graduate",
-    desc: "Transition into your career: strategy, fellowships, master's programs and beyond.",
-    icon: Briefcase,
   },
   candidate: {
     title: "Candidate",
