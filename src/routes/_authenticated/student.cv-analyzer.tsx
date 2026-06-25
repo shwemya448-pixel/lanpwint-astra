@@ -13,26 +13,38 @@ export const Route = createFileRoute("/_authenticated/student/cv-analyzer")({
   component: CVAnalyzerPage,
 });
 
-const SYSTEM = `You are a senior recruiter and career coach.
-Given a candidate's CV (text or image), produce a clean markdown report with:
+const SYSTEM = `You are a senior recruiter. Analyze the candidate's CV (text or image) and reply with STRICT JSON only — no markdown, no commentary.
 
-## Overall score
-A single number 0-100 and one-line verdict.
+Schema:
+{
+  "overall_score": number (0-100),
+  "verdict": string (one short sentence),
+  "scores": {
+    "clarity": number (0-100),
+    "experience": number (0-100),
+    "skills": number (0-100),
+    "education": number (0-100),
+    "impact": number (0-100)
+  },
+  "strengths": string[] (max 4, each <= 14 words),
+  "weaknesses": string[] (max 4, each <= 14 words),
+  "improvements": string[] (max 4, each <= 18 words, actionable),
+  "role_match": number | null (0-100, only if a target role is given, else null),
+  "role_match_reason": string | null
+}
 
-## Strengths
-- bullet points
+Keep each bullet short and concrete. Reply in the CV's language (English or Burmese).`;
 
-## Weaknesses
-- bullet points
-
-## Suggested improvements
-- specific, actionable rewrites where possible
-
-## Summary
-2-3 lines.
-
-If a target role is provided, end with **Match for this role: <0-100>%** and one line on why.
-Reply in the language of the CV (English or Burmese).`;
+type CVReport = {
+  overall_score: number;
+  verdict: string;
+  scores: Record<string, number>;
+  strengths: string[];
+  weaknesses: string[];
+  improvements: string[];
+  role_match: number | null;
+  role_match_reason: string | null;
+};
 
 function fileToDataUrl(file: File): Promise<string> {
   return new Promise((resolve, reject) => {
@@ -49,7 +61,7 @@ function CVAnalyzerPage() {
   const [target, setTarget] = useState("");
   const [imageDataUrl, setImageDataUrl] = useState<string | null>(null);
   const [imageName, setImageName] = useState<string | null>(null);
-  const [result, setResult] = useState("");
+  const [result, setResult] = useState<CVReport | null>(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -142,7 +154,7 @@ function CVAnalyzerPage() {
   }
 
   async function analyze() {
-    setError(""); setResult("");
+    setError(""); setResult(null);
     if (!cvText.trim() && !imageDataUrl) {
       setError("Add CV text, upload a photo, or capture one with the camera.");
       return;
@@ -154,9 +166,12 @@ function CVAnalyzerPage() {
         cvText ? `CV text:\n${cvText}` : "CV is provided as an image.",
       ].filter(Boolean).join("\n\n");
       const res = await ask({
-        data: { system: SYSTEM, prompt, imageDataUrl: imageDataUrl ?? undefined },
+        data: { system: SYSTEM, prompt, imageDataUrl: imageDataUrl ?? undefined, json: true },
       });
-      setResult(res.content || "No response received.");
+      const raw = (res.content || "").trim();
+      const cleaned = raw.replace(/^```json\s*/i, "").replace(/^```\s*/, "").replace(/```$/, "").trim();
+      const parsed = JSON.parse(cleaned) as CVReport;
+      setResult(parsed);
     } catch (e: any) {
       setError(e?.message ?? "Something went wrong.");
     } finally { setLoading(false); }
@@ -279,15 +294,89 @@ function CVAnalyzerPage() {
           {error && <span className="text-sm text-destructive">{error}</span>}
         </div>
 
-        {result && (
-          <article className={cn("mt-8 rounded-2xl border border-border bg-card p-6 lp-reveal")}>
-            <h2 className="font-serif text-2xl text-navy">AI report</h2>
-            <pre className="mt-3 whitespace-pre-wrap font-sans text-sm leading-relaxed text-foreground">
-              {result}
-            </pre>
-          </article>
-        )}
+        {result && <CVReportCard report={result} />}
       </section>
     </PageShell>
+  );
+}
+
+function ScoreBar({ label, value }: { label: string; value: number }) {
+  const v = Math.max(0, Math.min(100, Math.round(value)));
+  const tone =
+    v >= 80 ? "bg-emerald-500" : v >= 60 ? "bg-[color:var(--gold)]" : v >= 40 ? "bg-amber-500" : "bg-rose-500";
+  return (
+    <div>
+      <div className="mb-1 flex items-center justify-between text-xs">
+        <span className="capitalize text-muted-foreground">{label}</span>
+        <span className="font-semibold text-navy tabular-nums">{v}%</span>
+      </div>
+      <div className="h-2 w-full overflow-hidden rounded-full bg-muted">
+        <div className={cn("h-full rounded-full transition-all duration-700", tone)} style={{ width: `${v}%` }} />
+      </div>
+    </div>
+  );
+}
+
+function BulletList({ title, items, tone }: { title: string; items: string[]; tone: "good" | "bad" | "fix" }) {
+  if (!items?.length) return null;
+  const dot = tone === "good" ? "bg-emerald-500" : tone === "bad" ? "bg-rose-500" : "bg-[color:var(--gold)]";
+  return (
+    <div>
+      <h3 className="text-sm font-semibold text-navy">{title}</h3>
+      <ul className="mt-2 space-y-1.5">
+        {items.map((t, i) => (
+          <li key={i} className="flex gap-2 text-sm text-foreground">
+            <span className={cn("mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full", dot)} />
+            <span>{t}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+function CVReportCard({ report }: { report: CVReport }) {
+  const overall = Math.max(0, Math.min(100, Math.round(report.overall_score ?? 0)));
+  return (
+    <article className="mt-8 rounded-2xl border border-border bg-card p-6 lp-reveal">
+      <div className="flex flex-wrap items-center gap-6">
+        <div className="relative grid h-28 w-28 place-items-center">
+          <svg viewBox="0 0 36 36" className="absolute inset-0 h-full w-full -rotate-90">
+            <circle cx="18" cy="18" r="15.9" fill="none" stroke="hsl(var(--muted))" strokeWidth="3" />
+            <circle
+              cx="18" cy="18" r="15.9" fill="none"
+              stroke="var(--gold)" strokeWidth="3" strokeLinecap="round"
+              strokeDasharray={`${overall}, 100`}
+            />
+          </svg>
+          <div className="text-center">
+            <div className="font-serif text-3xl text-navy tabular-nums">{overall}</div>
+            <div className="text-[10px] uppercase tracking-wider text-muted-foreground">Overall</div>
+          </div>
+        </div>
+        <div className="flex-1 min-w-[200px]">
+          <p className="text-xs uppercase tracking-[0.2em] page-gold">AI Verdict</p>
+          <p className="mt-1 font-serif text-xl text-navy">{report.verdict}</p>
+          {report.role_match != null && (
+            <p className="mt-2 text-sm text-muted-foreground">
+              <span className="font-semibold text-navy">Role match: {Math.round(report.role_match)}%</span>
+              {report.role_match_reason ? ` — ${report.role_match_reason}` : ""}
+            </p>
+          )}
+        </div>
+      </div>
+
+      <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+        {Object.entries(report.scores ?? {}).map(([k, v]) => (
+          <ScoreBar key={k} label={k} value={Number(v) || 0} />
+        ))}
+      </div>
+
+      <div className="mt-6 grid gap-6 md:grid-cols-3">
+        <BulletList title="Strengths" items={report.strengths ?? []} tone="good" />
+        <BulletList title="Weaknesses" items={report.weaknesses ?? []} tone="bad" />
+        <BulletList title="Improvements" items={report.improvements ?? []} tone="fix" />
+      </div>
+    </article>
   );
 }
