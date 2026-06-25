@@ -129,6 +129,29 @@ function ProfilePage() {
           <Field label="Short bio"><Textarea rows={3} value={form.bio} onChange={(e) => setForm({ ...form, bio: e.target.value })} maxLength={500} /></Field>
         </Section>
 
+        {isEmployer && (
+          <Section title="Company info">
+            <Grid>
+              <Field label="Company name">
+                <Input
+                  value={form.company_name}
+                  onChange={(e) => setForm({ ...form, company_name: e.target.value })}
+                  placeholder="e.g. Lan Pwint Co., Ltd."
+                  maxLength={120}
+                />
+              </Field>
+              <Field label="Your position">
+                <Input
+                  value={form.position}
+                  onChange={(e) => setForm({ ...form, position: e.target.value })}
+                  placeholder="e.g. HR Manager, Founder"
+                  maxLength={120}
+                />
+              </Field>
+            </Grid>
+          </Section>
+        )}
+
         <Section title="Education">
           <Grid>
             <Field label="Current school / University"><Input value={form.school} onChange={(e) => setForm({ ...form, school: e.target.value })} maxLength={120} /></Field>
