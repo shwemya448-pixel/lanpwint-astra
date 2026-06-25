@@ -3,7 +3,7 @@ import type { PortalKind } from "./PortalCard";
 
 const LABEL: Record<PortalKind, string> = {
   student: "Candidates",
-  candidate: "Candidate",
+  candidate: "Employers",
 };
 
 export function PortalTransition({ portal, onDone }: { portal: PortalKind; onDone: () => void }) {
