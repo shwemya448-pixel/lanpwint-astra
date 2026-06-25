@@ -52,40 +52,58 @@ type Insights = {
 
 function AdminDashboard() {
   const { viewRole, setViewRole } = useViewRole();
+  const navigate = useNavigate();
   const { data, isLoading, error } = useQuery({
     queryKey: ["admin-insights"],
     queryFn: fetchInsights,
     staleTime: 60_000,
   });
 
+  function onPickRole(r: AppRole) {
+    setViewRole(r);
+    if (r === "student") navigate({ to: "/student/dashboard" });
+    else if (r === "employer") navigate({ to: "/employer/dashboard" });
+  }
+
   return (
-    <section className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-      <div className="flex flex-wrap items-end justify-between gap-3">
+    <section className="relative mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+      {/* ambient glow */}
+      <div aria-hidden className="pointer-events-none absolute inset-x-0 -top-10 h-72 bg-[radial-gradient(60%_60%_at_50%_0%,color-mix(in_oklab,var(--gold)_18%,transparent),transparent_70%)]" />
+
+      <div className="relative flex flex-wrap items-end justify-between gap-4">
         <div>
-          <div className="flex items-center gap-2 text-[color:var(--gold)]">
-            <Shield className="h-4 w-4" />
-            <span className="text-[11px] uppercase tracking-[0.22em]">Insights</span>
+          <div className="inline-flex items-center gap-2 rounded-full border border-[color:var(--gold)]/30 bg-[color:var(--gold)]/10 px-3 py-1 text-[color:var(--gold)]">
+            <Sparkles className="h-3.5 w-3.5" />
+            <span className="text-[10px] font-semibold uppercase tracking-[0.28em]">Insights</span>
           </div>
-          <h1 className="mt-1 font-serif text-3xl text-navy sm:text-4xl">Lan Pwint</h1>
-          <p className="mt-1 max-w-2xl text-sm text-muted-foreground">
+          <h1 className="mt-3 font-serif text-4xl text-navy sm:text-5xl">Lan Pwint</h1>
+          <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
             A live snapshot of who's using the platform, what they're doing, and where it's growing.
           </p>
         </div>
-        <div className="flex flex-wrap items-center gap-1 rounded-full border border-border bg-card p-1">
-          <span className="px-2 text-xs text-muted-foreground">View as</span>
-          {(["admin", "student", "employer"] as AppRole[]).map((r) => (
-            <Button
-              key={r}
-              size="sm"
-              variant={viewRole === r ? "default" : "ghost"}
-              onClick={() => setViewRole(r)}
-              className={viewRole === r ? "bg-navy text-navy-foreground hover:bg-deep" : ""}
-            >
-              <span className="capitalize">{r}</span>
-            </Button>
-          ))}
+        <div className="inline-flex items-center gap-1 rounded-full border border-border bg-card/60 p-1 shadow-sm backdrop-blur">
+          <span className="px-3 text-[11px] uppercase tracking-wider text-muted-foreground">View as</span>
+          {(["admin", "student", "employer"] as AppRole[]).map((r) => {
+            const active = viewRole === r;
+            return (
+              <button
+                key={r}
+                type="button"
+                onClick={() => onPickRole(r)}
+                className={
+                  "rounded-full px-4 py-1.5 text-xs font-medium capitalize transition-all " +
+                  (active
+                    ? "bg-gradient-to-r from-navy to-deep text-navy-foreground shadow-md shadow-navy/30"
+                    : "text-muted-foreground hover:bg-muted hover:text-foreground")
+                }
+              >
+                {r}
+              </button>
+            );
+          })}
         </div>
       </div>
+
 
       {error ? (
         <ErrorBox message={(error as Error).message} />
