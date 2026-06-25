@@ -47,12 +47,17 @@ import { Route as AuthenticatedEmployerMessagesRouteImport } from './routes/_aut
 import { Route as AuthenticatedEmployerJobMapRouteImport } from './routes/_authenticated/employer.job-map'
 import { Route as AuthenticatedEmployerDashboardRouteImport } from './routes/_authenticated/employer.dashboard'
 import { Route as AuthenticatedEmployerApplicationsRouteImport } from './routes/_authenticated/employer.applications'
+import { Route as AuthenticatedAdminUsersRouteImport } from './routes/_authenticated/admin.users'
 import { Route as AuthenticatedAdminNewsRouteImport } from './routes/_authenticated/admin.news'
+import { Route as AuthenticatedAdminLearnRouteImport } from './routes/_authenticated/admin.learn'
 import { Route as AuthenticatedAdminDashboardRouteImport } from './routes/_authenticated/admin.dashboard'
+import { Route as AuthenticatedAdminApplicationsRouteImport } from './routes/_authenticated/admin.applications'
 import { Route as AuthenticatedStudentJobsIndexRouteImport } from './routes/_authenticated/student.jobs.index'
 import { Route as AuthenticatedEmployerJobsIndexRouteImport } from './routes/_authenticated/employer.jobs.index'
+import { Route as AuthenticatedAdminJobsIndexRouteImport } from './routes/_authenticated/admin.jobs.index'
 import { Route as AuthenticatedStudentJobsJobIdRouteImport } from './routes/_authenticated/student.jobs.$jobId'
 import { Route as AuthenticatedEmployerJobsNewRouteImport } from './routes/_authenticated/employer.jobs.new'
+import { Route as AuthenticatedAdminJobsNewRouteImport } from './routes/_authenticated/admin.jobs.new'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
@@ -258,15 +263,31 @@ const AuthenticatedEmployerApplicationsRoute =
     path: '/applications',
     getParentRoute: () => AuthenticatedEmployerRoute,
   } as any)
+const AuthenticatedAdminUsersRoute = AuthenticatedAdminUsersRouteImport.update({
+  id: '/users',
+  path: '/users',
+  getParentRoute: () => AuthenticatedAdminRoute,
+} as any)
 const AuthenticatedAdminNewsRoute = AuthenticatedAdminNewsRouteImport.update({
   id: '/news',
   path: '/news',
+  getParentRoute: () => AuthenticatedAdminRoute,
+} as any)
+const AuthenticatedAdminLearnRoute = AuthenticatedAdminLearnRouteImport.update({
+  id: '/learn',
+  path: '/learn',
   getParentRoute: () => AuthenticatedAdminRoute,
 } as any)
 const AuthenticatedAdminDashboardRoute =
   AuthenticatedAdminDashboardRouteImport.update({
     id: '/dashboard',
     path: '/dashboard',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminApplicationsRoute =
+  AuthenticatedAdminApplicationsRouteImport.update({
+    id: '/applications',
+    path: '/applications',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
 const AuthenticatedStudentJobsIndexRoute =
@@ -281,6 +302,12 @@ const AuthenticatedEmployerJobsIndexRoute =
     path: '/jobs/',
     getParentRoute: () => AuthenticatedEmployerRoute,
   } as any)
+const AuthenticatedAdminJobsIndexRoute =
+  AuthenticatedAdminJobsIndexRouteImport.update({
+    id: '/jobs/',
+    path: '/jobs/',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
 const AuthenticatedStudentJobsJobIdRoute =
   AuthenticatedStudentJobsJobIdRouteImport.update({
     id: '/jobs/$jobId',
@@ -292,6 +319,12 @@ const AuthenticatedEmployerJobsNewRoute =
     id: '/jobs/new',
     path: '/jobs/new',
     getParentRoute: () => AuthenticatedEmployerRoute,
+  } as any)
+const AuthenticatedAdminJobsNewRoute =
+  AuthenticatedAdminJobsNewRouteImport.update({
+    id: '/jobs/new',
+    path: '/jobs/new',
+    getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
 
 export interface FileRoutesByFullPath {
@@ -318,8 +351,11 @@ export interface FileRoutesByFullPath {
   '/news/$slug': typeof NewsSlugRoute
   '/candidates/': typeof CandidatesIndexRoute
   '/graduates/': typeof GraduatesIndexRoute
+  '/admin/applications': typeof AuthenticatedAdminApplicationsRoute
   '/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
+  '/admin/learn': typeof AuthenticatedAdminLearnRoute
   '/admin/news': typeof AuthenticatedAdminNewsRoute
+  '/admin/users': typeof AuthenticatedAdminUsersRoute
   '/employer/applications': typeof AuthenticatedEmployerApplicationsRoute
   '/employer/dashboard': typeof AuthenticatedEmployerDashboardRoute
   '/employer/job-map': typeof AuthenticatedEmployerJobMapRoute
@@ -334,8 +370,10 @@ export interface FileRoutesByFullPath {
   '/admin/': typeof AuthenticatedAdminIndexRoute
   '/employer/': typeof AuthenticatedEmployerIndexRoute
   '/student/': typeof AuthenticatedStudentIndexRoute
+  '/admin/jobs/new': typeof AuthenticatedAdminJobsNewRoute
   '/employer/jobs/new': typeof AuthenticatedEmployerJobsNewRoute
   '/student/jobs/$jobId': typeof AuthenticatedStudentJobsJobIdRoute
+  '/admin/jobs/': typeof AuthenticatedAdminJobsIndexRoute
   '/employer/jobs/': typeof AuthenticatedEmployerJobsIndexRoute
   '/student/jobs/': typeof AuthenticatedStudentJobsIndexRoute
 }
@@ -358,8 +396,11 @@ export interface FileRoutesByTo {
   '/news/$slug': typeof NewsSlugRoute
   '/candidates': typeof CandidatesIndexRoute
   '/graduates': typeof GraduatesIndexRoute
+  '/admin/applications': typeof AuthenticatedAdminApplicationsRoute
   '/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
+  '/admin/learn': typeof AuthenticatedAdminLearnRoute
   '/admin/news': typeof AuthenticatedAdminNewsRoute
+  '/admin/users': typeof AuthenticatedAdminUsersRoute
   '/employer/applications': typeof AuthenticatedEmployerApplicationsRoute
   '/employer/dashboard': typeof AuthenticatedEmployerDashboardRoute
   '/employer/job-map': typeof AuthenticatedEmployerJobMapRoute
@@ -374,8 +415,10 @@ export interface FileRoutesByTo {
   '/admin': typeof AuthenticatedAdminIndexRoute
   '/employer': typeof AuthenticatedEmployerIndexRoute
   '/student': typeof AuthenticatedStudentIndexRoute
+  '/admin/jobs/new': typeof AuthenticatedAdminJobsNewRoute
   '/employer/jobs/new': typeof AuthenticatedEmployerJobsNewRoute
   '/student/jobs/$jobId': typeof AuthenticatedStudentJobsJobIdRoute
+  '/admin/jobs': typeof AuthenticatedAdminJobsIndexRoute
   '/employer/jobs': typeof AuthenticatedEmployerJobsIndexRoute
   '/student/jobs': typeof AuthenticatedStudentJobsIndexRoute
 }
@@ -405,8 +448,11 @@ export interface FileRoutesById {
   '/news/$slug': typeof NewsSlugRoute
   '/candidates/': typeof CandidatesIndexRoute
   '/graduates/': typeof GraduatesIndexRoute
+  '/_authenticated/admin/applications': typeof AuthenticatedAdminApplicationsRoute
   '/_authenticated/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
+  '/_authenticated/admin/learn': typeof AuthenticatedAdminLearnRoute
   '/_authenticated/admin/news': typeof AuthenticatedAdminNewsRoute
+  '/_authenticated/admin/users': typeof AuthenticatedAdminUsersRoute
   '/_authenticated/employer/applications': typeof AuthenticatedEmployerApplicationsRoute
   '/_authenticated/employer/dashboard': typeof AuthenticatedEmployerDashboardRoute
   '/_authenticated/employer/job-map': typeof AuthenticatedEmployerJobMapRoute
@@ -421,8 +467,10 @@ export interface FileRoutesById {
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
   '/_authenticated/employer/': typeof AuthenticatedEmployerIndexRoute
   '/_authenticated/student/': typeof AuthenticatedStudentIndexRoute
+  '/_authenticated/admin/jobs/new': typeof AuthenticatedAdminJobsNewRoute
   '/_authenticated/employer/jobs/new': typeof AuthenticatedEmployerJobsNewRoute
   '/_authenticated/student/jobs/$jobId': typeof AuthenticatedStudentJobsJobIdRoute
+  '/_authenticated/admin/jobs/': typeof AuthenticatedAdminJobsIndexRoute
   '/_authenticated/employer/jobs/': typeof AuthenticatedEmployerJobsIndexRoute
   '/_authenticated/student/jobs/': typeof AuthenticatedStudentJobsIndexRoute
 }
@@ -452,8 +500,11 @@ export interface FileRouteTypes {
     | '/news/$slug'
     | '/candidates/'
     | '/graduates/'
+    | '/admin/applications'
     | '/admin/dashboard'
+    | '/admin/learn'
     | '/admin/news'
+    | '/admin/users'
     | '/employer/applications'
     | '/employer/dashboard'
     | '/employer/job-map'
@@ -468,8 +519,10 @@ export interface FileRouteTypes {
     | '/admin/'
     | '/employer/'
     | '/student/'
+    | '/admin/jobs/new'
     | '/employer/jobs/new'
     | '/student/jobs/$jobId'
+    | '/admin/jobs/'
     | '/employer/jobs/'
     | '/student/jobs/'
   fileRoutesByTo: FileRoutesByTo
@@ -492,8 +545,11 @@ export interface FileRouteTypes {
     | '/news/$slug'
     | '/candidates'
     | '/graduates'
+    | '/admin/applications'
     | '/admin/dashboard'
+    | '/admin/learn'
     | '/admin/news'
+    | '/admin/users'
     | '/employer/applications'
     | '/employer/dashboard'
     | '/employer/job-map'
@@ -508,8 +564,10 @@ export interface FileRouteTypes {
     | '/admin'
     | '/employer'
     | '/student'
+    | '/admin/jobs/new'
     | '/employer/jobs/new'
     | '/student/jobs/$jobId'
+    | '/admin/jobs'
     | '/employer/jobs'
     | '/student/jobs'
   id:
@@ -538,8 +596,11 @@ export interface FileRouteTypes {
     | '/news/$slug'
     | '/candidates/'
     | '/graduates/'
+    | '/_authenticated/admin/applications'
     | '/_authenticated/admin/dashboard'
+    | '/_authenticated/admin/learn'
     | '/_authenticated/admin/news'
+    | '/_authenticated/admin/users'
     | '/_authenticated/employer/applications'
     | '/_authenticated/employer/dashboard'
     | '/_authenticated/employer/job-map'
@@ -554,8 +615,10 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/'
     | '/_authenticated/employer/'
     | '/_authenticated/student/'
+    | '/_authenticated/admin/jobs/new'
     | '/_authenticated/employer/jobs/new'
     | '/_authenticated/student/jobs/$jobId'
+    | '/_authenticated/admin/jobs/'
     | '/_authenticated/employer/jobs/'
     | '/_authenticated/student/jobs/'
   fileRoutesById: FileRoutesById
@@ -841,6 +904,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedEmployerApplicationsRouteImport
       parentRoute: typeof AuthenticatedEmployerRoute
     }
+    '/_authenticated/admin/users': {
+      id: '/_authenticated/admin/users'
+      path: '/users'
+      fullPath: '/admin/users'
+      preLoaderRoute: typeof AuthenticatedAdminUsersRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
     '/_authenticated/admin/news': {
       id: '/_authenticated/admin/news'
       path: '/news'
@@ -848,11 +918,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminNewsRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/_authenticated/admin/learn': {
+      id: '/_authenticated/admin/learn'
+      path: '/learn'
+      fullPath: '/admin/learn'
+      preLoaderRoute: typeof AuthenticatedAdminLearnRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
     '/_authenticated/admin/dashboard': {
       id: '/_authenticated/admin/dashboard'
       path: '/dashboard'
       fullPath: '/admin/dashboard'
       preLoaderRoute: typeof AuthenticatedAdminDashboardRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/applications': {
+      id: '/_authenticated/admin/applications'
+      path: '/applications'
+      fullPath: '/admin/applications'
+      preLoaderRoute: typeof AuthenticatedAdminApplicationsRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
     '/_authenticated/student/jobs/': {
@@ -869,6 +953,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedEmployerJobsIndexRouteImport
       parentRoute: typeof AuthenticatedEmployerRoute
     }
+    '/_authenticated/admin/jobs/': {
+      id: '/_authenticated/admin/jobs/'
+      path: '/jobs'
+      fullPath: '/admin/jobs/'
+      preLoaderRoute: typeof AuthenticatedAdminJobsIndexRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
     '/_authenticated/student/jobs/$jobId': {
       id: '/_authenticated/student/jobs/$jobId'
       path: '/jobs/$jobId'
@@ -883,19 +974,36 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedEmployerJobsNewRouteImport
       parentRoute: typeof AuthenticatedEmployerRoute
     }
+    '/_authenticated/admin/jobs/new': {
+      id: '/_authenticated/admin/jobs/new'
+      path: '/jobs/new'
+      fullPath: '/admin/jobs/new'
+      preLoaderRoute: typeof AuthenticatedAdminJobsNewRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
   }
 }
 
 interface AuthenticatedAdminRouteChildren {
+  AuthenticatedAdminApplicationsRoute: typeof AuthenticatedAdminApplicationsRoute
   AuthenticatedAdminDashboardRoute: typeof AuthenticatedAdminDashboardRoute
+  AuthenticatedAdminLearnRoute: typeof AuthenticatedAdminLearnRoute
   AuthenticatedAdminNewsRoute: typeof AuthenticatedAdminNewsRoute
+  AuthenticatedAdminUsersRoute: typeof AuthenticatedAdminUsersRoute
   AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
+  AuthenticatedAdminJobsNewRoute: typeof AuthenticatedAdminJobsNewRoute
+  AuthenticatedAdminJobsIndexRoute: typeof AuthenticatedAdminJobsIndexRoute
 }
 
 const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
+  AuthenticatedAdminApplicationsRoute: AuthenticatedAdminApplicationsRoute,
   AuthenticatedAdminDashboardRoute: AuthenticatedAdminDashboardRoute,
+  AuthenticatedAdminLearnRoute: AuthenticatedAdminLearnRoute,
   AuthenticatedAdminNewsRoute: AuthenticatedAdminNewsRoute,
+  AuthenticatedAdminUsersRoute: AuthenticatedAdminUsersRoute,
   AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
+  AuthenticatedAdminJobsNewRoute: AuthenticatedAdminJobsNewRoute,
+  AuthenticatedAdminJobsIndexRoute: AuthenticatedAdminJobsIndexRoute,
 }
 
 const AuthenticatedAdminRouteWithChildren =

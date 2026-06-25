@@ -67,8 +67,14 @@ function AdminLearn() {
       (youtubeId ? `https://img.youtube.com/vi/${youtubeId}/hqdefault.jpg` : null);
 
     const payload = {
-      ...editing,
+      title: editing.title.trim(),
+      video_url: editing.video_url!.trim(),
+      description: editing.description ?? null,
+      category: editing.category ?? null,
+      level: editing.level ?? null,
+      duration_minutes: editing.duration_minutes ?? null,
       thumbnail_url: thumbnail,
+      published: editing.published,
       created_by: user.id,
     };
     const { error } = editing.id
