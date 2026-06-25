@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import logoMark from "@/assets/logo-mark.png";
+import animeMascot from "@/assets/anime-mascot.png";
 
 const search = z.object({
   as: z.enum(["student", "employer"]).optional().default("student"),
@@ -112,6 +113,17 @@ function AuthPage() {
       <div className="auth-orb auth-orb-1" aria-hidden />
       <div className="auth-orb auth-orb-2" aria-hidden />
       <div className="auth-orb auth-orb-3" aria-hidden />
+
+      {/* Flying anime mascot */}
+      <img
+        src={animeMascot}
+        alt=""
+        aria-hidden
+        className="auth-mascot pointer-events-none select-none"
+      />
+      <span className="auth-mascot-trail auth-mascot-trail-1" aria-hidden />
+      <span className="auth-mascot-trail auth-mascot-trail-2" aria-hidden />
+      <span className="auth-mascot-trail auth-mascot-trail-3" aria-hidden />
 
       <div className="relative z-10 grid min-h-screen lg:grid-cols-[1.05fr_1fr]">
         {/* Left: brand showcase */}
