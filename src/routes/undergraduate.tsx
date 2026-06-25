@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { BookOpen, Bot, CheckCircle2, MessageSquareText, PlayCircle } from "lucide-react";
 import { PageHeader, PageShell } from "@/components/page-shell";
+import { PageNav } from "@/components/page-nav";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
@@ -74,9 +75,14 @@ function UndergradPage() {
         title="Prepare for the career that's coming next"
         description="Learn from real internship experiences. Track your progress through structured courses. Ask the AI career assistant anything you don't understand."
       />
+      <PageNav items={[
+        { id: "ai-assistant", label: "AI Career Assistant" },
+        { id: "learning-center", label: "Learning Center" },
+        { id: "internship-stories", label: "Internship Stories" },
+      ]} />
 
       {/* AI Assistant */}
-      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+      <section id="ai-assistant" className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
         <div className="grid gap-8 rounded-2xl border border-border bg-card p-8 lg:grid-cols-5 lg:p-12">
           <div className="lg:col-span-3">
             <Badge variant="secondary" className="bg-teal/15 text-teal hover:bg-teal/20">
@@ -110,7 +116,7 @@ function UndergradPage() {
       </section>
 
       {/* Learning Center */}
-      <section className="bg-muted/40 border-y border-border">
+      <section id="learning-center" className="bg-muted/40 border-y border-border">
         <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
           <div className="flex flex-wrap items-end justify-between gap-4">
             <div>
@@ -150,7 +156,7 @@ function UndergradPage() {
       </section>
 
       {/* Internship stories */}
-      <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
+      <section id="internship-stories" className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
             <p className="text-xs uppercase tracking-[0.22em] text-teal">Internship stories</p>
