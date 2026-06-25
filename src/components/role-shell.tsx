@@ -49,7 +49,7 @@ const EMPLOYER_NAV: NavItem[] = [
   { to: "/employer/jobs/new", label: "Post job", icon: Plus },
   { to: "/employer/jobs", label: "My jobs", icon: Briefcase },
   { to: "/employer/job-map", label: "Job map", icon: MapPin },
-  { to: "/employer/cv-board", label: "CV Board", icon: Users },
+  
   { to: "/employer/applications", label: "Applications", icon: FileText },
   { to: "/employer/messages", label: "Messages", icon: MessageSquare },
 ];
