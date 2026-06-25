@@ -75,7 +75,7 @@ function JobDetail() {
 
       toast.success("Application submitted!");
       qc.invalidateQueries({ queryKey: ["my-app", jobId, user.id] });
-      navigate({ to: "/applications" });
+      navigate({ to: "/student/applications" });
     } catch (e: any) {
       toast.error(e.message ?? "Could not submit application");
     } finally {
