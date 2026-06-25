@@ -17,6 +17,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { LocaleProvider } from "@/lib/i18n";
 import { ViewRoleProvider } from "@/lib/view-role";
 import { ScreenshotGuard } from "@/components/screenshot-guard";
+import { BotMascot } from "@/components/bot-mascot";
 import { lazy, Suspense } from "react";
 import { useLocale } from "@/lib/i18n";
 const AutoTranslator = lazy(() =>
@@ -118,7 +119,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Karla:wght@300;400;500;600;700&display=swap",
       },
     ],
   }),
@@ -164,6 +165,7 @@ function RootComponent() {
             <LazyTranslator />
             <ScreenshotGuard />
             <Outlet />
+            <BotMascot />
             <Toaster richColors position="top-right" />
           </QueryClientProvider>
         </ViewRoleProvider>

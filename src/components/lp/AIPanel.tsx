@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Sparkles, Send } from "lucide-react";
 import { useServerFn } from "@tanstack/react-start";
 import { askGemini } from "@/lib/ai-gemini.functions";
+import compassSprite from "@/assets/compass-sprite.png";
 
 export function AIPanel({
   title,
@@ -37,13 +38,24 @@ export function AIPanel({
   };
 
   return (
-    <div className="lp-card p-4 sm:p-6">
-      <div className="flex items-center gap-2 mb-1 flex-wrap">
-        <Sparkles className="h-4 w-4 text-[color:var(--gold)] shrink-0" />
-        <h3 className="font-bold text-sm sm:text-base">{title}</h3>
-        <span className="ml-auto text-[10px] uppercase tracking-[0.2em] text-[color:var(--gold)]">AI · Preview</span>
+    <div className="lp-card lp-tilt p-4 sm:p-6 relative overflow-hidden">
+      <div className="lp-sheen" aria-hidden />
+      <div className="flex items-center gap-3 mb-1 flex-wrap">
+        <img
+          src={compassSprite}
+          alt=""
+          width={44}
+          height={44}
+          loading="lazy"
+          className="h-11 w-11 lp-float drop-shadow-[0_4px_12px_color-mix(in_oklab,var(--gold)_55%,transparent)] shrink-0"
+        />
+        <div className="flex flex-col">
+          <h3 className="font-serif text-lg sm:text-xl leading-tight">{title}</h3>
+          <span className="text-[10px] uppercase tracking-[0.25em] lp-shimmer-text font-semibold">Pwint · AI Companion</span>
+        </div>
+        <Sparkles className="ml-auto h-4 w-4 text-[color:var(--gold)] shrink-0" />
       </div>
-      <p className="text-xs text-muted-foreground mb-4">{hint}</p>
+      <p className="text-xs text-muted-foreground mb-4 mt-2">{hint}</p>
       <form onSubmit={send} className="flex flex-col sm:flex-row gap-2">
         <input
           value={input}
