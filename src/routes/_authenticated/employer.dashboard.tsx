@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Briefcase, FileText, MapPin, MessageSquare, Plus, Users } from "lucide-react";
+import { Briefcase, FileText, MapPin, MessageSquare, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/_authenticated/employer/dashboard")({
@@ -11,9 +11,8 @@ const TILES = [
   { icon: Plus, title: "Post a new job", body: "Open roles published in minutes.", to: "/employer/jobs/new", cta: "Create post" },
   { icon: Briefcase, title: "My job posts", body: "Edit, close, or reopen your roles.", to: "/employer/jobs", cta: "View posts" },
   { icon: MapPin, title: "Job map", body: "Pin your jobs on the Myanmar map.", to: "/employer/job-map", cta: "Open map" },
-  { icon: Users, title: "CV Board", body: "Browse real student profiles.", to: "/employer/cv-board", cta: "Browse CVs" },
-  { icon: FileText, title: "Applications", body: "Review CVs and send offers.", to: "/employer/applications", cta: "Review" },
-  { icon: MessageSquare, title: "Messages", body: "Realtime chat with candidates.", to: "/employer/messages", cta: "Open messages" },
+  { icon: FileText, title: "Applications", body: "Student profiles unlock as soon as they apply.", to: "/employer/applications", cta: "Review" },
+  { icon: MessageSquare, title: "Messages", body: "Chat with candidates who reach out or apply.", to: "/employer/messages", cta: "Open messages" },
 ];
 
 function EmployerDashboard() {
