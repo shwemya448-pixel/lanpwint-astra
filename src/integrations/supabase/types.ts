@@ -323,6 +323,7 @@ export type Database = {
           cv_url: string | null
           degree: string | null
           education: Json | null
+          employer_status: string
           full_name: string | null
           graduation_year: number | null
           headline: string | null
@@ -344,6 +345,7 @@ export type Database = {
           cv_url?: string | null
           degree?: string | null
           education?: Json | null
+          employer_status?: string
           full_name?: string | null
           graduation_year?: number | null
           headline?: string | null
@@ -365,6 +367,7 @@ export type Database = {
           cv_url?: string | null
           degree?: string | null
           education?: Json | null
+          employer_status?: string
           full_name?: string | null
           graduation_year?: number | null
           headline?: string | null

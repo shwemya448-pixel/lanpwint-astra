@@ -1,8 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useQuery } from "@tanstack/react-query";
-import { Users } from "lucide-react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { Users, Check, X, Clock } from "lucide-react";
+import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/_authenticated/admin/users")({
   head: () => ({ meta: [{ title: "Admin · Users — Lan Pwint" }] }),
@@ -10,11 +12,12 @@ export const Route = createFileRoute("/_authenticated/admin/users")({
 });
 
 function AdminUsers() {
+  const qc = useQueryClient();
   const { data, isLoading, error } = useQuery({
     queryKey: ["admin-users"],
     queryFn: async () => {
       const [{ data: profiles, error: e1 }, { data: roles, error: e2 }] = await Promise.all([
-        supabase.from("profiles").select("id, full_name, contact_email, location, school, created_at").order("created_at", { ascending: false }),
+        (supabase.from("profiles").select("id, full_name, contact_email, location, school, created_at, employer_status, company_name").order("created_at", { ascending: false }) as any),
         supabase.from("user_roles").select("user_id, role"),
       ]);
       if (e1) throw e1;
@@ -25,14 +28,26 @@ function AdminUsers() {
         list.push(r.role);
         rolesByUser.set(r.user_id, list);
       }
-      return (profiles ?? []).map((p) => ({ ...p, roles: rolesByUser.get(p.id) ?? [] }));
+      return ((profiles ?? []) as any[]).map((p) => ({ ...p, roles: rolesByUser.get(p.id) ?? [] }));
     },
+  });
+
+  const setStatus = useMutation({
+    mutationFn: async ({ id, status }: { id: string; status: "approved" | "rejected" | "pending" }) => {
+      const { error: err } = await (supabase.from("profiles").update({ employer_status: status } as any).eq("id", id) as any);
+      if (err) throw err;
+    },
+    onSuccess: (_d, vars) => {
+      toast.success(`Employer ${vars.status}`);
+      qc.invalidateQueries({ queryKey: ["admin-users"] });
+    },
+    onError: (e: Error) => toast.error(e.message),
   });
 
   return (
     <section className="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
       <h1 className="font-serif text-3xl text-navy">Users</h1>
-      <p className="mt-1 text-sm text-muted-foreground">Everyone on Lan Pwint.</p>
+      <p className="mt-1 text-sm text-muted-foreground">Approve employer accounts and view everyone on Lan Pwint.</p>
 
       {error ? (
         <p className="mt-6 text-sm text-destructive">{(error as Error).message}</p>
@@ -51,26 +66,67 @@ function AdminUsers() {
                 <th className="px-4 py-3">Name</th>
                 <th className="px-4 py-3">Email</th>
                 <th className="px-4 py-3">Roles</th>
-                <th className="px-4 py-3">Location</th>
-                <th className="px-4 py-3">School</th>
+                <th className="px-4 py-3">Company</th>
+                <th className="px-4 py-3">Employer status</th>
+                <th className="px-4 py-3 text-right">Actions</th>
               </tr>
             </thead>
             <tbody>
-              {data.map((u, i) => (
-                <tr key={u.id} className="lp-table-row border-t border-border" style={{ animationDelay: `${Math.min(i * 40, 600)}ms` }}>
-                  <td className="px-4 py-3 font-medium text-navy">{u.full_name || "—"}</td>
-                  <td className="px-4 py-3 text-muted-foreground">{u.contact_email}</td>
-                  <td className="px-4 py-3">
-                    <div className="flex flex-wrap gap-1">
-                      {u.roles.length === 0
-                        ? <span className="text-muted-foreground">—</span>
-                        : u.roles.map((r) => <Badge key={r} variant="outline" className="capitalize">{r}</Badge>)}
-                    </div>
-                  </td>
-                  <td className="px-4 py-3 text-muted-foreground">{u.location || "—"}</td>
-                  <td className="px-4 py-3 text-muted-foreground">{u.school || "—"}</td>
-                </tr>
-              ))}
+              {data.map((u: any, i: number) => {
+                const isEmployer = u.roles.includes("employer");
+                const status: string = u.employer_status ?? "approved";
+                return (
+                  <tr key={u.id} className="lp-table-row border-t border-border" style={{ animationDelay: `${Math.min(i * 40, 600)}ms` }}>
+                    <td className="px-4 py-3 font-medium text-navy">{u.full_name || "—"}</td>
+                    <td className="px-4 py-3 text-muted-foreground">{u.contact_email}</td>
+                    <td className="px-4 py-3">
+                      <div className="flex flex-wrap gap-1">
+                        {u.roles.length === 0
+                          ? <span className="text-muted-foreground">—</span>
+                          : u.roles.map((r: string) => <Badge key={r} variant="outline" className="capitalize">{r}</Badge>)}
+                      </div>
+                    </td>
+                    <td className="px-4 py-3 text-muted-foreground">{u.company_name || "—"}</td>
+                    <td className="px-4 py-3">
+                      {isEmployer ? (
+                        <Badge
+                          variant="outline"
+                          className={
+                            status === "approved"
+                              ? "border-green-500/40 bg-green-500/10 text-green-700 dark:text-green-300"
+                              : status === "rejected"
+                              ? "border-red-500/40 bg-red-500/10 text-red-700 dark:text-red-300"
+                              : "border-amber-500/40 bg-amber-500/10 text-amber-700 dark:text-amber-300"
+                          }
+                        >
+                          {status === "pending" && <Clock className="mr-1 h-3 w-3" />}
+                          {status === "approved" && <Check className="mr-1 h-3 w-3" />}
+                          {status === "rejected" && <X className="mr-1 h-3 w-3" />}
+                          {status}
+                        </Badge>
+                      ) : (
+                        <span className="text-muted-foreground">—</span>
+                      )}
+                    </td>
+                    <td className="px-4 py-3">
+                      {isEmployer ? (
+                        <div className="flex justify-end gap-2">
+                          {status !== "approved" && (
+                            <Button size="sm" variant="default" disabled={setStatus.isPending} onClick={() => setStatus.mutate({ id: u.id, status: "approved" })}>
+                              <Check className="mr-1 h-3.5 w-3.5" /> Approve
+                            </Button>
+                          )}
+                          {status !== "rejected" && (
+                            <Button size="sm" variant="outline" disabled={setStatus.isPending} onClick={() => setStatus.mutate({ id: u.id, status: "rejected" })}>
+                              <X className="mr-1 h-3.5 w-3.5" /> Reject
+                            </Button>
+                          )}
+                        </div>
+                      ) : null}
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>

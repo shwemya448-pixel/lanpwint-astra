@@ -69,11 +69,45 @@ function AuthPage() {
             } as any)
             .eq("id", signUpData.user.id);
         }
-        toast.success("Account created. Check your email if confirmation is required.");
-        navigate({ to: "/dashboard" });
+        if (role === "employer") {
+          await supabase.auth.signOut();
+          toast.success("Account created. An admin will review your employer account — you can sign in once it's approved.");
+          setMode("signin");
+        } else {
+          toast.success("Account created. Check your email if confirmation is required.");
+          navigate({ to: "/dashboard" });
+        }
       } else {
-        const { error } = await supabase.auth.signInWithPassword({ email, password });
+        const { data: signInData, error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;
+        const userId = signInData.user?.id;
+        if (userId) {
+          const { data: rolesRow } = await supabase
+            .from("user_roles")
+            .select("role")
+            .eq("user_id", userId);
+          const roles = (rolesRow ?? []).map((r: { role: string }) => r.role);
+          const isEmployer = roles.includes("employer");
+          const isAdmin = roles.includes("admin");
+          const isStudent = roles.includes("student");
+          if (isEmployer && !isAdmin && !isStudent) {
+            const { data: prof } = await (supabase
+              .from("profiles")
+              .select("employer_status")
+              .eq("id", userId)
+              .maybeSingle() as any);
+            const status = (prof as { employer_status?: string } | null)?.employer_status ?? "pending";
+            if (status !== "approved") {
+              await supabase.auth.signOut();
+              toast.error(
+                status === "rejected"
+                  ? "Your employer account was not approved. Please contact support."
+                  : "Your employer account is pending admin approval. You'll be able to sign in once it's approved.",
+              );
+              return;
+            }
+          }
+        }
         toast.success("Welcome back.");
         navigate({ to: "/dashboard" });
       }
