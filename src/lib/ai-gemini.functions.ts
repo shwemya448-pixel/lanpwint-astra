@@ -6,6 +6,7 @@ const Input = z.object({
   prompt: z.string().min(1),
   imageDataUrl: z.string().optional(),
   model: z.string().optional(),
+  json: z.boolean().optional(),
 });
 
 export const askGemini = createServerFn({ method: "POST" })
@@ -33,6 +34,7 @@ export const askGemini = createServerFn({ method: "POST" })
           { role: "system", content: data.system },
           { role: "user", content: userContent },
         ],
+        ...(data.json ? { response_format: { type: "json_object" } } : {}),
       }),
     });
 
