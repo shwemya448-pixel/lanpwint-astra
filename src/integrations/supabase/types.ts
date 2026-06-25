@@ -222,12 +222,14 @@ export type Database = {
           excerpt_my: string | null
           id: string
           image_url: string | null
+          media_urls: string[]
           published: boolean
           published_at: string
           slug: string
           title_en: string
           title_my: string
           updated_at: string
+          video_url: string | null
         }
         Insert: {
           author_id?: string | null
@@ -239,12 +241,14 @@ export type Database = {
           excerpt_my?: string | null
           id?: string
           image_url?: string | null
+          media_urls?: string[]
           published?: boolean
           published_at?: string
           slug: string
           title_en: string
           title_my: string
           updated_at?: string
+          video_url?: string | null
         }
         Update: {
           author_id?: string | null
@@ -256,12 +260,14 @@ export type Database = {
           excerpt_my?: string | null
           id?: string
           image_url?: string | null
+          media_urls?: string[]
           published?: boolean
           published_at?: string
           slug?: string
           title_en?: string
           title_my?: string
           updated_at?: string
+          video_url?: string | null
         }
         Relationships: [
           {
