@@ -1,9 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { PageShell } from "@/components/page-shell";
 import { Input } from "@/components/ui/input";
-import { Search } from "lucide-react";
+import { Search, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/_authenticated/student/learn")({
   head: () => ({ meta: [{ title: "Learn & Earn — Lan Pwint" }] }),
@@ -199,6 +201,21 @@ function LearnPage() {
   const [activeKey, setActiveKey] = useState(CATEGORIES[0].key);
   const [q, setQ] = useState("");
 
+  const { data: adminLessons } = useQuery({
+    queryKey: ["student-lessons"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("lessons")
+        .select("id, title, description, video_url, thumbnail_url, category")
+        .eq("published", true)
+        .order("created_at", { ascending: false });
+      if (error) throw error;
+      return (data ?? [])
+        .map((l) => ({ ...l, ytId: extractYouTubeId(l.video_url ?? "") }))
+        .filter((l) => l.ytId);
+    },
+  });
+
   const filtered = useMemo(() => {
     const cat = CATEGORIES.find((c) => c.key === activeKey) ?? CATEGORIES[0];
     if (!q.trim()) return cat;
@@ -220,7 +237,42 @@ function LearnPage() {
           Hand-picked YouTube videos for each skill. Pick a category and watch right here — no sign-up needed.
         </p>
 
-        <div className="mt-6 max-w-md relative">
+        {adminLessons && adminLessons.length > 0 && (
+          <div className="mt-8 rounded-2xl border border-[color:var(--gold)]/40 bg-[color:var(--gold)]/5 p-5">
+            <div className="flex items-center gap-2 text-[color:var(--gold)]">
+              <Sparkles className="h-4 w-4" />
+              <span className="text-xs uppercase tracking-[0.22em]">From Lan Pwint</span>
+            </div>
+            <h2 className="mt-1 font-serif text-2xl text-navy">Featured lessons</h2>
+            <div className="mt-4 grid gap-5 lg:grid-cols-2">
+              {adminLessons.map((l) => (
+                <article key={l.id} className="overflow-hidden rounded-2xl border bg-card shadow-sm">
+                  <div className="aspect-video w-full bg-black">
+                    <iframe
+                      className="h-full w-full"
+                      src={`https://www.youtube-nocookie.com/embed/${l.ytId}?rel=0&modestbranding=1`}
+                      title={l.title}
+                      loading="lazy"
+                      allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    />
+                  </div>
+                  <div className="p-4">
+                    <h3 className="font-serif text-lg text-navy">{l.title}</h3>
+                    {l.category && (
+                      <p className="mt-1 text-xs uppercase tracking-wider text-muted-foreground">{l.category}</p>
+                    )}
+                    {l.description && (
+                      <p className="mt-2 text-sm text-muted-foreground">{l.description}</p>
+                    )}
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <div className="mt-8 max-w-md relative">
           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <Input
             value={q}
@@ -280,4 +332,9 @@ function LearnPage() {
       </section>
     </PageShell>
   );
+}
+
+function extractYouTubeId(url: string): string | null {
+  const m = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([\w-]{11})/);
+  return m?.[1] ?? null;
 }
