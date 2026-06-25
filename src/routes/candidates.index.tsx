@@ -1,30 +1,33 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Bookmark, MessagesSquare, Search, ShieldCheck } from "lucide-react";
+import { Briefcase, MapPin, MessageSquare, Users } from "lucide-react";
 
 export const Route = createFileRoute("/candidates/")({
-  component: CandidatesOverview,
+  component: EmployerOverview,
 });
 
 const CARDS = [
-  { to: "/candidates/features", icon: Search, title: "Features", body: "What the recruiting platform gives you." },
-  { to: "/candidates/browse", icon: Bookmark, title: "Browse Candidates", body: "Search and save graduate profiles." },
-  { to: "/candidates/recruiter-dashboard", icon: MessagesSquare, title: "Recruiter Dashboard", body: "Manage shortlists and conversations." },
-  { to: "/candidates", icon: ShieldCheck, title: "Verified employers", body: "Every recruiter on Lan Pwint is verified." },
+  { to: "/employer/jobs/new", icon: Briefcase, title: "Post a job", body: "Open roles published in minutes. Students apply with one tap." },
+  { to: "/employer/job-map", icon: MapPin, title: "Drop it on the map", body: "Pin each role on the Myanmar map so candidates can find you geographically." },
+  { to: "/employer/cv-board", icon: Users, title: "Browse the CV Board", body: "Real student profiles with skills, university, and contact email." },
+  { to: "/employer/messages", icon: MessageSquare, title: "Message directly", body: "Realtime chat with shortlisted candidates — no email back-and-forth." },
 ];
 
-function CandidatesOverview() {
+function EmployerOverview() {
   return (
-    <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-      <div className="grid gap-6 sm:grid-cols-2">
+    <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lp-reveal">
+      <div className="grid gap-6 sm:grid-cols-2 lp-reveal-stagger">
         {CARDS.map((c) => (
           <Link
             key={c.title}
             to={c.to as never}
-            className="rounded-2xl border border-border bg-card p-6 transition-shadow hover:shadow-soft"
+            className="lp-card p-6 transition-all hover:-translate-y-1 hover:shadow-2xl"
           >
-            <c.icon className="h-6 w-6 text-teal" />
-            <h2 className="mt-4 font-serif text-2xl text-navy">{c.title}</h2>
-            <p className="mt-2 text-muted-foreground">{c.body}</p>
+            <div className="h-11 w-11 rounded-xl lp-glass flex items-center justify-center text-[color:var(--gold)]">
+              <c.icon className="h-5 w-5" />
+            </div>
+            <h2 className="mt-4 font-serif text-2xl text-foreground">{c.title}</h2>
+            <div className="mt-2 lp-divider-gold" />
+            <p className="mt-3 text-muted-foreground">{c.body}</p>
           </Link>
         ))}
       </div>

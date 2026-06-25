@@ -1,4 +1,4 @@
-import { ArrowRight, GraduationCap, UserCheck } from "lucide-react";
+import { ArrowRight, Briefcase, GraduationCap } from "lucide-react";
 
 export type PortalKind = "student" | "candidate";
 
@@ -9,9 +9,9 @@ const META: Record<PortalKind, { title: string; desc: string; icon: typeof Gradu
     icon: GraduationCap,
   },
   candidate: {
-    title: "Candidate",
-    desc: "Match with recruiters, ace interviews, and showcase your professional portfolio.",
-    icon: UserCheck,
+    title: "Employers",
+    desc: "Post jobs, pin them on the Myanmar map, browse student CVs, and message candidates directly.",
+    icon: Briefcase,
   },
 };
 
