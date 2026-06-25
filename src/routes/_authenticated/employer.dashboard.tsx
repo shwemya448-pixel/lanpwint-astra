@@ -21,7 +21,7 @@ function EmployerDashboard() {
       <p className="text-xs uppercase tracking-[0.22em] text-[color:var(--gold)]">Employer workspace</p>
       <h1 className="mt-2 font-serif text-3xl text-foreground sm:text-4xl">Hire your next great teammate</h1>
       <p className="mt-3 max-w-2xl text-muted-foreground">
-        Post roles, drop them on the map, browse the CV board, and message candidates — all in one place.
+        Post roles, drop them on the map, review applicants, and message candidates — all in one place.
       </p>
       <div className="mt-4 lp-divider-gold w-32" />
 
