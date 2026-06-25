@@ -65,7 +65,7 @@ function AdminDashboard() {
             <Shield className="h-4 w-4" />
             <span className="text-[11px] uppercase tracking-[0.22em]">Insights</span>
           </div>
-          <h1 className="mt-1 font-serif text-3xl text-navy sm:text-4xl">Run Lan Pwint</h1>
+          <h1 className="mt-1 font-serif text-3xl text-navy sm:text-4xl">Lan Pwint</h1>
           <p className="mt-1 max-w-2xl text-sm text-muted-foreground">
             A live snapshot of who's using the platform, what they're doing, and where it's growing.
           </p>
