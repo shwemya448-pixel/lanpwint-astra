@@ -333,3 +333,8 @@ function LearnPage() {
     </PageShell>
   );
 }
+
+function extractYouTubeId(url: string): string | null {
+  const m = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([\w-]{11})/);
+  return m?.[1] ?? null;
+}
