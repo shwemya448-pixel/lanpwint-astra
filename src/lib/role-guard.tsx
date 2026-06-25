@@ -50,12 +50,16 @@ export function RoleGuard({
   const list = roles ?? [];
   const isAdmin = list.includes("admin");
 
-  // Admin can preview any role (selected by RoleSwitcher).
-  if (isAdmin) {
-    if (required === "admin") return <>{children}</>;
-    // Admin only enters student/employer routes when they switch view-role.
-    if (viewRole === required || viewRole === "admin") return <>{children}</>;
-    return <Navigate to="/unauthorized" />;
+  // Admin has full access to every role's workspace, regardless of preview selection.
+  if (isAdmin) return <>{children}</>;
+
+  // Non-admin: if the user actually holds the role, allow.
+  if (list.includes(required)) {
+    // Respect the view-role preview only when the user holds multiple roles.
+    if (list.length > 1 && viewRole && viewRole !== required) {
+      return <Navigate to="/unauthorized" />;
+    }
+    return <>{children}</>;
   }
 
   if (list.includes(required)) return <>{children}</>;
