@@ -175,7 +175,7 @@ function JobsList() {
                     </div>
                     <div className="flex flex-col items-end gap-1.5">
                       <Badge variant="secondary" className="bg-[color:var(--gold-soft)] text-[color:var(--gold)]">
-                        {jobTypeLabel(j.job_type)}
+                        {jobTypeLabel(j.job_type ?? "")}
                       </Badge>
                       {j.source && (
                         <span className="rounded-full border border-border px-2 py-0.5 text-[10px] uppercase tracking-wider text-muted-foreground">
