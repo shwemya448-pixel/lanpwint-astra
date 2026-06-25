@@ -109,13 +109,13 @@ export function RoleNav({ role }: { role: AppRole }) {
       <div className={cn("bg-gradient-to-b", ROLE_TINT[role])}>
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 sm:px-6 lg:px-8">
           <Link to="/" className="flex items-center gap-3 shrink-0">
-            <span className="lp-logo-mark h-11 w-11">
+            <span className="lp-logo-mark h-13 w-13">
               <img
                 src={logoMark}
                 alt="Lan Pwint"
-                width={44}
-                height={44}
-                className="h-11 w-11 rounded-md object-contain"
+                width={52}
+                height={52}
+                className="h-13 w-13 rounded-md object-contain"
               />
             </span>
             <div className="leading-tight">

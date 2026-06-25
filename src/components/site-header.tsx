@@ -27,13 +27,13 @@ export function SiteHeader() {
     <header className="sticky top-0 z-40 border-b border-border/60 bg-background/85 backdrop-blur-md">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
         <Link to="/" className="group flex items-center gap-3 shrink-0">
-          <span className="lp-logo-mark h-12 w-12">
+          <span className="lp-logo-mark h-14 w-14">
             <img
               src={logoMark}
               alt="Lan Pwint"
-              width={48}
-              height={48}
-              className="h-12 w-12 rounded-md object-contain"
+              width={56}
+              height={56}
+              className="h-14 w-14 rounded-md object-contain"
             />
           </span>
           <div className="leading-tight">
