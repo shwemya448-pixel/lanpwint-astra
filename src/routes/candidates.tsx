@@ -5,36 +5,36 @@ import { PageHeader, PageShell } from "@/components/page-shell";
 export const Route = createFileRoute("/candidates")({
   head: () => ({
     meta: [
-      { title: "Candidates & Employers — Lan Pwint" },
+      { title: "For Employers — Lan Pwint" },
       {
         name: "description",
         content:
-          "Browse verified graduate profiles, filter by skills, education, and experience, and contact candidates directly.",
+          "Post jobs, map your hiring across Myanmar, browse the student CV board, and message candidates — all from one employer workspace.",
       },
-      { property: "og:title", content: "Hire from Lan Pwint" },
+      { property: "og:title", content: "Hire on Lan Pwint" },
       {
         property: "og:description",
-        content: "Find graduates ready to work. Filter, save, and message directly.",
+        content: "Post roles, pin them on the map, find verified student CVs, and message directly.",
       },
     ],
   }),
-  component: CandidatesLayout,
+  component: EmployersLayout,
 });
 
-function CandidatesLayout() {
+function EmployersLayout() {
   return (
     <PageShell>
       <PageHeader
-        eyebrow="For candidates & employers"
-        title="Find the people who can build what's next"
-        description="Browse profiles, search with precise filters, and reach out to candidates directly through Lan Pwint."
+        eyebrow="For employers"
+        title="Hire the next generation of Myanmar talent"
+        description="Post jobs, drop them on the map so students can find you, browse the CV board, and start a conversation in one click."
       />
       <PageNav
         items={[
           { to: "/candidates", label: "Overview" },
-          { to: "/candidates/features", label: "Features" },
-          { to: "/candidates/browse", label: "Browse Candidates" },
-          { to: "/candidates/recruiter-dashboard", label: "Recruiter Dashboard" },
+          { to: "/candidates/features", label: "What you get" },
+          { to: "/candidates/browse", label: "How CV Board works" },
+          { to: "/candidates/recruiter-dashboard", label: "Open employer workspace" },
         ]}
       />
       <Outlet />
