@@ -23,7 +23,9 @@ function JobsList() {
     queryFn: async () => {
       const { data } = await supabase
         .from("jobs")
-        .select("id, title, company, location, job_type, salary_min, salary_max, salary_currency, skills, created_at")
+        .select(
+          "id, title, company, location, job_type, salary_min, salary_max, salary_currency, skills, description, requirements, application_deadline, created_at",
+        )
         .eq("status", "open")
         .order("created_at", { ascending: false });
       return data ?? [];
