@@ -1,7 +1,10 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
-import { Sparkles, BookOpen, FileText, Users, ArrowRight } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { Sparkles, BookOpen, FileText, Users, ArrowRight, Newspaper } from "lucide-react";
 import { useSession } from "@/lib/auth";
+import { supabase } from "@/integrations/supabase/client";
+import { useLocale } from "@/lib/i18n";
 import { DoorScene } from "@/components/lp/DoorScene";
 import { ShootingStars } from "@/components/lp/ShootingStars";
 import { PortalCard, type PortalKind } from "@/components/lp/PortalCard";
