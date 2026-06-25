@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { BookOpen, Bot, CheckCircle2, MessageSquareText, PlayCircle } from "lucide-react";
 import { PageHeader, PageShell } from "@/components/page-shell";
+import { PageNav } from "@/components/page-nav";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
