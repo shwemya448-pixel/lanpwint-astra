@@ -70,7 +70,7 @@ function EmployerJobs() {
             {data.map((j) => (
               <div key={j.id} className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-border bg-card p-5">
                 <div>
-                  <Link to="/jobs/$jobId" params={{ jobId: j.id }} className="font-serif text-lg text-navy hover:text-teal">
+                  <Link to="/student/jobs/$jobId" params={{ jobId: j.id }} className="font-serif text-lg text-navy hover:text-teal">
                     {j.title}
                   </Link>
                   <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-muted-foreground">

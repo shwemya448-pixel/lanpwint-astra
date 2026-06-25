@@ -12,7 +12,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { formatSalary, jobTypeLabel, timeAgo } from "@/lib/format";
 
-export const Route = createFileRoute("/_authenticated/jobs/$jobId")({
+export const Route = createFileRoute("/_authenticated/student/jobs/$jobId")({
   head: () => ({ meta: [{ title: "Job — Lan Pwint" }] }),
   component: JobDetail,
 });
@@ -75,7 +75,7 @@ function JobDetail() {
 
       toast.success("Application submitted!");
       qc.invalidateQueries({ queryKey: ["my-app", jobId, user.id] });
-      navigate({ to: "/applications" });
+      navigate({ to: "/student/applications" });
     } catch (e: any) {
       toast.error(e.message ?? "Could not submit application");
     } finally {
@@ -95,7 +95,7 @@ function JobDetail() {
       <PageShell>
         <div className="mx-auto max-w-4xl px-4 py-12">
           <p>Job not found.</p>
-          <Link to="/jobs" className="text-teal hover:underline">← Back to jobs</Link>
+          <Link to="/student/jobs" className="text-teal hover:underline">← Back to jobs</Link>
         </div>
       </PageShell>
     );
@@ -104,7 +104,7 @@ function JobDetail() {
   return (
     <PageShell>
       <section className="mx-auto max-w-4xl px-4 py-10 sm:px-6 lg:px-8">
-        <Link to="/jobs" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground">
+        <Link to="/student/jobs" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground">
           <ArrowLeft className="h-4 w-4" /> All jobs
         </Link>
 
@@ -155,7 +155,7 @@ function JobDetail() {
                 Status: <Badge variant="secondary">{existing.status}</Badge> · {timeAgo(existing.created_at)}
               </p>
               <Button asChild variant="outline" className="mt-4">
-                <Link to="/applications">View my applications</Link>
+                <Link to="/student/applications">View my applications</Link>
               </Button>
             </div>
           ) : (

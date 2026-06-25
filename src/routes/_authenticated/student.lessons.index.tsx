@@ -5,7 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { PageShell, PageHeader } from "@/components/page-shell";
 import { Badge } from "@/components/ui/badge";
 
-export const Route = createFileRoute("/_authenticated/lessons/")({
+export const Route = createFileRoute("/_authenticated/student/lessons/")({
   head: () => ({ meta: [{ title: "Learning Center — Lan Pwint" }] }),
   component: LessonsList,
 });
@@ -44,7 +44,7 @@ function LessonsList() {
             {data.map((l) => (
               <Link
                 key={l.id}
-                to="/lessons/$lessonId"
+                to="/student/lessons/$lessonId"
                 params={{ lessonId: l.id }}
                 className="group overflow-hidden rounded-2xl border border-border bg-card transition-colors hover:border-teal"
               >

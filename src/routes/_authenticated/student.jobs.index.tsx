@@ -9,7 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { formatSalary, jobTypeLabel, timeAgo } from "@/lib/format";
 
-export const Route = createFileRoute("/_authenticated/jobs/")({
+export const Route = createFileRoute("/_authenticated/student/jobs/")({
   head: () => ({ meta: [{ title: "Browse jobs — Lan Pwint" }] }),
   component: JobsList,
 });
@@ -92,7 +92,7 @@ function JobsList() {
             {filtered.map((j) => (
               <Link
                 key={j.id}
-                to="/jobs/$jobId"
+                to="/student/jobs/$jobId"
                 params={{ jobId: j.id }}
                 className="rounded-2xl border border-border bg-card p-6 transition-colors hover:border-teal"
               >

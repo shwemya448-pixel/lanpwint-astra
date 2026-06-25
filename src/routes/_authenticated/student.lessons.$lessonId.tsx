@@ -5,7 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { PageShell } from "@/components/page-shell";
 import { Badge } from "@/components/ui/badge";
 
-export const Route = createFileRoute("/_authenticated/lessons/$lessonId")({
+export const Route = createFileRoute("/_authenticated/student/lessons/$lessonId")({
   head: () => ({ meta: [{ title: "Lesson — Lan Pwint" }] }),
   component: LessonDetail,
 });
@@ -34,7 +34,7 @@ function LessonDetail() {
   return (
     <PageShell>
       <section className="mx-auto max-w-4xl px-4 py-10 sm:px-6 lg:px-8">
-        <Link to="/lessons" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground">
+        <Link to="/student/lessons" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground">
           <ArrowLeft className="h-4 w-4" /> All lessons
         </Link>
 

@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageShell } from "@/components/page-shell";
 
-export const Route = createFileRoute("/_authenticated/job-map")({
+export const Route = createFileRoute("/_authenticated/student/job-map")({
   head: () => ({ meta: [{ title: "Job Map — Lan Pwint" }] }),
   component: JobMapPage,
 });

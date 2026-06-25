@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageShell } from "@/components/page-shell";
 
-export const Route = createFileRoute("/_authenticated/cv-board")({
+export const Route = createFileRoute("/_authenticated/employer/cv-board")({
   head: () => ({ meta: [{ title: "CV Board — Lan Pwint" }] }),
   component: CVBoardPage,
 });
