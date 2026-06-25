@@ -87,6 +87,7 @@ function AdminUsers() {
                           : u.roles.map((r: string) => <Badge key={r} variant="outline" className="capitalize">{r}</Badge>)}
                       </div>
                     </td>
+                    <td className="px-4 py-3 text-muted-foreground">{u.position || "—"}</td>
                     <td className="px-4 py-3 text-muted-foreground">{u.company_name || "—"}</td>
                     <td className="px-4 py-3">
                       {isEmployer ? (
