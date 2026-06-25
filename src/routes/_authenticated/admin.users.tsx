@@ -17,7 +17,7 @@ function AdminUsers() {
     queryKey: ["admin-users"],
     queryFn: async () => {
       const [{ data: profiles, error: e1 }, { data: roles, error: e2 }] = await Promise.all([
-        (supabase.from("profiles").select("id, full_name, contact_email, location, school, created_at, employer_status, company_name").order("created_at", { ascending: false }) as any),
+        (supabase.from("profiles").select("id, full_name, contact_email, position, company_name, created_at, employer_status").order("created_at", { ascending: false }) as any),
         supabase.from("user_roles").select("user_id, role"),
       ]);
       if (e1) throw e1;
