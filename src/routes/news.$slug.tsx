@@ -120,5 +120,18 @@ function NewsVideo({ url }: { url: string }) {
       </div>
     );
   }
-  return <video src={url} controls className="mt-6 w-full rounded-xl border border-border" />;
+  return (
+    <div className="mt-6 w-full overflow-hidden rounded-xl border border-border bg-black">
+      <video
+        src={url}
+        controls
+        playsInline
+        preload="metadata"
+        className="h-full w-full"
+      >
+        <source src={url} type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+    </div>
+  );
 }
