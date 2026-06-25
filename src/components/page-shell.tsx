@@ -1,8 +1,13 @@
 import type { ReactNode } from "react";
 import { SiteHeader } from "./site-header";
 import { SiteFooter } from "./site-footer";
+import { useRoleShell } from "./role-shell";
 
 export function PageShell({ children }: { children: ReactNode }) {
+  const role = useRoleShell();
+  // When inside a role-specific layout, the role layout already renders the
+  // header + footer. Avoid stacking shells.
+  if (role) return <>{children}</>;
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <SiteHeader />
