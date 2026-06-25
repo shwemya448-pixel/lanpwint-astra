@@ -8,7 +8,7 @@ const dict = {
   en: {
     "nav.home": "Home",
     "nav.students": "Students",
-    "nav.candidates": "Candidates",
+    "nav.candidates": "For Employers",
     "nav.about": "About",
     "nav.contact": "Contact",
     "nav.news": "News",
