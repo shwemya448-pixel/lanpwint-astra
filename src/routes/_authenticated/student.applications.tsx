@@ -30,12 +30,29 @@ function MyApplications() {
     queryKey: ["my-applications", user?.id],
     enabled: !!user,
     queryFn: async () => {
-      const { data } = await supabase
+      const { data: apps } = await supabase
         .from("applications")
-        .select("id, status, created_at, employer_note, job:jobs(id, title, company, location, employer_id, employer:profiles!jobs_employer_id_fkey(id, full_name, contact_email, headline, avatar_url))")
+        .select("id, status, created_at, employer_note, job:jobs(id, title, company, location, employer_id)")
         .eq("student_id", user!.id)
         .order("created_at", { ascending: false });
-      return data ?? [];
+      const list = apps ?? [];
+      const unlockedEmployerIds = Array.from(
+        new Set(
+          list
+            .filter((a: any) => a.status === "offered" || a.status === "accepted")
+            .map((a: any) => a.job?.employer_id)
+            .filter(Boolean),
+        ),
+      );
+      let employers: Record<string, any> = {};
+      if (unlockedEmployerIds.length) {
+        const { data: profs } = await supabase
+          .from("profiles")
+          .select("id, full_name, contact_email, headline, avatar_url")
+          .in("id", unlockedEmployerIds);
+        employers = Object.fromEntries((profs ?? []).map((p: any) => [p.id, p]));
+      }
+      return list.map((a: any) => ({ ...a, employer: employers[a.job?.employer_id] ?? null }));
     },
   });
 
