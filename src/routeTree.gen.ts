@@ -45,6 +45,7 @@ import { Route as AuthenticatedStudentDashboardRouteImport } from './routes/_aut
 import { Route as AuthenticatedStudentCvAnalyzerRouteImport } from './routes/_authenticated/student.cv-analyzer'
 import { Route as AuthenticatedStudentApplicationsRouteImport } from './routes/_authenticated/student.applications'
 import { Route as AuthenticatedEmployerMessagesRouteImport } from './routes/_authenticated/employer.messages'
+import { Route as AuthenticatedEmployerJobMapRouteImport } from './routes/_authenticated/employer.job-map'
 import { Route as AuthenticatedEmployerDashboardRouteImport } from './routes/_authenticated/employer.dashboard'
 import { Route as AuthenticatedEmployerCvBoardRouteImport } from './routes/_authenticated/employer.cv-board'
 import { Route as AuthenticatedEmployerApplicationsRouteImport } from './routes/_authenticated/employer.applications'
@@ -246,6 +247,12 @@ const AuthenticatedEmployerMessagesRoute =
     path: '/messages',
     getParentRoute: () => AuthenticatedEmployerRoute,
   } as any)
+const AuthenticatedEmployerJobMapRoute =
+  AuthenticatedEmployerJobMapRouteImport.update({
+    id: '/job-map',
+    path: '/job-map',
+    getParentRoute: () => AuthenticatedEmployerRoute,
+  } as any)
 const AuthenticatedEmployerDashboardRoute =
   AuthenticatedEmployerDashboardRouteImport.update({
     id: '/dashboard',
@@ -330,6 +337,7 @@ export interface FileRoutesByFullPath {
   '/employer/applications': typeof AuthenticatedEmployerApplicationsRoute
   '/employer/cv-board': typeof AuthenticatedEmployerCvBoardRoute
   '/employer/dashboard': typeof AuthenticatedEmployerDashboardRoute
+  '/employer/job-map': typeof AuthenticatedEmployerJobMapRoute
   '/employer/messages': typeof AuthenticatedEmployerMessagesRoute
   '/student/applications': typeof AuthenticatedStudentApplicationsRoute
   '/student/cv-analyzer': typeof AuthenticatedStudentCvAnalyzerRoute
@@ -371,6 +379,7 @@ export interface FileRoutesByTo {
   '/employer/applications': typeof AuthenticatedEmployerApplicationsRoute
   '/employer/cv-board': typeof AuthenticatedEmployerCvBoardRoute
   '/employer/dashboard': typeof AuthenticatedEmployerDashboardRoute
+  '/employer/job-map': typeof AuthenticatedEmployerJobMapRoute
   '/employer/messages': typeof AuthenticatedEmployerMessagesRoute
   '/student/applications': typeof AuthenticatedStudentApplicationsRoute
   '/student/cv-analyzer': typeof AuthenticatedStudentCvAnalyzerRoute
@@ -419,6 +428,7 @@ export interface FileRoutesById {
   '/_authenticated/employer/applications': typeof AuthenticatedEmployerApplicationsRoute
   '/_authenticated/employer/cv-board': typeof AuthenticatedEmployerCvBoardRoute
   '/_authenticated/employer/dashboard': typeof AuthenticatedEmployerDashboardRoute
+  '/_authenticated/employer/job-map': typeof AuthenticatedEmployerJobMapRoute
   '/_authenticated/employer/messages': typeof AuthenticatedEmployerMessagesRoute
   '/_authenticated/student/applications': typeof AuthenticatedStudentApplicationsRoute
   '/_authenticated/student/cv-analyzer': typeof AuthenticatedStudentCvAnalyzerRoute
@@ -467,6 +477,7 @@ export interface FileRouteTypes {
     | '/employer/applications'
     | '/employer/cv-board'
     | '/employer/dashboard'
+    | '/employer/job-map'
     | '/employer/messages'
     | '/student/applications'
     | '/student/cv-analyzer'
@@ -508,6 +519,7 @@ export interface FileRouteTypes {
     | '/employer/applications'
     | '/employer/cv-board'
     | '/employer/dashboard'
+    | '/employer/job-map'
     | '/employer/messages'
     | '/student/applications'
     | '/student/cv-analyzer'
@@ -555,6 +567,7 @@ export interface FileRouteTypes {
     | '/_authenticated/employer/applications'
     | '/_authenticated/employer/cv-board'
     | '/_authenticated/employer/dashboard'
+    | '/_authenticated/employer/job-map'
     | '/_authenticated/employer/messages'
     | '/_authenticated/student/applications'
     | '/_authenticated/student/cv-analyzer'
@@ -839,6 +852,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedEmployerMessagesRouteImport
       parentRoute: typeof AuthenticatedEmployerRoute
     }
+    '/_authenticated/employer/job-map': {
+      id: '/_authenticated/employer/job-map'
+      path: '/job-map'
+      fullPath: '/employer/job-map'
+      preLoaderRoute: typeof AuthenticatedEmployerJobMapRouteImport
+      parentRoute: typeof AuthenticatedEmployerRoute
+    }
     '/_authenticated/employer/dashboard': {
       id: '/_authenticated/employer/dashboard'
       path: '/dashboard'
@@ -924,6 +944,7 @@ interface AuthenticatedEmployerRouteChildren {
   AuthenticatedEmployerApplicationsRoute: typeof AuthenticatedEmployerApplicationsRoute
   AuthenticatedEmployerCvBoardRoute: typeof AuthenticatedEmployerCvBoardRoute
   AuthenticatedEmployerDashboardRoute: typeof AuthenticatedEmployerDashboardRoute
+  AuthenticatedEmployerJobMapRoute: typeof AuthenticatedEmployerJobMapRoute
   AuthenticatedEmployerMessagesRoute: typeof AuthenticatedEmployerMessagesRoute
   AuthenticatedEmployerIndexRoute: typeof AuthenticatedEmployerIndexRoute
   AuthenticatedEmployerJobsNewRoute: typeof AuthenticatedEmployerJobsNewRoute
@@ -935,6 +956,7 @@ const AuthenticatedEmployerRouteChildren: AuthenticatedEmployerRouteChildren = {
     AuthenticatedEmployerApplicationsRoute,
   AuthenticatedEmployerCvBoardRoute: AuthenticatedEmployerCvBoardRoute,
   AuthenticatedEmployerDashboardRoute: AuthenticatedEmployerDashboardRoute,
+  AuthenticatedEmployerJobMapRoute: AuthenticatedEmployerJobMapRoute,
   AuthenticatedEmployerMessagesRoute: AuthenticatedEmployerMessagesRoute,
   AuthenticatedEmployerIndexRoute: AuthenticatedEmployerIndexRoute,
   AuthenticatedEmployerJobsNewRoute: AuthenticatedEmployerJobsNewRoute,

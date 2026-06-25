@@ -53,7 +53,7 @@ function EmployerJobMap() {
       const { data } = await supabase
         .from("jobs")
         .select("id, title, company, location, job_type, status, salary_min, salary_max, salary_currency, created_at")
-        .eq("posted_by", uid!)
+        .eq("employer_id", uid!)
         .order("created_at", { ascending: false });
       return data ?? [];
     },
