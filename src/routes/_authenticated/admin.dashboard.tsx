@@ -1,7 +1,9 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
 import {
   Briefcase,
+  Check,
   DollarSign,
   FileText,
   GraduationCap,
@@ -11,7 +13,9 @@ import {
   TrendingUp,
   UserCheck,
   Users,
+  X,
 } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import {
   Area,
   AreaChart,
@@ -103,6 +107,10 @@ function AdminDashboard() {
           })}
         </div>
       </div>
+
+      <PendingEmployers />
+
+
 
 
       {error ? (
@@ -438,4 +446,106 @@ async function fetchInsights(): Promise<Insights> {
     signupSeries,
     topLocations,
   };
+}
+
+function PendingEmployers() {
+  const qc = useQueryClient();
+  const { data, isLoading } = useQuery({
+    queryKey: ["pending-employers"],
+    queryFn: async () => {
+      const { data: roles, error: e1 } = await supabase
+        .from("user_roles")
+        .select("user_id")
+        .eq("role", "employer");
+      if (e1) throw e1;
+      const ids = (roles ?? []).map((r: { user_id: string }) => r.user_id);
+      if (ids.length === 0) return [];
+      const { data: profs, error: e2 } = await (supabase
+        .from("profiles")
+        .select("id, full_name, contact_email, company_name, employer_status, created_at")
+        .in("id", ids)
+        .eq("employer_status", "pending")
+        .order("created_at", { ascending: false }) as any);
+      if (e2) throw e2;
+      return (profs ?? []) as Array<{
+        id: string;
+        full_name: string | null;
+        contact_email: string | null;
+        company_name: string | null;
+        employer_status: string;
+        created_at: string;
+      }>;
+    },
+    staleTime: 30_000,
+  });
+
+  const setStatus = useMutation({
+    mutationFn: async ({ id, status }: { id: string; status: "approved" | "rejected" }) => {
+      const { error } = await (supabase
+        .from("profiles")
+        .update({ employer_status: status } as any)
+        .eq("id", id) as any);
+      if (error) throw error;
+    },
+    onSuccess: (_d, vars) => {
+      toast.success(`Employer ${vars.status}`);
+      qc.invalidateQueries({ queryKey: ["pending-employers"] });
+      qc.invalidateQueries({ queryKey: ["admin-users"] });
+    },
+    onError: (e: Error) => toast.error(e.message),
+  });
+
+  if (isLoading) return null;
+  const list = data ?? [];
+
+  return (
+    <div className="mt-6 rounded-2xl border border-amber-500/30 bg-amber-500/5 p-5">
+      <div className="flex items-center justify-between">
+        <div>
+          <h2 className="font-serif text-lg text-navy">Pending employer approvals</h2>
+          <p className="text-xs text-muted-foreground">
+            New employers can't sign in until you approve them.
+          </p>
+        </div>
+        <span className="rounded-full border border-amber-500/40 bg-amber-500/10 px-3 py-1 text-xs font-semibold text-amber-700 dark:text-amber-300">
+          {list.length} waiting
+        </span>
+      </div>
+
+      {list.length === 0 ? (
+        <p className="mt-4 text-sm text-muted-foreground">All caught up — no pending requests.</p>
+      ) : (
+        <ul className="mt-4 divide-y divide-border">
+          {list.map((u) => (
+            <li key={u.id} className="flex flex-wrap items-center justify-between gap-3 py-3">
+              <div className="min-w-0">
+                <p className="truncate font-medium text-navy">{u.full_name || u.contact_email || "Unnamed"}</p>
+                <p className="truncate text-xs text-muted-foreground">
+                  {u.contact_email}
+                  {u.company_name ? ` · ${u.company_name}` : ""}
+                </p>
+              </div>
+              <div className="flex gap-2">
+                <Button
+                  size="sm"
+                  disabled={setStatus.isPending}
+                  onClick={() => setStatus.mutate({ id: u.id, status: "approved" })}
+                >
+                  <Check className="mr-1 h-3.5 w-3.5" /> Approve
+                </Button>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  disabled={setStatus.isPending}
+                  onClick={() => setStatus.mutate({ id: u.id, status: "rejected" })}
+                >
+                  <X className="mr-1 h-3.5 w-3.5" /> Reject
+                </Button>
+              </div>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
 }
