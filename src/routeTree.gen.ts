@@ -27,7 +27,6 @@ import { Route as GraduatesMessagingRouteImport } from './routes/graduates.messa
 import { Route as GraduatesCvAnalyzerRouteImport } from './routes/graduates.cv-analyzer'
 import { Route as CandidatesRecruiterDashboardRouteImport } from './routes/candidates.recruiter-dashboard'
 import { Route as CandidatesFeaturesRouteImport } from './routes/candidates.features'
-import { Route as CandidatesBrowseRouteImport } from './routes/candidates.browse'
 import { Route as AuthenticatedUnauthorizedRouteImport } from './routes/_authenticated/unauthorized'
 import { Route as AuthenticatedStudentRouteImport } from './routes/_authenticated/student'
 import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticated/profile'
@@ -47,7 +46,6 @@ import { Route as AuthenticatedStudentApplicationsRouteImport } from './routes/_
 import { Route as AuthenticatedEmployerMessagesRouteImport } from './routes/_authenticated/employer.messages'
 import { Route as AuthenticatedEmployerJobMapRouteImport } from './routes/_authenticated/employer.job-map'
 import { Route as AuthenticatedEmployerDashboardRouteImport } from './routes/_authenticated/employer.dashboard'
-import { Route as AuthenticatedEmployerCvBoardRouteImport } from './routes/_authenticated/employer.cv-board'
 import { Route as AuthenticatedEmployerApplicationsRouteImport } from './routes/_authenticated/employer.applications'
 import { Route as AuthenticatedAdminNewsRouteImport } from './routes/_authenticated/admin.news'
 import { Route as AuthenticatedAdminDashboardRouteImport } from './routes/_authenticated/admin.dashboard'
@@ -144,11 +142,6 @@ const CandidatesRecruiterDashboardRoute =
 const CandidatesFeaturesRoute = CandidatesFeaturesRouteImport.update({
   id: '/features',
   path: '/features',
-  getParentRoute: () => CandidatesRoute,
-} as any)
-const CandidatesBrowseRoute = CandidatesBrowseRouteImport.update({
-  id: '/browse',
-  path: '/browse',
   getParentRoute: () => CandidatesRoute,
 } as any)
 const AuthenticatedUnauthorizedRoute =
@@ -259,12 +252,6 @@ const AuthenticatedEmployerDashboardRoute =
     path: '/dashboard',
     getParentRoute: () => AuthenticatedEmployerRoute,
   } as any)
-const AuthenticatedEmployerCvBoardRoute =
-  AuthenticatedEmployerCvBoardRouteImport.update({
-    id: '/cv-board',
-    path: '/cv-board',
-    getParentRoute: () => AuthenticatedEmployerRoute,
-  } as any)
 const AuthenticatedEmployerApplicationsRoute =
   AuthenticatedEmployerApplicationsRouteImport.update({
     id: '/applications',
@@ -323,7 +310,6 @@ export interface FileRoutesByFullPath {
   '/profile': typeof AuthenticatedProfileRoute
   '/student': typeof AuthenticatedStudentRouteWithChildren
   '/unauthorized': typeof AuthenticatedUnauthorizedRoute
-  '/candidates/browse': typeof CandidatesBrowseRoute
   '/candidates/features': typeof CandidatesFeaturesRoute
   '/candidates/recruiter-dashboard': typeof CandidatesRecruiterDashboardRoute
   '/graduates/cv-analyzer': typeof GraduatesCvAnalyzerRoute
@@ -335,7 +321,6 @@ export interface FileRoutesByFullPath {
   '/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
   '/admin/news': typeof AuthenticatedAdminNewsRoute
   '/employer/applications': typeof AuthenticatedEmployerApplicationsRoute
-  '/employer/cv-board': typeof AuthenticatedEmployerCvBoardRoute
   '/employer/dashboard': typeof AuthenticatedEmployerDashboardRoute
   '/employer/job-map': typeof AuthenticatedEmployerJobMapRoute
   '/employer/messages': typeof AuthenticatedEmployerMessagesRoute
@@ -365,7 +350,6 @@ export interface FileRoutesByTo {
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/profile': typeof AuthenticatedProfileRoute
   '/unauthorized': typeof AuthenticatedUnauthorizedRoute
-  '/candidates/browse': typeof CandidatesBrowseRoute
   '/candidates/features': typeof CandidatesFeaturesRoute
   '/candidates/recruiter-dashboard': typeof CandidatesRecruiterDashboardRoute
   '/graduates/cv-analyzer': typeof GraduatesCvAnalyzerRoute
@@ -377,7 +361,6 @@ export interface FileRoutesByTo {
   '/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
   '/admin/news': typeof AuthenticatedAdminNewsRoute
   '/employer/applications': typeof AuthenticatedEmployerApplicationsRoute
-  '/employer/cv-board': typeof AuthenticatedEmployerCvBoardRoute
   '/employer/dashboard': typeof AuthenticatedEmployerDashboardRoute
   '/employer/job-map': typeof AuthenticatedEmployerJobMapRoute
   '/employer/messages': typeof AuthenticatedEmployerMessagesRoute
@@ -414,7 +397,6 @@ export interface FileRoutesById {
   '/_authenticated/profile': typeof AuthenticatedProfileRoute
   '/_authenticated/student': typeof AuthenticatedStudentRouteWithChildren
   '/_authenticated/unauthorized': typeof AuthenticatedUnauthorizedRoute
-  '/candidates/browse': typeof CandidatesBrowseRoute
   '/candidates/features': typeof CandidatesFeaturesRoute
   '/candidates/recruiter-dashboard': typeof CandidatesRecruiterDashboardRoute
   '/graduates/cv-analyzer': typeof GraduatesCvAnalyzerRoute
@@ -426,7 +408,6 @@ export interface FileRoutesById {
   '/_authenticated/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
   '/_authenticated/admin/news': typeof AuthenticatedAdminNewsRoute
   '/_authenticated/employer/applications': typeof AuthenticatedEmployerApplicationsRoute
-  '/_authenticated/employer/cv-board': typeof AuthenticatedEmployerCvBoardRoute
   '/_authenticated/employer/dashboard': typeof AuthenticatedEmployerDashboardRoute
   '/_authenticated/employer/job-map': typeof AuthenticatedEmployerJobMapRoute
   '/_authenticated/employer/messages': typeof AuthenticatedEmployerMessagesRoute
@@ -463,7 +444,6 @@ export interface FileRouteTypes {
     | '/profile'
     | '/student'
     | '/unauthorized'
-    | '/candidates/browse'
     | '/candidates/features'
     | '/candidates/recruiter-dashboard'
     | '/graduates/cv-analyzer'
@@ -475,7 +455,6 @@ export interface FileRouteTypes {
     | '/admin/dashboard'
     | '/admin/news'
     | '/employer/applications'
-    | '/employer/cv-board'
     | '/employer/dashboard'
     | '/employer/job-map'
     | '/employer/messages'
@@ -505,7 +484,6 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/profile'
     | '/unauthorized'
-    | '/candidates/browse'
     | '/candidates/features'
     | '/candidates/recruiter-dashboard'
     | '/graduates/cv-analyzer'
@@ -517,7 +495,6 @@ export interface FileRouteTypes {
     | '/admin/dashboard'
     | '/admin/news'
     | '/employer/applications'
-    | '/employer/cv-board'
     | '/employer/dashboard'
     | '/employer/job-map'
     | '/employer/messages'
@@ -553,7 +530,6 @@ export interface FileRouteTypes {
     | '/_authenticated/profile'
     | '/_authenticated/student'
     | '/_authenticated/unauthorized'
-    | '/candidates/browse'
     | '/candidates/features'
     | '/candidates/recruiter-dashboard'
     | '/graduates/cv-analyzer'
@@ -565,7 +541,6 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/dashboard'
     | '/_authenticated/admin/news'
     | '/_authenticated/employer/applications'
-    | '/_authenticated/employer/cv-board'
     | '/_authenticated/employer/dashboard'
     | '/_authenticated/employer/job-map'
     | '/_authenticated/employer/messages'
@@ -726,13 +701,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CandidatesFeaturesRouteImport
       parentRoute: typeof CandidatesRoute
     }
-    '/candidates/browse': {
-      id: '/candidates/browse'
-      path: '/browse'
-      fullPath: '/candidates/browse'
-      preLoaderRoute: typeof CandidatesBrowseRouteImport
-      parentRoute: typeof CandidatesRoute
-    }
     '/_authenticated/unauthorized': {
       id: '/_authenticated/unauthorized'
       path: '/unauthorized'
@@ -866,13 +834,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedEmployerDashboardRouteImport
       parentRoute: typeof AuthenticatedEmployerRoute
     }
-    '/_authenticated/employer/cv-board': {
-      id: '/_authenticated/employer/cv-board'
-      path: '/cv-board'
-      fullPath: '/employer/cv-board'
-      preLoaderRoute: typeof AuthenticatedEmployerCvBoardRouteImport
-      parentRoute: typeof AuthenticatedEmployerRoute
-    }
     '/_authenticated/employer/applications': {
       id: '/_authenticated/employer/applications'
       path: '/applications'
@@ -942,7 +903,6 @@ const AuthenticatedAdminRouteWithChildren =
 
 interface AuthenticatedEmployerRouteChildren {
   AuthenticatedEmployerApplicationsRoute: typeof AuthenticatedEmployerApplicationsRoute
-  AuthenticatedEmployerCvBoardRoute: typeof AuthenticatedEmployerCvBoardRoute
   AuthenticatedEmployerDashboardRoute: typeof AuthenticatedEmployerDashboardRoute
   AuthenticatedEmployerJobMapRoute: typeof AuthenticatedEmployerJobMapRoute
   AuthenticatedEmployerMessagesRoute: typeof AuthenticatedEmployerMessagesRoute
@@ -954,7 +914,6 @@ interface AuthenticatedEmployerRouteChildren {
 const AuthenticatedEmployerRouteChildren: AuthenticatedEmployerRouteChildren = {
   AuthenticatedEmployerApplicationsRoute:
     AuthenticatedEmployerApplicationsRoute,
-  AuthenticatedEmployerCvBoardRoute: AuthenticatedEmployerCvBoardRoute,
   AuthenticatedEmployerDashboardRoute: AuthenticatedEmployerDashboardRoute,
   AuthenticatedEmployerJobMapRoute: AuthenticatedEmployerJobMapRoute,
   AuthenticatedEmployerMessagesRoute: AuthenticatedEmployerMessagesRoute,
@@ -1019,14 +978,12 @@ const AuthenticatedRouteRouteWithChildren =
   AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
 
 interface CandidatesRouteChildren {
-  CandidatesBrowseRoute: typeof CandidatesBrowseRoute
   CandidatesFeaturesRoute: typeof CandidatesFeaturesRoute
   CandidatesRecruiterDashboardRoute: typeof CandidatesRecruiterDashboardRoute
   CandidatesIndexRoute: typeof CandidatesIndexRoute
 }
 
 const CandidatesRouteChildren: CandidatesRouteChildren = {
-  CandidatesBrowseRoute: CandidatesBrowseRoute,
   CandidatesFeaturesRoute: CandidatesFeaturesRoute,
   CandidatesRecruiterDashboardRoute: CandidatesRecruiterDashboardRoute,
   CandidatesIndexRoute: CandidatesIndexRoute,
