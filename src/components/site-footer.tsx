@@ -15,7 +15,7 @@ export function SiteFooter() {
             </div>
           </div>
           <p className="mt-4 max-w-md text-sm text-[#F5F1E8]/85">
-            A career development platform helping students and graduates build successful careers through
+            A career development platform helping candidates and graduates build successful careers through
             learning, internships, and employment opportunities.
           </p>
         </div>
@@ -23,7 +23,7 @@ export function SiteFooter() {
         <div>
           <h4 className="font-serif text-sm text-[color:var(--gold)]">Platform</h4>
           <ul className="mt-3 space-y-2 text-sm text-[#F5F1E8]/85">
-            <li><Link to="/student/dashboard" className="hover:text-[color:var(--gold)] hover:underline">Students</Link></li>
+            <li><Link to="/student/dashboard" className="hover:text-[color:var(--gold)] hover:underline">Candidates</Link></li>
             <li><Link to="/candidates" className="hover:text-[color:var(--gold)] hover:underline">For Employers</Link></li>
           </ul>
         </div>

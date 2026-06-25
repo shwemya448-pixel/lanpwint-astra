@@ -12,13 +12,13 @@ import { SiteFooter } from "@/components/site-footer";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Lan Pwint — AI Academic & Career Gateway" },
+      { title: "Lan Pwint — AI Career Gateway" },
       {
         name: "description",
         content:
-          "Lan Pwint (လမ်းပွင့်) — AI-powered gateway for Myanmar students, graduates, and candidates: discover your passion, learn, find scholarships, build a CV, and connect with recruiters.",
+          "Lan Pwint (လမ်းပွင့်) — AI-powered gateway for Myanmar candidates, graduates, and employers: discover your passion, learn, find scholarships, build a CV, and connect with recruiters.",
       },
-      { property: "og:title", content: "Lan Pwint — AI Academic & Career Gateway" },
+      { property: "og:title", content: "Lan Pwint — AI Career Gateway" },
       {
         property: "og:description",
         content: "Discover your passion, build skills, find scholarships, and launch your career.",
@@ -63,7 +63,7 @@ function LandingPage() {
           <div className="text-center md:text-left">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full lp-glass text-[10px] sm:text-xs tracking-wider uppercase">
               <Sparkles className="h-3.5 w-3.5 text-[color:var(--gold)] shrink-0" />
-              <span className="text-muted-foreground">AI Academic · Career · Gateway</span>
+              <span className="text-muted-foreground">AI Career · Compass · Gateway</span>
             </div>
             <h1 className="mt-5 sm:mt-6 text-3xl sm:text-5xl lg:text-6xl font-bold leading-[1.05]">
               <span className="lp-shimmer-text">Lan Pwint</span>
@@ -74,7 +74,7 @@ function LandingPage() {
               Your AI-powered gateway to passion, learning, and career.
             </p>
             <p className="mt-3 text-xs sm:text-sm text-muted-foreground/80 max-w-xl mx-auto md:mx-0">
-              Academic &amp; Career Gateway for Myanmar students, graduates, and candidates.
+              Career Gateway for Myanmar candidates, graduates, and employers.
             </p>
             <div className="mt-7 sm:mt-8 flex flex-col sm:flex-row gap-3 items-stretch sm:items-center md:justify-start justify-center">
               <a href="#portals" className="lp-gold-btn h-12 px-7 rounded-xl text-sm font-semibold inline-flex items-center justify-center">

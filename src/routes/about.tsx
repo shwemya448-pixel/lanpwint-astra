@@ -9,7 +9,7 @@ export const Route = createFileRoute("/about")({
       {
         name: "description",
         content:
-          "Lan Pwint (လမ်းပွင့်) is a career development platform helping students learn from real internship experiences, supporting graduates in finding jobs, and helping employers discover talented candidates.",
+          "Lan Pwint (လမ်းပွင့်) is a career development platform helping candidates learn from real internship experiences, supporting graduates in finding jobs, and helping employers discover talented candidates.",
       },
       { property: "og:title", content: "About Lan Pwint" },
       { property: "og:description", content: "Our mission: open the road to better careers." },
@@ -42,18 +42,18 @@ function About() {
       <PageHeader
         eyebrow="About us"
         title="Open the road to a better career"
-        description="Lan Pwint (လမ်းပွင့်) is a career development platform dedicated to helping undergraduate students learn from real internship experiences, supporting graduates in finding employment opportunities, and enabling employers to discover talented candidates efficiently."
+        description="Lan Pwint (လမ်းပွင့်) is a career development platform dedicated to helping undergraduate candidates learn from real internship experiences, supporting graduates in finding employment opportunities, and enabling employers to discover talented candidates efficiently."
       />
 
       <section className="mx-auto max-w-5xl px-4 py-16 sm:px-6 lg:px-8">
         <div className="grid gap-12 lg:grid-cols-5">
           <div className="lg:col-span-2">
             <p className="text-xs uppercase tracking-[0.22em] text-teal">Our mission</p>
-            <h2 className="mt-3 font-serif text-3xl text-navy">Bridging students, graduates, and employers</h2>
+            <h2 className="mt-3 font-serif text-3xl text-navy">Bridging candidates, graduates, and employers</h2>
           </div>
           <div className="space-y-5 text-muted-foreground leading-relaxed lg:col-span-3">
             <p>
-              Too many capable students enter the job market without a clear understanding of what employers want — and
+              Too many capable candidates enter the job market without a clear understanding of what employers want — and
               too many great employers struggle to find the right people. Lan Pwint exists to close that gap.
             </p>
             <p>

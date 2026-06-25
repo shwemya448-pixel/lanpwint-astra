@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import type { PortalKind } from "./PortalCard";
 
 const LABEL: Record<PortalKind, string> = {
-  student: "Students",
+  student: "Candidates",
   candidate: "Candidate",
 };
 

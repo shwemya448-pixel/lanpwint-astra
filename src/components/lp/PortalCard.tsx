@@ -4,13 +4,13 @@ export type PortalKind = "student" | "candidate";
 
 const META: Record<PortalKind, { title: string; desc: string; icon: typeof GraduationCap }> = {
   student: {
-    title: "Students",
+    title: "Candidates",
     desc: "Discover your passion, build skills, find scholarships, craft a winning CV, and transition into your career.",
     icon: GraduationCap,
   },
   candidate: {
     title: "Employers",
-    desc: "Post jobs, pin them on the Myanmar map, browse student CVs, and message candidates directly.",
+    desc: "Post jobs, pin them on the Myanmar map, browse candidate CVs, and message candidates directly.",
     icon: Briefcase,
   },
 };

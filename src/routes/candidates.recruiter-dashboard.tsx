@@ -17,7 +17,7 @@ function RecruiterDashboardPage() {
             <p className="text-xs uppercase tracking-[0.25em] text-[color:var(--gold)]">Employer workspace</p>
             <h2 className="mt-2 font-serif text-3xl sm:text-4xl">Everything you need to hire — in one tab</h2>
             <p className="mt-3 max-w-2xl opacity-85">
-              Post jobs, drop them on the Myanmar map, browse the CV board, and message students. All synced in realtime.
+              Post jobs, drop them on the Myanmar map, browse the CV board, and message candidates. All synced in realtime.
             </p>
           </div>
           <div className="lg:justify-self-end">

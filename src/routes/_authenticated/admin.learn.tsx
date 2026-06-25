@@ -102,7 +102,7 @@ function AdminLearn() {
         <div>
           <h1 className="font-serif text-3xl text-navy">Learn videos</h1>
           <p className="mt-1 text-sm text-muted-foreground">
-            Curated YouTube lessons surfaced on the student Learn page.
+            Curated YouTube lessons surfaced on the Candidate Learn page.
           </p>
         </div>
         {!editing && (
@@ -134,7 +134,7 @@ function AdminLearn() {
           <div className="flex items-center justify-between">
             <label className="flex items-center gap-2 text-sm">
               <Switch checked={editing.published} onCheckedChange={(v) => setEditing({ ...editing, published: v })} />
-              Published (visible to students)
+              Published (visible to candidates)
             </label>
             <div className="flex gap-2">
               <Button variant="outline" onClick={() => setEditing(null)}>Cancel</Button>

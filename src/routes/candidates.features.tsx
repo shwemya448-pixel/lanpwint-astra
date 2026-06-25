@@ -8,10 +8,10 @@ export const Route = createFileRoute("/candidates/features")({
 
 const FEATURES = [
   { icon: Briefcase, title: "Unlimited job posts", body: "Title, salary, requirements, deadline — published the moment you click." },
-  { icon: MapPin, title: "Map your hiring", body: "Each role auto-pins to its city so students can browse jobs near them." },
-  { icon: Users, title: "Verified student CVs", body: "University, year, skills, downloadable CV — refreshed daily." },
+  { icon: MapPin, title: "Map your hiring", body: "Each role auto-pins to its city so candidates can browse jobs near them." },
+  { icon: Users, title: "Verified candidate CVs", body: "University, year, skills, downloadable CV — refreshed daily." },
   { icon: MessageSquare, title: "Realtime messaging", body: "Chat with candidates inside Lan Pwint. Threads sync instantly." },
-  { icon: Sparkles, title: "AI-screened CVs", body: "Students arrive with AI-rated CVs, so you skip the spam." },
+  { icon: Sparkles, title: "AI-screened CVs", body: "Candidates arrive with AI-rated CVs, so you skip the spam." },
   { icon: ShieldCheck, title: "Verified employer profile", body: "A trust badge on every post so candidates respond to your outreach." },
 ];
 

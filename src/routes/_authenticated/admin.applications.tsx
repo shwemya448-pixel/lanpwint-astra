@@ -55,7 +55,7 @@ function AdminApps() {
   return (
     <section className="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
       <h1 className="font-serif text-3xl text-navy">Applications</h1>
-      <p className="mt-1 text-sm text-muted-foreground">Every application across the platform. Accept students to send an offer.</p>
+      <p className="mt-1 text-sm text-muted-foreground">Every application across the platform. Accept candidates to send an offer.</p>
 
       {error ? (
         <p className="mt-6 text-sm text-destructive">{(error as Error).message}</p>
@@ -74,7 +74,7 @@ function AdminApps() {
                 <div className="min-w-0">
                   <div className="flex flex-wrap items-center gap-2">
                     <p className="font-serif text-lg text-navy">
-                      {a.profile?.full_name ?? "Unnamed student"}
+                      {a.profile?.full_name ?? "Unnamed candidate"}
                     </p>
                     <Badge variant="outline" className="capitalize">{a.status}</Badge>
                   </div>
