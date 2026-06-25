@@ -1,6 +1,7 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { BookOpen, Briefcase, FileText, LogOut, MapPin, MessageSquare, Newspaper, Plus, Sparkles, User, Users } from "lucide-react";
+import { BookOpen, Briefcase, FileText, LogOut, MapPin, MessageSquare, Newspaper, Plus, Shield, Sparkles, User, Users, Eye } from "lucide-react";
+
 import { supabase } from "@/integrations/supabase/client";
 import { useSession, useUserRoles, type AppRole } from "@/lib/auth";
 import { useViewRole } from "@/lib/view-role";
@@ -35,7 +36,7 @@ function Dashboard() {
     navigate({ to: "/auth", replace: true });
   }
 
-  const { viewRole } = useViewRole();
+  const { viewRole, setViewRole } = useViewRole();
   const isAdmin = roles.includes("admin");
   const role: AppRole = isAdmin ? viewRole : (roles.includes("employer") ? "employer" : "student");
 
@@ -60,11 +61,36 @@ function Dashboard() {
           </Button>
         </div>
 
-        {role === "employer" ? <EmployerHome /> : <StudentHome />}
+        {isAdmin && (
+          <div className="mt-6 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-[color:var(--gold)]/40 bg-[color:var(--gold)]/10 px-4 py-3 text-sm">
+            <div className="flex items-center gap-2 text-[color:var(--gold)]">
+              <Eye className="h-4 w-4" />
+              <span>
+                Viewing as <strong className="capitalize">{viewRole}</strong> — switch perspective to preview what each role sees.
+              </span>
+            </div>
+            <div className="flex gap-1">
+              {(["admin", "student", "employer"] as AppRole[]).map((r) => (
+                <Button
+                  key={r}
+                  size="sm"
+                  variant={viewRole === r ? "default" : "outline"}
+                  onClick={() => setViewRole(r)}
+                  className={viewRole === r ? "bg-[color:var(--gold)] text-[color:var(--navy)] hover:brightness-110" : ""}
+                >
+                  <span className="capitalize">{r}</span>
+                </Button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {role === "admin" ? <AdminHome /> : role === "employer" ? <EmployerHome /> : <StudentHome />}
       </section>
     </PageShell>
   );
 }
+
 
 type Tile = { icon: any; title: string; body: string; to: string; cta: string };
 
@@ -116,3 +142,22 @@ function EmployerHome() {
     />
   );
 }
+
+function AdminHome() {
+  return (
+    <TileGrid
+      tiles={[
+        { icon: Newspaper, title: "Post & manage news", body: "Publish bilingual announcements and articles.", to: "/admin/news", cta: "Open news admin" },
+        { icon: Shield, title: "View as Student", body: "Preview every page a student sees in the app.", to: "/dashboard", cta: "Switch above" },
+        { icon: Briefcase, title: "View as Employer", body: "Preview the employer dashboard and tools.", to: "/dashboard", cta: "Switch above" },
+        { icon: BookOpen, title: "Learn & Earn", body: "Curated YouTube career videos by category.", to: "/learn", cta: "Open" },
+        { icon: MapPin, title: "Job map (Myanmar)", body: "See live job locations across the country.", to: "/job-map", cta: "Open map" },
+        { icon: Users, title: "CV Board", body: "Browse every student CV in the system.", to: "/cv-board", cta: "Browse CVs" },
+        { icon: Sparkles, title: "CV Analyzer", body: "Test the AI CV analyzer used by students.", to: "/cv-analyzer", cta: "Open analyzer" },
+        { icon: MessageSquare, title: "Messages", body: "Inspect the messaging surface.", to: "/messages", cta: "Open messages" },
+        { icon: FileText, title: "All applications", body: "Track applications across the platform.", to: "/applications", cta: "Open" },
+      ]}
+    />
+  );
+}
+
