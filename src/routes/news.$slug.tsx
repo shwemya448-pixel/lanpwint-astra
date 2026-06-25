@@ -125,10 +125,10 @@ function NewsVideo({ url }: { url: string }) {
     <div className="mt-6 aspect-video w-full overflow-hidden rounded-xl border border-border bg-black">
       <video
         key={url}
+        src={url}
         controls
         playsInline
-        preload="metadata"
-        crossOrigin="anonymous"
+        preload="auto"
         className="h-full w-full"
       >
         <source src={url} type={type} />
