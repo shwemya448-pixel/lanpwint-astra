@@ -9,7 +9,7 @@ export function PageShell({ children }: { children: ReactNode }) {
   // header + footer. Avoid stacking shells.
   if (role) return <>{children}</>;
   return (
-    <div className="flex min-h-screen flex-col bg-background">
+    <div className="flex min-h-screen flex-col bg-background lp-aurora lp-aurora-grain">
       <SiteHeader />
       <main className="flex-1">{children}</main>
       <SiteFooter />
