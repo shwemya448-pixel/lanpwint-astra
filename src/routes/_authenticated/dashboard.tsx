@@ -142,3 +142,22 @@ function EmployerHome() {
     />
   );
 }
+
+function AdminHome() {
+  return (
+    <TileGrid
+      tiles={[
+        { icon: Newspaper, title: "Post & manage news", body: "Publish bilingual announcements and articles.", to: "/admin/news", cta: "Open news admin" },
+        { icon: Shield, title: "View as Student", body: "Preview every page a student sees in the app.", to: "/dashboard", cta: "Switch above" },
+        { icon: Briefcase, title: "View as Employer", body: "Preview the employer dashboard and tools.", to: "/dashboard", cta: "Switch above" },
+        { icon: BookOpen, title: "Learn & Earn", body: "Curated YouTube career videos by category.", to: "/learn", cta: "Open" },
+        { icon: MapPin, title: "Job map (Myanmar)", body: "See live job locations across the country.", to: "/job-map", cta: "Open map" },
+        { icon: Users, title: "CV Board", body: "Browse every student CV in the system.", to: "/cv-board", cta: "Browse CVs" },
+        { icon: Sparkles, title: "CV Analyzer", body: "Test the AI CV analyzer used by students.", to: "/cv-analyzer", cta: "Open analyzer" },
+        { icon: MessageSquare, title: "Messages", body: "Inspect the messaging surface.", to: "/messages", cta: "Open messages" },
+        { icon: FileText, title: "All applications", body: "Track applications across the platform.", to: "/applications", cta: "Open" },
+      ]}
+    />
+  );
+}
+
