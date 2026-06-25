@@ -26,14 +26,16 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-40 border-b border-border/60 bg-background/85 backdrop-blur-md">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
-        <Link to="/" className="group flex items-center gap-2.5 shrink-0">
-          <img
-            src={logoMark}
-            alt="Lan Pwint"
-            width={40}
-            height={40}
-            className="h-10 w-10 rounded-md object-contain transition-transform duration-300 group-hover:scale-105"
-          />
+        <Link to="/" className="group flex items-center gap-3 shrink-0">
+          <span className="lp-logo-mark h-12 w-12">
+            <img
+              src={logoMark}
+              alt="Lan Pwint"
+              width={48}
+              height={48}
+              className="h-12 w-12 rounded-md object-contain"
+            />
+          </span>
           <div className="leading-tight">
             <div className="font-serif text-base text-foreground">Lan Pwint</div>
             <div className="text-[10px] uppercase tracking-[0.18em] text-[color:var(--gold)]/80">

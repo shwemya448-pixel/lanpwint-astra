@@ -82,7 +82,7 @@ const ROLE_TINT: Record<AppRole, string> = {
 export function RoleLayout({ role, children }: { role: AppRole; children: ReactNode }) {
   return (
     <RoleShellContext.Provider value={role}>
-      <div className="flex min-h-screen flex-col bg-background">
+      <div className="flex min-h-screen flex-col bg-background lp-aurora lp-aurora-grain">
         <RoleNav role={role} />
         <main className="flex-1">{children}</main>
         <SiteFooter />
@@ -108,14 +108,16 @@ export function RoleNav({ role }: { role: AppRole }) {
     <header className={cn("sticky top-0 z-40 border-b border-border bg-background/85 backdrop-blur-md")}>
       <div className={cn("bg-gradient-to-b", ROLE_TINT[role])}>
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 sm:px-6 lg:px-8">
-          <Link to="/" className="flex items-center gap-2.5 shrink-0">
-            <img
-              src={logoMark}
-              alt="Lan Pwint"
-              width={36}
-              height={36}
-              className="h-9 w-9 rounded-md object-contain"
-            />
+          <Link to="/" className="flex items-center gap-3 shrink-0">
+            <span className="lp-logo-mark h-11 w-11">
+              <img
+                src={logoMark}
+                alt="Lan Pwint"
+                width={44}
+                height={44}
+                className="h-11 w-11 rounded-md object-contain"
+              />
+            </span>
             <div className="leading-tight">
               <div className="font-serif text-base text-foreground">Lan Pwint</div>
               <div className="text-[10px] uppercase tracking-[0.18em] text-[color:var(--gold)]/85">

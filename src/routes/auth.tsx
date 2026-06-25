@@ -33,6 +33,8 @@ function AuthPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
+  const [companyName, setCompanyName] = useState("");
+  const [position, setPosition] = useState("");
   const [busy, setBusy] = useState(false);
 
   useEffect(() => setRole(as), [as]);
@@ -124,7 +126,7 @@ function AuthPage() {
             <Label className="text-xs uppercase tracking-[0.18em] text-muted-foreground">I am a</Label>
             <div className="mt-2 grid grid-cols-2 gap-2">
               <RoleButton active={role === "student"} onClick={() => setRole("student")} icon={GraduationCap} label="Candidate" />
-              <RoleButton active={role === "employer"} onClick={() => setRole("employer")} icon={Briefcase} label="Candidate / Employer" />
+              <RoleButton active={role === "employer"} onClick={() => setRole("employer")} icon={Briefcase} label="Employer" />
             </div>
           </div>
 
@@ -149,6 +151,24 @@ function AuthPage() {
               <form onSubmit={handleEmail} className="space-y-4">
                 <Field id="name" label="Full name" value={name} onChange={setName} required />
                 <Field id="email2" label="Email" type="email" value={email} onChange={setEmail} required />
+                {role === "employer" && (
+                  <>
+                    <Field
+                      id="company"
+                      label="Company name"
+                      value={companyName}
+                      onChange={setCompanyName}
+                      required
+                    />
+                    <Field
+                      id="position"
+                      label="Your position"
+                      value={position}
+                      onChange={setPosition}
+                      required
+                    />
+                  </>
+                )}
                 <Field id="pw2" label="Password" type="password" value={password} onChange={setPassword} required minLength={6} />
                 <Button type="submit" disabled={busy} className="w-full bg-navy text-navy-foreground hover:bg-deep">
                   {busy && <Loader2 className="mr-2 h-4 w-4 animate-spin" />} Create account
