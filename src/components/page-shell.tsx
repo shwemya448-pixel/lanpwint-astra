@@ -11,7 +11,7 @@ export function PageShell({ children }: { children: ReactNode }) {
   return (
     <div className="flex min-h-screen flex-col bg-background lp-aurora lp-aurora-grain">
       <SiteHeader />
-      <main className="flex-1">{children}</main>
+      <main key={typeof window !== "undefined" ? window.location.pathname : "ssr"} className="flex-1 lp-page-enter">{children}</main>
       <SiteFooter />
     </div>
   );

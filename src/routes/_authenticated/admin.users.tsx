@@ -56,8 +56,8 @@ function AdminUsers() {
               </tr>
             </thead>
             <tbody>
-              {data.map((u) => (
-                <tr key={u.id} className="border-t border-border">
+              {data.map((u, i) => (
+                <tr key={u.id} className="lp-table-row border-t border-border" style={{ animationDelay: `${Math.min(i * 40, 600)}ms` }}>
                   <td className="px-4 py-3 font-medium text-navy">{u.full_name || "—"}</td>
                   <td className="px-4 py-3 text-muted-foreground">{u.contact_email}</td>
                   <td className="px-4 py-3">
