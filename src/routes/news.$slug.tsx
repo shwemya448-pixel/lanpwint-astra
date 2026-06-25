@@ -66,13 +66,59 @@ function NewsDetail() {
             {post.image_url && (
               <img src={post.image_url} alt="" className="mt-6 w-full rounded-xl border border-border" />
             )}
+            {post.video_url && <NewsVideo url={post.video_url} />}
             <div className="mt-6 whitespace-pre-wrap font-sans leading-relaxed text-foreground/90">
               {lang === "my" ? post.body_my : post.body_en}
             </div>
+            {Array.isArray(post.media_urls) && post.media_urls.length > 0 && (
+              <div className="mt-8 grid gap-3 sm:grid-cols-2">
+                {post.media_urls.map((url: string, idx: number) => {
+                  const isVideo = /\.(mp4|webm|mov|m4v|ogg)(\?|$)/i.test(url);
+                  return isVideo ? (
+                    <video key={idx} src={url} controls className="w-full rounded-lg border border-border" />
+                  ) : (
+                    <img key={idx} src={url} alt="" className="w-full rounded-lg border border-border object-cover" />
+                  );
+                })}
+              </div>
+            )}
           </article>
         )}
       </main>
       <SiteFooter />
     </div>
   );
+}
+
+function NewsVideo({ url }: { url: string }) {
+  // Render YouTube/Vimeo as iframe; otherwise as <video>.
+  const yt = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([\w-]{11})/);
+  const vimeo = url.match(/vimeo\.com\/(\d+)/);
+  if (yt) {
+    return (
+      <div className="mt-6 aspect-video w-full overflow-hidden rounded-xl border border-border">
+        <iframe
+          src={`https://www.youtube.com/embed/${yt[1]}`}
+          title="Video"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+          className="h-full w-full"
+        />
+      </div>
+    );
+  }
+  if (vimeo) {
+    return (
+      <div className="mt-6 aspect-video w-full overflow-hidden rounded-xl border border-border">
+        <iframe
+          src={`https://player.vimeo.com/video/${vimeo[1]}`}
+          title="Video"
+          allow="autoplay; fullscreen; picture-in-picture"
+          allowFullScreen
+          className="h-full w-full"
+        />
+      </div>
+    );
+  }
+  return <video src={url} controls className="mt-6 w-full rounded-xl border border-border" />;
 }
