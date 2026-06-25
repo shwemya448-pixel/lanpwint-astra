@@ -109,7 +109,7 @@ export function AuthMenu() {
                 <Link to="/student/applications">{t("auth.myApplications")}</Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <Link to="/student/lessons">{t("auth.learning")}</Link>
+                <Link to="/student/learn">{t("auth.learning")}</Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
                 <Link to="/profile">
