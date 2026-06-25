@@ -159,9 +159,9 @@ function AuthPage() {
             </p>
 
             <div className="mt-8 grid max-w-md grid-cols-3 gap-3">
-              <Stat label="Candidates" value="12K" />
-              <Stat label="Employers" value="480" />
-              <Stat label="Placements" value="3.2K" />
+              <Stat label="Candidates" value="3" />
+              <Stat label="Employers" value="3" />
+              <Stat label="Placements" value="0" />
             </div>
           </div>
 
