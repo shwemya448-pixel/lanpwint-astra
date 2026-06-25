@@ -1,8 +1,9 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { BookOpen, Briefcase, FileText, LogOut, Plus, User, Users } from "lucide-react";
+import { BookOpen, Briefcase, FileText, LogOut, MapPin, MessageSquare, Newspaper, Plus, Sparkles, User, Users } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useSession, useUserRoles, type AppRole } from "@/lib/auth";
+import { useViewRole } from "@/lib/view-role";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { PageShell } from "@/components/page-shell";
@@ -34,7 +35,9 @@ function Dashboard() {
     navigate({ to: "/auth", replace: true });
   }
 
-  const role: AppRole = roles[0] ?? "student";
+  const { viewRole } = useViewRole();
+  const isAdmin = roles.includes("admin");
+  const role: AppRole = isAdmin ? viewRole : (roles.includes("employer") ? "employer" : "student");
 
   return (
     <PageShell>
@@ -86,10 +89,14 @@ function StudentHome() {
   return (
     <TileGrid
       tiles={[
+        { icon: BookOpen, title: "Learn & Earn", body: "YouTube career videos by category — interviews, CV, tech, more.", to: "/learn", cta: "Watch & learn" },
+        { icon: MessageSquare, title: "Messages", body: "Chat directly with employers about jobs and offers.", to: "/messages", cta: "Open messages" },
+        { icon: MapPin, title: "Job map", body: "See open jobs across Myanmar on a live map.", to: "/job-map", cta: "Open map" },
+        { icon: Sparkles, title: "CV Analyzer", body: "AI scores your CV and matches it to a job posting.", to: "/cv-analyzer", cta: "Analyze CV" },
+        { icon: User, title: "My CV Board", body: "Manage your profile so employers can find you.", to: "/my-cv", cta: "Manage CV" },
+        { icon: Newspaper, title: "News", body: "Latest career news and announcements.", to: "/news", cta: "Read news" },
         { icon: Briefcase, title: "Browse jobs", body: "Internships and graduate roles from real employers.", to: "/jobs", cta: "View openings" },
-        { icon: FileText, title: "My applications", body: "Track your applications and respond to offers.", to: "/applications", cta: "My applications" },
-        { icon: BookOpen, title: "Learning Center", body: "Watch video lessons from real internship experiences.", to: "/lessons", cta: "Start learning" },
-        { icon: User, title: "My profile", body: "Skills, education, certificates, and CV.", to: "/profile", cta: "Edit profile" },
+        { icon: FileText, title: "My applications", body: "Track applications and respond to offers.", to: "/applications", cta: "My applications" },
       ]}
     />
   );
@@ -99,9 +106,12 @@ function EmployerHome() {
   return (
     <TileGrid
       tiles={[
+        { icon: Users, title: "CV Board", body: "Browse student profiles and discover candidates.", to: "/cv-board", cta: "Browse CVs" },
+        { icon: MessageSquare, title: "Messages", body: "Connect with students directly.", to: "/messages", cta: "Open messages" },
         { icon: Plus, title: "Post a new job", body: "Reach motivated students and graduates.", to: "/employer/jobs/new", cta: "Create job post" },
         { icon: Briefcase, title: "My job posts", body: "Edit, close or reopen your roles.", to: "/employer/jobs", cta: "View posts" },
-        { icon: Users, title: "Applications", body: "Review CVs and send offers to candidates.", to: "/employer/applications", cta: "Review applicants" },
+        { icon: FileText, title: "Applications", body: "Review CVs and send offers to candidates.", to: "/employer/applications", cta: "Review applicants" },
+        { icon: Newspaper, title: "News", body: "Industry news and platform announcements.", to: "/news", cta: "Read news" },
       ]}
     />
   );

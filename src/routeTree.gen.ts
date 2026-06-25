@@ -22,7 +22,13 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as NewsSlugRouteImport } from './routes/news.$slug'
 import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticated/profile'
+import { Route as AuthenticatedMyCvRouteImport } from './routes/_authenticated/my-cv'
+import { Route as AuthenticatedMessagesRouteImport } from './routes/_authenticated/messages'
+import { Route as AuthenticatedLearnRouteImport } from './routes/_authenticated/learn'
+import { Route as AuthenticatedJobMapRouteImport } from './routes/_authenticated/job-map'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedCvBoardRouteImport } from './routes/_authenticated/cv-board'
+import { Route as AuthenticatedCvAnalyzerRouteImport } from './routes/_authenticated/cv-analyzer'
 import { Route as AuthenticatedApplicationsRouteImport } from './routes/_authenticated/applications'
 import { Route as AuthenticatedLessonsIndexRouteImport } from './routes/_authenticated/lessons.index'
 import { Route as AuthenticatedJobsIndexRouteImport } from './routes/_authenticated/jobs.index'
@@ -97,9 +103,39 @@ const AuthenticatedProfileRoute = AuthenticatedProfileRouteImport.update({
   path: '/profile',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedMyCvRoute = AuthenticatedMyCvRouteImport.update({
+  id: '/my-cv',
+  path: '/my-cv',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedMessagesRoute = AuthenticatedMessagesRouteImport.update({
+  id: '/messages',
+  path: '/messages',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedLearnRoute = AuthenticatedLearnRouteImport.update({
+  id: '/learn',
+  path: '/learn',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedJobMapRoute = AuthenticatedJobMapRouteImport.update({
+  id: '/job-map',
+  path: '/job-map',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedCvBoardRoute = AuthenticatedCvBoardRouteImport.update({
+  id: '/cv-board',
+  path: '/cv-board',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedCvAnalyzerRoute = AuthenticatedCvAnalyzerRouteImport.update({
+  id: '/cv-analyzer',
+  path: '/cv-analyzer',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedApplicationsRoute =
@@ -166,7 +202,13 @@ export interface FileRoutesByFullPath {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/undergraduate': typeof UndergraduateRoute
   '/applications': typeof AuthenticatedApplicationsRoute
+  '/cv-analyzer': typeof AuthenticatedCvAnalyzerRoute
+  '/cv-board': typeof AuthenticatedCvBoardRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/job-map': typeof AuthenticatedJobMapRoute
+  '/learn': typeof AuthenticatedLearnRoute
+  '/messages': typeof AuthenticatedMessagesRoute
+  '/my-cv': typeof AuthenticatedMyCvRoute
   '/profile': typeof AuthenticatedProfileRoute
   '/news/$slug': typeof NewsSlugRoute
   '/admin/news': typeof AuthenticatedAdminNewsRoute
@@ -190,7 +232,13 @@ export interface FileRoutesByTo {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/undergraduate': typeof UndergraduateRoute
   '/applications': typeof AuthenticatedApplicationsRoute
+  '/cv-analyzer': typeof AuthenticatedCvAnalyzerRoute
+  '/cv-board': typeof AuthenticatedCvBoardRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/job-map': typeof AuthenticatedJobMapRoute
+  '/learn': typeof AuthenticatedLearnRoute
+  '/messages': typeof AuthenticatedMessagesRoute
+  '/my-cv': typeof AuthenticatedMyCvRoute
   '/profile': typeof AuthenticatedProfileRoute
   '/news/$slug': typeof NewsSlugRoute
   '/admin/news': typeof AuthenticatedAdminNewsRoute
@@ -216,7 +264,13 @@ export interface FileRoutesById {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/undergraduate': typeof UndergraduateRoute
   '/_authenticated/applications': typeof AuthenticatedApplicationsRoute
+  '/_authenticated/cv-analyzer': typeof AuthenticatedCvAnalyzerRoute
+  '/_authenticated/cv-board': typeof AuthenticatedCvBoardRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/job-map': typeof AuthenticatedJobMapRoute
+  '/_authenticated/learn': typeof AuthenticatedLearnRoute
+  '/_authenticated/messages': typeof AuthenticatedMessagesRoute
+  '/_authenticated/my-cv': typeof AuthenticatedMyCvRoute
   '/_authenticated/profile': typeof AuthenticatedProfileRoute
   '/news/$slug': typeof NewsSlugRoute
   '/_authenticated/admin/news': typeof AuthenticatedAdminNewsRoute
@@ -242,7 +296,13 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/undergraduate'
     | '/applications'
+    | '/cv-analyzer'
+    | '/cv-board'
     | '/dashboard'
+    | '/job-map'
+    | '/learn'
+    | '/messages'
+    | '/my-cv'
     | '/profile'
     | '/news/$slug'
     | '/admin/news'
@@ -266,7 +326,13 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/undergraduate'
     | '/applications'
+    | '/cv-analyzer'
+    | '/cv-board'
     | '/dashboard'
+    | '/job-map'
+    | '/learn'
+    | '/messages'
+    | '/my-cv'
     | '/profile'
     | '/news/$slug'
     | '/admin/news'
@@ -291,7 +357,13 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/undergraduate'
     | '/_authenticated/applications'
+    | '/_authenticated/cv-analyzer'
+    | '/_authenticated/cv-board'
     | '/_authenticated/dashboard'
+    | '/_authenticated/job-map'
+    | '/_authenticated/learn'
+    | '/_authenticated/messages'
+    | '/_authenticated/my-cv'
     | '/_authenticated/profile'
     | '/news/$slug'
     | '/_authenticated/admin/news'
@@ -411,11 +483,53 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedProfileRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/my-cv': {
+      id: '/_authenticated/my-cv'
+      path: '/my-cv'
+      fullPath: '/my-cv'
+      preLoaderRoute: typeof AuthenticatedMyCvRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/messages': {
+      id: '/_authenticated/messages'
+      path: '/messages'
+      fullPath: '/messages'
+      preLoaderRoute: typeof AuthenticatedMessagesRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/learn': {
+      id: '/_authenticated/learn'
+      path: '/learn'
+      fullPath: '/learn'
+      preLoaderRoute: typeof AuthenticatedLearnRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/job-map': {
+      id: '/_authenticated/job-map'
+      path: '/job-map'
+      fullPath: '/job-map'
+      preLoaderRoute: typeof AuthenticatedJobMapRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/dashboard': {
       id: '/_authenticated/dashboard'
       path: '/dashboard'
       fullPath: '/dashboard'
       preLoaderRoute: typeof AuthenticatedDashboardRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/cv-board': {
+      id: '/_authenticated/cv-board'
+      path: '/cv-board'
+      fullPath: '/cv-board'
+      preLoaderRoute: typeof AuthenticatedCvBoardRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/cv-analyzer': {
+      id: '/_authenticated/cv-analyzer'
+      path: '/cv-analyzer'
+      fullPath: '/cv-analyzer'
+      preLoaderRoute: typeof AuthenticatedCvAnalyzerRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/applications': {
@@ -486,7 +600,13 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedApplicationsRoute: typeof AuthenticatedApplicationsRoute
+  AuthenticatedCvAnalyzerRoute: typeof AuthenticatedCvAnalyzerRoute
+  AuthenticatedCvBoardRoute: typeof AuthenticatedCvBoardRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedJobMapRoute: typeof AuthenticatedJobMapRoute
+  AuthenticatedLearnRoute: typeof AuthenticatedLearnRoute
+  AuthenticatedMessagesRoute: typeof AuthenticatedMessagesRoute
+  AuthenticatedMyCvRoute: typeof AuthenticatedMyCvRoute
   AuthenticatedProfileRoute: typeof AuthenticatedProfileRoute
   AuthenticatedAdminNewsRoute: typeof AuthenticatedAdminNewsRoute
   AuthenticatedEmployerApplicationsRoute: typeof AuthenticatedEmployerApplicationsRoute
@@ -500,7 +620,13 @@ interface AuthenticatedRouteRouteChildren {
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedApplicationsRoute: AuthenticatedApplicationsRoute,
+  AuthenticatedCvAnalyzerRoute: AuthenticatedCvAnalyzerRoute,
+  AuthenticatedCvBoardRoute: AuthenticatedCvBoardRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedJobMapRoute: AuthenticatedJobMapRoute,
+  AuthenticatedLearnRoute: AuthenticatedLearnRoute,
+  AuthenticatedMessagesRoute: AuthenticatedMessagesRoute,
+  AuthenticatedMyCvRoute: AuthenticatedMyCvRoute,
   AuthenticatedProfileRoute: AuthenticatedProfileRoute,
   AuthenticatedAdminNewsRoute: AuthenticatedAdminNewsRoute,
   AuthenticatedEmployerApplicationsRoute:
@@ -542,13 +668,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
