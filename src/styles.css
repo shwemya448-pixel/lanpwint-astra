@@ -143,9 +143,15 @@
     letter-spacing: -0.01em;
   }
   ::selection {
-    background-color: color-mix(in oklab, var(--teal) 30%, transparent);
+    background-color: color-mix(in oklab, var(--gold) 35%, transparent);
+  }
+  /* Global smooth transitions */
+  a, button, [role="button"], .rounded-2xl, .rounded-xl, .rounded-lg, .rounded-full, input, select, textarea {
+    transition: background-color .25s ease, color .25s ease, border-color .25s ease,
+                box-shadow .3s ease, transform .25s ease, filter .25s ease;
   }
 }
+
 
 /* Subtle paper grain for hero surfaces */
 @utility grain {
