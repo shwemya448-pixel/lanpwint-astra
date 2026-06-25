@@ -63,16 +63,16 @@ function NewsDetail() {
             <div className="mt-2 text-sm text-muted-foreground">
               {new Date(post.published_at).toLocaleDateString(lang === "my" ? "my-MM" : "en-US", { year: "numeric", month: "long", day: "numeric" })}
             </div>
-            {post.video_url && <NewsVideo url={post.video_url} />}
+            {post.video_url && <NewsVideo url={post.video_url} fallbacks={post.media_urls} />}
             {!post.video_url && post.image_url && (
               <img src={post.image_url} alt="" className="mt-6 w-full rounded-xl border border-border" />
             )}
             <div className="mt-6 whitespace-pre-wrap font-sans leading-relaxed text-foreground/90">
               {lang === "my" ? post.body_my : post.body_en}
             </div>
-            {Array.isArray(post.media_urls) && post.media_urls.length > 0 && (
+            {Array.isArray(post.media_urls) && post.media_urls.filter((url: string) => url !== getFallbackVideoUrl(post.video_url)).length > 0 && (
               <div className="mt-8 grid gap-3 sm:grid-cols-2">
-                {post.media_urls.map((url: string, idx: number) => {
+                {post.media_urls.filter((url: string) => url !== getFallbackVideoUrl(post.video_url)).map((url: string, idx: number) => {
                   const isVideo = /\.(mp4|webm|mov|m4v|ogg)(\?|$)/i.test(url);
                   return isVideo ? (
                     <video key={idx} src={url} controls className="w-full rounded-lg border border-border" />
@@ -90,7 +90,25 @@ function NewsDetail() {
   );
 }
 
-function NewsVideo({ url }: { url: string }) {
+function getFallbackVideoUrl(url?: string | null) {
+  if (!url) return null;
+  if (url.includes("astra1.mp4")) return "/__l5e/assets-v1/c7ee45cb-1229-44d5-bd48-fbe49a79860b/astra1.webm";
+  if (url.includes("astra2.mp4")) return "/__l5e/assets-v1/cf73cf89-f20b-47c3-97fb-862fd44b3653/astra2.webm";
+  return null;
+}
+
+function videoSources(url: string, fallbacks?: string[] | null) {
+  const sources = [url, ...(fallbacks ?? []), getFallbackVideoUrl(url)].filter(Boolean) as string[];
+  return Array.from(new Set(sources));
+}
+
+function sourceType(url: string) {
+  if (/\.webm(\?|$)/i.test(url)) return "video/webm";
+  if (/\.ogg(\?|$)/i.test(url)) return "video/ogg";
+  return "video/mp4";
+}
+
+function NewsVideo({ url, fallbacks }: { url: string; fallbacks?: string[] | null }) {
   // Render YouTube/Vimeo as iframe; otherwise as <video>.
   const yt = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([\w-]{11})/);
   const vimeo = url.match(/vimeo\.com\/(\d+)/);
@@ -120,17 +138,19 @@ function NewsVideo({ url }: { url: string }) {
       </div>
     );
   }
-  const type = /\.webm(\?|$)/i.test(url) ? "video/webm" : "video/mp4";
   return (
-    <div className="mt-6 aspect-video w-full overflow-hidden rounded-xl border border-border bg-black">
+    <div className="mt-6 aspect-video w-full overflow-hidden rounded-xl border border-border bg-background shadow-[0_18px_55px_-28px_color-mix(in_oklab,var(--gold)_40%,transparent)]">
       <video
         key={url}
         controls
         playsInline
-        preload="auto"
-        className="h-full w-full"
+        preload="metadata"
+        controlsList="nodownload"
+        className="h-full w-full bg-background object-contain"
       >
-        <source src={url} type={type} />
+        {videoSources(url, fallbacks).map((source) => (
+          <source key={source} src={source} type={sourceType(source)} />
+        ))}
         Your browser does not support the video tag.
       </video>
     </div>
