@@ -185,15 +185,20 @@ function NewsPreview() {
 
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {posts.map((p: any) => (
-            <Link
+            <article
               key={p.id}
-              to="/news/$slug"
-              params={{ slug: p.slug }}
               className="group rounded-xl border border-border bg-card overflow-hidden transition-all hover:border-[color:var(--gold)]/60 hover:shadow-[0_8px_30px_-12px_color-mix(in_oklab,var(--gold)_30%,transparent)]"
             >
               {p.video_url ? (
-                <div className="aspect-video overflow-hidden bg-black">
-                  <video src={p.video_url} muted playsInline preload="metadata" className="h-full w-full object-cover" />
+                <div className="aspect-video overflow-hidden bg-background">
+                  <video
+                    src={p.video_url}
+                    controls
+                    playsInline
+                    preload="metadata"
+                    controlsList="nodownload"
+                    className="h-full w-full bg-background object-contain"
+                  />
                 </div>
               ) : p.image_url ? (
                 <div className="aspect-video overflow-hidden bg-muted">
@@ -206,17 +211,17 @@ function NewsPreview() {
                     {lang === "my" ? p.news_categories.name_my : p.news_categories.name_en}
                   </div>
                 )}
-                <h3 className="mt-2 font-serif text-lg text-foreground group-hover:text-[color:var(--gold)] transition-colors line-clamp-2">
+                <Link to="/news/$slug" params={{ slug: p.slug }} className="mt-2 block font-serif text-lg text-foreground transition-colors hover:text-[color:var(--gold)] line-clamp-2">
                   {lang === "my" ? p.title_my : p.title_en}
-                </h3>
+                </Link>
                 <p className="mt-2 text-sm text-muted-foreground line-clamp-3">
                   {lang === "my" ? p.excerpt_my : p.excerpt_en}
                 </p>
-                <div className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-[color:var(--gold)]">
+                <Link to="/news/$slug" params={{ slug: p.slug }} className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-[color:var(--gold)] hover:underline">
                   See more <ArrowRight className="h-3.5 w-3.5" />
-                </div>
+                </Link>
               </div>
-            </Link>
+            </article>
           ))}
         </div>
       </div>

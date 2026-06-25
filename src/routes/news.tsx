@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
+import { ArrowRight } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
@@ -76,15 +77,20 @@ function NewsPage() {
         ) : (
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {posts.map((p: any) => (
-              <Link
+              <article
                 key={p.id}
-                to="/news/$slug"
-                params={{ slug: p.slug }}
                 className="group rounded-xl border border-border bg-card overflow-hidden transition-all hover:border-[color:var(--gold)]/60 hover:shadow-[0_8px_30px_-12px_color-mix(in_oklab,var(--gold)_30%,transparent)]"
               >
                 {p.video_url ? (
-                  <div className="aspect-video overflow-hidden bg-black">
-                    <video src={p.video_url} muted playsInline preload="metadata" className="h-full w-full object-cover" />
+                  <div className="aspect-video overflow-hidden bg-background">
+                    <video
+                      src={p.video_url}
+                      controls
+                      playsInline
+                      preload="metadata"
+                      controlsList="nodownload"
+                      className="h-full w-full bg-background object-contain"
+                    />
                   </div>
                 ) : p.image_url ? (
                   <div className="aspect-video overflow-hidden bg-muted">
@@ -97,17 +103,22 @@ function NewsPage() {
                       {lang === "my" ? p.news_categories.name_my : p.news_categories.name_en}
                     </div>
                   )}
-                  <h2 className="mt-2 font-serif text-xl text-foreground group-hover:text-[color:var(--gold)] transition-colors">
+                  <Link to="/news/$slug" params={{ slug: p.slug }} className="mt-2 block font-serif text-xl text-foreground transition-colors hover:text-[color:var(--gold)]">
                     {lang === "my" ? p.title_my : p.title_en}
-                  </h2>
+                  </Link>
                   <p className="mt-2 text-sm text-muted-foreground line-clamp-3">
                     {lang === "my" ? p.excerpt_my : p.excerpt_en}
                   </p>
-                  <div className="mt-3 text-xs text-muted-foreground">
-                    {new Date(p.published_at).toLocaleDateString(lang === "my" ? "my-MM" : "en-US", { year: "numeric", month: "short", day: "numeric" })}
+                  <div className="mt-4 flex items-center justify-between gap-3">
+                    <div className="text-xs text-muted-foreground">
+                      {new Date(p.published_at).toLocaleDateString(lang === "my" ? "my-MM" : "en-US", { year: "numeric", month: "short", day: "numeric" })}
+                    </div>
+                    <Link to="/news/$slug" params={{ slug: p.slug }} className="inline-flex items-center gap-1 text-xs font-semibold text-[color:var(--gold)] hover:underline">
+                      See more <ArrowRight className="h-3.5 w-3.5" />
+                    </Link>
                   </div>
                 </div>
-              </Link>
+              </article>
             ))}
           </div>
         )}
