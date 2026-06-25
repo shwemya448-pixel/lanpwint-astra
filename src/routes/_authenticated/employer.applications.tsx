@@ -24,20 +24,34 @@ function EmployerApps() {
   const { user } = useSession();
   const qc = useQueryClient();
 
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, error } = useQuery({
     queryKey: ["employer-applications", user?.id],
     enabled: !!user,
     queryFn: async () => {
-      const { data } = await supabase
+      const { data: applications, error: applicationsError } = await supabase
         .from("applications")
         .select(`
-          id, status, cover_letter, cv_url, employer_note, created_at,
-          job:jobs!inner(id, title, employer_id),
-          profile:profiles(id, full_name, headline, school, degree, skills, contact_email)
+          id, student_id, status, cover_letter, cv_url, employer_note, created_at,
+          job:jobs!inner(id, title, employer_id)
         `)
         .eq("job.employer_id", user!.id)
         .order("created_at", { ascending: false });
-      return data ?? [];
+      if (applicationsError) throw applicationsError;
+
+      const studentIds = [...new Set((applications ?? []).map((app) => app.student_id).filter(Boolean))];
+      const { data: profiles, error: profilesError } = studentIds.length
+        ? await supabase
+            .from("profiles")
+            .select("id, full_name, headline, school, degree, skills, contact_email")
+            .in("id", studentIds)
+        : { data: [], error: null };
+      if (profilesError) throw profilesError;
+
+      const profilesById = new Map((profiles ?? []).map((profile) => [profile.id, profile]));
+      return (applications ?? []).map((application) => ({
+        ...application,
+        profile: profilesById.get(application.student_id) ?? null,
+      }));
     },
   });
 
@@ -64,6 +78,11 @@ function EmployerApps() {
       <section className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
         {isLoading ? (
           <p>Loading…</p>
+        ) : error ? (
+          <div className="rounded-2xl border border-destructive/30 bg-destructive/5 p-8 text-center">
+            <p className="font-serif text-xl text-destructive">Applications could not load</p>
+            <p className="mt-1 text-sm text-muted-foreground">{error.message}</p>
+          </div>
         ) : !data || data.length === 0 ? (
           <div className="rounded-2xl border border-dashed border-border bg-card p-12 text-center">
             <p className="font-serif text-xl text-navy">No applications yet</p>
@@ -115,7 +134,13 @@ function EmployerApps() {
                   {a.cv_url && (
                     <Button variant="outline" size="sm" onClick={() => downloadCv(a.cv_url)}>
                       <FileText className="mr-1 h-4 w-4" /> View CV
+                      <Download className="ml-1 h-3.5 w-3.5" />
                     </Button>
+                  )}
+                  {!a.cv_url && (
+                    <span className="inline-flex items-center rounded-md border border-dashed border-border px-3 py-1.5 text-xs text-muted-foreground">
+                      No CV file attached
+                    </span>
                   )}
                   {a.status === "pending" && (
                     <Button size="sm" variant="outline" onClick={() => updateApp(a.id, { status: "reviewing" }, "Marked as reviewing")}>
