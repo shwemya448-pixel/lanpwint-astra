@@ -59,7 +59,7 @@ function MyApplications() {
             <p className="font-serif text-xl text-navy">No applications yet</p>
             <p className="mt-1 text-sm text-muted-foreground">Browse the latest openings and apply.</p>
             <Button asChild className="mt-5 bg-navy text-navy-foreground hover:bg-deep">
-              <Link to="/jobs">Browse jobs</Link>
+              <Link to="/student/jobs">Browse jobs</Link>
             </Button>
           </div>
         ) : (
@@ -68,7 +68,7 @@ function MyApplications() {
               <div key={a.id} className="rounded-2xl border border-border bg-card p-5">
                 <div className="flex flex-wrap items-start justify-between gap-3">
                   <div>
-                    <Link to="/jobs/$jobId" params={{ jobId: a.job?.id }} className="font-serif text-lg text-navy hover:text-teal">
+                    <Link to="/student/jobs/$jobId" params={{ jobId: a.job?.id }} className="font-serif text-lg text-navy hover:text-teal">
                       {a.job?.title ?? "Job"}
                     </Link>
                     <p className="text-sm text-muted-foreground">

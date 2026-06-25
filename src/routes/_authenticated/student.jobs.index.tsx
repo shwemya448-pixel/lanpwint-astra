@@ -92,7 +92,7 @@ function JobsList() {
             {filtered.map((j) => (
               <Link
                 key={j.id}
-                to="/jobs/$jobId"
+                to="/student/jobs/$jobId"
                 params={{ jobId: j.id }}
                 className="rounded-2xl border border-border bg-card p-6 transition-colors hover:border-teal"
               >

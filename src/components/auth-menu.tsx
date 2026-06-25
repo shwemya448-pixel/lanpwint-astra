@@ -103,13 +103,13 @@ export function AuthMenu() {
           ) : (
             <>
               <DropdownMenuItem asChild>
-                <Link to="/jobs">{t("auth.browseJobs")}</Link>
+                <Link to="/student/jobs">{t("auth.browseJobs")}</Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <Link to="/applications">{t("auth.myApplications")}</Link>
+                <Link to="/student/applications">{t("auth.myApplications")}</Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <Link to="/lessons">{t("auth.learning")}</Link>
+                <Link to="/student/lessons">{t("auth.learning")}</Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
                 <Link to="/profile">

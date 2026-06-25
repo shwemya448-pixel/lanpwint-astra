@@ -22,7 +22,7 @@ function MyCVPage() {
             <div className="font-serif text-lg text-navy">Edit profile</div>
             <div className="mt-1 text-sm text-muted-foreground">Skills, education, and bio.</div>
           </Link>
-          <Link to="/cv-analyzer" className="rounded-2xl border border-border bg-card p-6 hover:border-[color:var(--gold)]">
+          <Link to="/student/cv-analyzer" className="rounded-2xl border border-border bg-card p-6 hover:border-[color:var(--gold)]">
             <div className="font-serif text-lg text-navy">Analyze my CV</div>
             <div className="mt-1 text-sm text-muted-foreground">Get AI feedback and a match score.</div>
           </Link>

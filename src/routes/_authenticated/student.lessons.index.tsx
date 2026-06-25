@@ -44,7 +44,7 @@ function LessonsList() {
             {data.map((l) => (
               <Link
                 key={l.id}
-                to="/lessons/$lessonId"
+                to="/student/lessons/$lessonId"
                 params={{ lessonId: l.id }}
                 className="group overflow-hidden rounded-2xl border border-border bg-card transition-colors hover:border-teal"
               >
