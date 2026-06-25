@@ -127,6 +127,8 @@ function LandingPage() {
         </div>
       </section>
 
+      <NewsPreview />
+
       <SiteFooter />
 
 
