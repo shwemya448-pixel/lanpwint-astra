@@ -63,10 +63,10 @@ function NewsDetail() {
             <div className="mt-2 text-sm text-muted-foreground">
               {new Date(post.published_at).toLocaleDateString(lang === "my" ? "my-MM" : "en-US", { year: "numeric", month: "long", day: "numeric" })}
             </div>
-            {post.image_url && (
+            {post.video_url && <NewsVideo url={post.video_url} />}
+            {!post.video_url && post.image_url && (
               <img src={post.image_url} alt="" className="mt-6 w-full rounded-xl border border-border" />
             )}
-            {post.video_url && <NewsVideo url={post.video_url} />}
             <div className="mt-6 whitespace-pre-wrap font-sans leading-relaxed text-foreground/90">
               {lang === "my" ? post.body_my : post.body_en}
             </div>
@@ -125,7 +125,6 @@ function NewsVideo({ url }: { url: string }) {
     <div className="mt-6 aspect-video w-full overflow-hidden rounded-xl border border-border bg-black">
       <video
         key={url}
-        src={url}
         controls
         playsInline
         preload="auto"

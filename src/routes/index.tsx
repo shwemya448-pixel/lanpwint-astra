@@ -191,13 +191,13 @@ function NewsPreview() {
               params={{ slug: p.slug }}
               className="group rounded-xl border border-border bg-card overflow-hidden transition-all hover:border-[color:var(--gold)]/60 hover:shadow-[0_8px_30px_-12px_color-mix(in_oklab,var(--gold)_30%,transparent)]"
             >
-              {p.image_url ? (
-                <div className="aspect-video overflow-hidden bg-muted">
-                  <img src={p.image_url} alt="" className="h-full w-full object-cover transition-transform group-hover:scale-105" />
-                </div>
-              ) : p.video_url ? (
+              {p.video_url ? (
                 <div className="aspect-video overflow-hidden bg-black">
                   <video src={p.video_url} muted playsInline preload="metadata" className="h-full w-full object-cover" />
+                </div>
+              ) : p.image_url ? (
+                <div className="aspect-video overflow-hidden bg-muted">
+                  <img src={p.image_url} alt="" className="h-full w-full object-cover transition-transform group-hover:scale-105" />
                 </div>
               ) : null}
               <div className="p-5">
