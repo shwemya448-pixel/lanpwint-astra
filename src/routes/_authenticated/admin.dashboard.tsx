@@ -1,7 +1,9 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
 import {
   Briefcase,
+  Check,
   DollarSign,
   FileText,
   GraduationCap,
@@ -11,7 +13,9 @@ import {
   TrendingUp,
   UserCheck,
   Users,
+  X,
 } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import {
   Area,
   AreaChart,
