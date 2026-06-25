@@ -289,32 +289,44 @@ function StatTile({
   sub: string;
 }) {
   return (
-    <div className={`rounded-2xl p-5 text-white shadow-md ${tint}`}>
-      <div className="flex items-start justify-between">
+    <div
+      className={
+        "group relative overflow-hidden rounded-2xl p-5 text-white shadow-lg ring-1 ring-white/10 transition-all hover:-translate-y-0.5 hover:shadow-2xl " +
+        tint
+      }
+    >
+      <div aria-hidden className="pointer-events-none absolute -right-8 -top-8 h-32 w-32 rounded-full bg-white/15 blur-2xl transition-transform group-hover:scale-110" />
+      <div aria-hidden className="pointer-events-none absolute inset-0 bg-[radial-gradient(120%_60%_at_0%_0%,rgba(255,255,255,0.18),transparent_60%)]" />
+      <div className="relative flex items-start justify-between">
         <div>
-          <div className="text-2xl font-semibold">{value}</div>
-          <div className="mt-0.5 text-sm opacity-90">{label}</div>
+          <div className="text-3xl font-bold tracking-tight drop-shadow-sm">{value}</div>
+          <div className="mt-1 text-xs font-medium uppercase tracking-wider opacity-90">{label}</div>
         </div>
-        <Icon className="h-7 w-7 opacity-80" />
+        <span className="grid h-10 w-10 place-items-center rounded-xl bg-white/20 backdrop-blur">
+          <Icon className="h-5 w-5" />
+        </span>
       </div>
-      <div className="mt-4 rounded-md bg-white/20 px-2 py-1 text-[11px]">{sub}</div>
+      <div className="relative mt-5 inline-flex items-center rounded-md bg-white/15 px-2.5 py-1 text-[11px] font-medium backdrop-blur">
+        {sub}
+      </div>
     </div>
   );
 }
 
 function MiniStat({ icon: Icon, label, value }: { icon: any; label: string; value: number }) {
   return (
-    <div className="flex items-center gap-3 rounded-xl border border-border bg-background p-3">
-      <span className="grid h-9 w-9 place-items-center rounded-md bg-[color:var(--gold)]/15 text-[color:var(--gold)]">
+    <div className="group flex items-center gap-3 rounded-xl border border-border bg-background/60 p-3 transition-all hover:-translate-y-0.5 hover:border-[color:var(--gold)]/40 hover:shadow-md">
+      <span className="grid h-10 w-10 place-items-center rounded-lg bg-gradient-to-br from-[color:var(--gold)]/25 to-[color:var(--gold)]/5 text-[color:var(--gold)] ring-1 ring-[color:var(--gold)]/20">
         <Icon className="h-4 w-4" />
       </span>
       <div>
-        <div className="text-lg font-semibold text-navy">{value.toLocaleString()}</div>
-        <div className="text-[11px] uppercase tracking-wider text-muted-foreground">{label}</div>
+        <div className="text-xl font-bold text-navy">{value.toLocaleString()}</div>
+        <div className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">{label}</div>
       </div>
     </div>
   );
 }
+
 
 function SkeletonRow() {
   return (
