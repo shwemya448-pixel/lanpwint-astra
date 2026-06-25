@@ -9,7 +9,7 @@ export const Route = createFileRoute("/candidates")({
       {
         name: "description",
         content:
-          "Post jobs, map your hiring across Myanmar, browse the student CV board, and message candidates — all from one employer workspace.",
+          "Post jobs, map your hiring across Myanmar, browse the candidate CV board, and message candidates — all from one employer workspace.",
       },
       { property: "og:title", content: "Hire on Lan Pwint" },
       {
@@ -27,7 +27,7 @@ function EmployersLayout() {
       <PageHeader
         eyebrow="For employers"
         title="Hire the next generation of Myanmar talent"
-        description="Post jobs, drop them on the map so students can find you, and start a conversation as soon as a candidate applies."
+        description="Post jobs, drop them on the map so candidates can find you, and start a conversation as soon as a candidate applies."
       />
       <PageNav
         items={[

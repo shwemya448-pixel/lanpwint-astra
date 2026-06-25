@@ -6,9 +6,9 @@ export const Route = createFileRoute("/candidates/")({
 });
 
 const CARDS = [
-  { to: "/employer/jobs/new", icon: Briefcase, title: "Post a job", body: "Open roles published in minutes. Students apply with one tap." },
+  { to: "/employer/jobs/new", icon: Briefcase, title: "Post a job", body: "Open roles published in minutes. Candidates apply with one tap." },
   { to: "/employer/job-map", icon: MapPin, title: "Drop it on the map", body: "Pin each role on the Myanmar map so candidates can find you geographically." },
-  { to: "/employer/applications", icon: FileText, title: "Review applicants", body: "Student details are revealed only after they apply to your job — keeping their data private." },
+  { to: "/employer/applications", icon: FileText, title: "Review applicants", body: "Candidate details are revealed only after they apply to your job — keeping their data private." },
   { to: "/employer/messages", icon: MessageSquare, title: "Message directly", body: "Realtime chat with candidates who reach out or apply — no email back-and-forth." },
 ];
 
