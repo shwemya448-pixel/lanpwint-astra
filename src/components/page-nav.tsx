@@ -7,7 +7,7 @@ export interface PageNavItem {
 
 export function PageNav({ items }: { items: PageNavItem[] }) {
   return (
-    <nav className="sticky top-[var(--header-height,64px)] z-30 border-b border-border bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <nav className="border-b border-border bg-muted/40">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <ul className="flex gap-6 overflow-x-auto py-3 text-sm">
           {items.map((item) => (
