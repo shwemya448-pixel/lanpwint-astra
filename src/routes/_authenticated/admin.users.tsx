@@ -17,7 +17,7 @@ function AdminUsers() {
     queryKey: ["admin-users"],
     queryFn: async () => {
       const [{ data: profiles, error: e1 }, { data: roles, error: e2 }] = await Promise.all([
-        (supabase.from("profiles").select("id, full_name, contact_email, position, company_name, created_at, employer_status").order("created_at", { ascending: false }) as any),
+        (supabase.from("profiles").select("id, full_name, contact_email, position, company_name, school, location, created_at, employer_status").order("created_at", { ascending: false }) as any),
         supabase.from("user_roles").select("user_id, role"),
       ]);
       if (e1) throw e1;
@@ -68,6 +68,8 @@ function AdminUsers() {
                 <th className="px-4 py-3">Roles</th>
                 <th className="px-4 py-3">Position</th>
                 <th className="px-4 py-3">Company</th>
+                <th className="px-4 py-3">School</th>
+                <th className="px-4 py-3">Location</th>
                 <th className="px-4 py-3">Employer status</th>
                 <th className="px-4 py-3 text-right">Actions</th>
               </tr>
@@ -89,6 +91,8 @@ function AdminUsers() {
                     </td>
                     <td className="px-4 py-3 text-muted-foreground">{u.position || "—"}</td>
                     <td className="px-4 py-3 text-muted-foreground">{u.company_name || "—"}</td>
+                    <td className="px-4 py-3 text-muted-foreground">{u.school || "—"}</td>
+                    <td className="px-4 py-3 text-muted-foreground">{u.location || "—"}</td>
                     <td className="px-4 py-3">
                       {isEmployer ? (
                         <Badge
@@ -113,15 +117,15 @@ function AdminUsers() {
                     <td className="px-4 py-3">
                       {isEmployer ? (
                         <div className="flex justify-end gap-2">
-                          {status !== "approved" && (
-                            <Button size="sm" variant="default" disabled={setStatus.isPending} onClick={() => setStatus.mutate({ id: u.id, status: "approved" })}>
-                              <Check className="mr-1 h-3.5 w-3.5" /> Approve
-                            </Button>
-                          )}
-                          {status !== "rejected" && (
-                            <Button size="sm" variant="outline" disabled={setStatus.isPending} onClick={() => setStatus.mutate({ id: u.id, status: "rejected" })}>
-                              <X className="mr-1 h-3.5 w-3.5" /> Reject
-                            </Button>
+                          {status === "pending" && (
+                            <>
+                              <Button size="sm" variant="default" disabled={setStatus.isPending} onClick={() => setStatus.mutate({ id: u.id, status: "approved" })}>
+                                <Check className="mr-1 h-3.5 w-3.5" /> Approve
+                              </Button>
+                              <Button size="sm" variant="outline" disabled={setStatus.isPending} onClick={() => setStatus.mutate({ id: u.id, status: "rejected" })}>
+                                <X className="mr-1 h-3.5 w-3.5" /> Reject
+                              </Button>
+                            </>
                           )}
                         </div>
                       ) : null}
