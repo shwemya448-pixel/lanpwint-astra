@@ -59,7 +59,7 @@ const dict = {
   my: {
     "nav.home": "ပင်မ",
     "nav.students": "ကျောင်းသားများ",
-    "nav.candidates": "လျှောက်ထားသူ",
+    "nav.candidates": "အလုပ်ရှင်များ",
     "nav.about": "အကြောင်း",
     "nav.contact": "ဆက်သွယ်ရန်",
     "nav.news": "သတင်း",
