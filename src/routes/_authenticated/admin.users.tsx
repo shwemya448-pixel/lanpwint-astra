@@ -17,7 +17,7 @@ function AdminUsers() {
     queryKey: ["admin-users"],
     queryFn: async () => {
       const [{ data: profiles, error: e1 }, { data: roles, error: e2 }] = await Promise.all([
-        (supabase.from("profiles").select("id, full_name, contact_email, location, school, created_at, employer_status, company_name").order("created_at", { ascending: false }) as any),
+        (supabase.from("profiles").select("id, full_name, contact_email, position, company_name, created_at, employer_status").order("created_at", { ascending: false }) as any),
         supabase.from("user_roles").select("user_id, role"),
       ]);
       if (e1) throw e1;
@@ -66,6 +66,7 @@ function AdminUsers() {
                 <th className="px-4 py-3">Name</th>
                 <th className="px-4 py-3">Email</th>
                 <th className="px-4 py-3">Roles</th>
+                <th className="px-4 py-3">Position</th>
                 <th className="px-4 py-3">Company</th>
                 <th className="px-4 py-3">Employer status</th>
                 <th className="px-4 py-3 text-right">Actions</th>
@@ -86,6 +87,7 @@ function AdminUsers() {
                           : u.roles.map((r: string) => <Badge key={r} variant="outline" className="capitalize">{r}</Badge>)}
                       </div>
                     </td>
+                    <td className="px-4 py-3 text-muted-foreground">{u.position || "—"}</td>
                     <td className="px-4 py-3 text-muted-foreground">{u.company_name || "—"}</td>
                     <td className="px-4 py-3">
                       {isEmployer ? (
