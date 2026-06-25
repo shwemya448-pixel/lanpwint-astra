@@ -50,10 +50,8 @@ import { Route as AuthenticatedEmployerCvBoardRouteImport } from './routes/_auth
 import { Route as AuthenticatedEmployerApplicationsRouteImport } from './routes/_authenticated/employer.applications'
 import { Route as AuthenticatedAdminNewsRouteImport } from './routes/_authenticated/admin.news'
 import { Route as AuthenticatedAdminDashboardRouteImport } from './routes/_authenticated/admin.dashboard'
-import { Route as AuthenticatedStudentLessonsIndexRouteImport } from './routes/_authenticated/student.lessons.index'
 import { Route as AuthenticatedStudentJobsIndexRouteImport } from './routes/_authenticated/student.jobs.index'
 import { Route as AuthenticatedEmployerJobsIndexRouteImport } from './routes/_authenticated/employer.jobs.index'
-import { Route as AuthenticatedStudentLessonsLessonIdRouteImport } from './routes/_authenticated/student.lessons.$lessonId'
 import { Route as AuthenticatedStudentJobsJobIdRouteImport } from './routes/_authenticated/student.jobs.$jobId'
 import { Route as AuthenticatedEmployerJobsNewRouteImport } from './routes/_authenticated/employer.jobs.new'
 
@@ -277,12 +275,6 @@ const AuthenticatedAdminDashboardRoute =
     path: '/dashboard',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
-const AuthenticatedStudentLessonsIndexRoute =
-  AuthenticatedStudentLessonsIndexRouteImport.update({
-    id: '/lessons/',
-    path: '/lessons/',
-    getParentRoute: () => AuthenticatedStudentRoute,
-  } as any)
 const AuthenticatedStudentJobsIndexRoute =
   AuthenticatedStudentJobsIndexRouteImport.update({
     id: '/jobs/',
@@ -294,12 +286,6 @@ const AuthenticatedEmployerJobsIndexRoute =
     id: '/jobs/',
     path: '/jobs/',
     getParentRoute: () => AuthenticatedEmployerRoute,
-  } as any)
-const AuthenticatedStudentLessonsLessonIdRoute =
-  AuthenticatedStudentLessonsLessonIdRouteImport.update({
-    id: '/lessons/$lessonId',
-    path: '/lessons/$lessonId',
-    getParentRoute: () => AuthenticatedStudentRoute,
   } as any)
 const AuthenticatedStudentJobsJobIdRoute =
   AuthenticatedStudentJobsJobIdRouteImport.update({
@@ -357,10 +343,8 @@ export interface FileRoutesByFullPath {
   '/student/': typeof AuthenticatedStudentIndexRoute
   '/employer/jobs/new': typeof AuthenticatedEmployerJobsNewRoute
   '/student/jobs/$jobId': typeof AuthenticatedStudentJobsJobIdRoute
-  '/student/lessons/$lessonId': typeof AuthenticatedStudentLessonsLessonIdRoute
   '/employer/jobs/': typeof AuthenticatedEmployerJobsIndexRoute
   '/student/jobs/': typeof AuthenticatedStudentJobsIndexRoute
-  '/student/lessons/': typeof AuthenticatedStudentLessonsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -400,10 +384,8 @@ export interface FileRoutesByTo {
   '/student': typeof AuthenticatedStudentIndexRoute
   '/employer/jobs/new': typeof AuthenticatedEmployerJobsNewRoute
   '/student/jobs/$jobId': typeof AuthenticatedStudentJobsJobIdRoute
-  '/student/lessons/$lessonId': typeof AuthenticatedStudentLessonsLessonIdRoute
   '/employer/jobs': typeof AuthenticatedEmployerJobsIndexRoute
   '/student/jobs': typeof AuthenticatedStudentJobsIndexRoute
-  '/student/lessons': typeof AuthenticatedStudentLessonsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -450,10 +432,8 @@ export interface FileRoutesById {
   '/_authenticated/student/': typeof AuthenticatedStudentIndexRoute
   '/_authenticated/employer/jobs/new': typeof AuthenticatedEmployerJobsNewRoute
   '/_authenticated/student/jobs/$jobId': typeof AuthenticatedStudentJobsJobIdRoute
-  '/_authenticated/student/lessons/$lessonId': typeof AuthenticatedStudentLessonsLessonIdRoute
   '/_authenticated/employer/jobs/': typeof AuthenticatedEmployerJobsIndexRoute
   '/_authenticated/student/jobs/': typeof AuthenticatedStudentJobsIndexRoute
-  '/_authenticated/student/lessons/': typeof AuthenticatedStudentLessonsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -500,10 +480,8 @@ export interface FileRouteTypes {
     | '/student/'
     | '/employer/jobs/new'
     | '/student/jobs/$jobId'
-    | '/student/lessons/$lessonId'
     | '/employer/jobs/'
     | '/student/jobs/'
-    | '/student/lessons/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -543,10 +521,8 @@ export interface FileRouteTypes {
     | '/student'
     | '/employer/jobs/new'
     | '/student/jobs/$jobId'
-    | '/student/lessons/$lessonId'
     | '/employer/jobs'
     | '/student/jobs'
-    | '/student/lessons'
   id:
     | '__root__'
     | '/'
@@ -592,10 +568,8 @@ export interface FileRouteTypes {
     | '/_authenticated/student/'
     | '/_authenticated/employer/jobs/new'
     | '/_authenticated/student/jobs/$jobId'
-    | '/_authenticated/student/lessons/$lessonId'
     | '/_authenticated/employer/jobs/'
     | '/_authenticated/student/jobs/'
-    | '/_authenticated/student/lessons/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -900,13 +874,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminDashboardRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
-    '/_authenticated/student/lessons/': {
-      id: '/_authenticated/student/lessons/'
-      path: '/lessons'
-      fullPath: '/student/lessons/'
-      preLoaderRoute: typeof AuthenticatedStudentLessonsIndexRouteImport
-      parentRoute: typeof AuthenticatedStudentRoute
-    }
     '/_authenticated/student/jobs/': {
       id: '/_authenticated/student/jobs/'
       path: '/jobs'
@@ -920,13 +887,6 @@ declare module '@tanstack/react-router' {
       fullPath: '/employer/jobs/'
       preLoaderRoute: typeof AuthenticatedEmployerJobsIndexRouteImport
       parentRoute: typeof AuthenticatedEmployerRoute
-    }
-    '/_authenticated/student/lessons/$lessonId': {
-      id: '/_authenticated/student/lessons/$lessonId'
-      path: '/lessons/$lessonId'
-      fullPath: '/student/lessons/$lessonId'
-      preLoaderRoute: typeof AuthenticatedStudentLessonsLessonIdRouteImport
-      parentRoute: typeof AuthenticatedStudentRoute
     }
     '/_authenticated/student/jobs/$jobId': {
       id: '/_authenticated/student/jobs/$jobId'
@@ -996,9 +956,7 @@ interface AuthenticatedStudentRouteChildren {
   AuthenticatedStudentMyCvRoute: typeof AuthenticatedStudentMyCvRoute
   AuthenticatedStudentIndexRoute: typeof AuthenticatedStudentIndexRoute
   AuthenticatedStudentJobsJobIdRoute: typeof AuthenticatedStudentJobsJobIdRoute
-  AuthenticatedStudentLessonsLessonIdRoute: typeof AuthenticatedStudentLessonsLessonIdRoute
   AuthenticatedStudentJobsIndexRoute: typeof AuthenticatedStudentJobsIndexRoute
-  AuthenticatedStudentLessonsIndexRoute: typeof AuthenticatedStudentLessonsIndexRoute
 }
 
 const AuthenticatedStudentRouteChildren: AuthenticatedStudentRouteChildren = {
@@ -1011,10 +969,7 @@ const AuthenticatedStudentRouteChildren: AuthenticatedStudentRouteChildren = {
   AuthenticatedStudentMyCvRoute: AuthenticatedStudentMyCvRoute,
   AuthenticatedStudentIndexRoute: AuthenticatedStudentIndexRoute,
   AuthenticatedStudentJobsJobIdRoute: AuthenticatedStudentJobsJobIdRoute,
-  AuthenticatedStudentLessonsLessonIdRoute:
-    AuthenticatedStudentLessonsLessonIdRoute,
   AuthenticatedStudentJobsIndexRoute: AuthenticatedStudentJobsIndexRoute,
-  AuthenticatedStudentLessonsIndexRoute: AuthenticatedStudentLessonsIndexRoute,
 }
 
 const AuthenticatedStudentRouteWithChildren =

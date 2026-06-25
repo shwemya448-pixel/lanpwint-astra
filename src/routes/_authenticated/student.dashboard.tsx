@@ -15,7 +15,7 @@ const TILES = [
   { icon: User, title: "My CV", body: "Manage your discoverable profile.", to: "/student/my-cv", cta: "Manage CV" },
   { icon: Briefcase, title: "Browse jobs", body: "Internships and graduate roles.", to: "/student/jobs", cta: "View openings" },
   { icon: FileText, title: "My applications", body: "Track applications and offers.", to: "/student/applications", cta: "Open" },
-  { icon: BookOpen, title: "Lessons", body: "Curated learning library.", to: "/student/lessons", cta: "Open lessons" },
+  
 ];
 
 function StudentDashboard() {

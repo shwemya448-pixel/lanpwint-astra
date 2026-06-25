@@ -23,7 +23,9 @@ function JobsList() {
     queryFn: async () => {
       const { data } = await supabase
         .from("jobs")
-        .select("id, title, company, location, job_type, salary_min, salary_max, salary_currency, skills, created_at")
+        .select(
+          "id, title, company, location, job_type, salary_min, salary_max, salary_currency, skills, description, requirements, application_deadline, created_at",
+        )
         .eq("status", "open")
         .order("created_at", { ascending: false });
       return data ?? [];
@@ -33,7 +35,7 @@ function JobsList() {
   const filtered = (data ?? []).filter((j) => {
     if (type && j.job_type !== type) return false;
     if (!q) return true;
-    const hay = `${j.title} ${j.company ?? ""} ${j.location ?? ""} ${(j.skills ?? []).join(" ")}`.toLowerCase();
+    const hay = `${j.title} ${j.company ?? ""} ${j.location ?? ""} ${j.description ?? ""} ${(j.skills ?? []).join(" ")}`.toLowerCase();
     return hay.includes(q.toLowerCase());
   });
 
@@ -88,46 +90,64 @@ function JobsList() {
             <p className="mt-1 text-sm text-muted-foreground">Check back soon — new roles are posted every week.</p>
           </div>
         ) : (
-          <div className="grid gap-4 md:grid-cols-2">
-            {filtered.map((j) => (
-              <Link
-                key={j.id}
-                to="/student/jobs/$jobId"
-                params={{ jobId: j.id }}
-                className="rounded-2xl border border-border bg-card p-6 transition-colors hover:border-teal"
-              >
-                <div className="flex items-start justify-between gap-3">
-                  <div>
-                    <h3 className="font-serif text-xl text-navy">{j.title}</h3>
-                    {j.company && <p className="text-sm text-muted-foreground">{j.company}</p>}
+          <div className="grid gap-4 md:grid-cols-2 lp-reveal-stagger">
+            {filtered.map((j) => {
+              const deadline = j.application_deadline ? new Date(j.application_deadline) : null;
+              const deadlineSoon = deadline ? (deadline.getTime() - Date.now()) / 86400000 < 7 : false;
+              return (
+                <Link
+                  key={j.id}
+                  to="/student/jobs/$jobId"
+                  params={{ jobId: j.id }}
+                  className="group flex flex-col rounded-2xl border bg-card p-6"
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <div>
+                      <h3 className="font-serif text-xl text-navy group-hover:text-[color:var(--gold)] transition-colors">
+                        {j.title}
+                      </h3>
+                      {j.company && <p className="text-sm text-muted-foreground">{j.company}</p>}
+                    </div>
+                    <Badge variant="secondary" className="bg-[color:var(--gold-soft)] text-[color:var(--gold)]">
+                      {jobTypeLabel(j.job_type)}
+                    </Badge>
                   </div>
-                  <Badge variant="secondary" className="bg-teal/15 text-teal">{jobTypeLabel(j.job_type)}</Badge>
-                </div>
-                <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted-foreground">
-                  {j.location && (
-                    <span className="inline-flex items-center gap-1">
-                      <MapPin className="h-3 w-3" /> {j.location}
-                    </span>
-                  )}
-                  <span>{formatSalary(j.salary_min, j.salary_max, j.salary_currency ?? "MMK")}</span>
-                  <span>{timeAgo(j.created_at)}</span>
-                </div>
-                {j.skills && j.skills.length > 0 && (
-                  <div className="mt-3 flex flex-wrap gap-1.5">
-                    {j.skills.slice(0, 5).map((s) => (
-                      <span key={s} className="rounded-full bg-muted px-2.5 py-0.5 text-[11px] text-foreground/80">
-                        {s}
+                  <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted-foreground">
+                    {j.location && (
+                      <span className="inline-flex items-center gap-1">
+                        <MapPin className="h-3 w-3" /> {j.location}
                       </span>
-                    ))}
+                    )}
+                    <span>{formatSalary(j.salary_min, j.salary_max, j.salary_currency ?? "MMK")}</span>
+                    <span>Posted {timeAgo(j.created_at)}</span>
+                    {deadline && (
+                      <span className={deadlineSoon ? "text-destructive" : ""}>
+                        Apply by {deadline.toLocaleDateString()}
+                      </span>
+                    )}
                   </div>
-                )}
-                <div className="mt-5">
-                  <Button size="sm" className="bg-navy text-navy-foreground hover:bg-deep">
-                    View & apply
-                  </Button>
-                </div>
-              </Link>
-            ))}
+
+                  {j.description && (
+                    <p className="mt-3 line-clamp-3 text-sm text-foreground/80">
+                      {j.description}
+                    </p>
+                  )}
+
+                  {j.skills && j.skills.length > 0 && (
+                    <div className="mt-3 flex flex-wrap gap-1.5">
+                      {j.skills.slice(0, 6).map((s) => (
+                        <span key={s} className="rounded-full bg-muted px-2.5 py-0.5 text-[11px] text-foreground/80">
+                          {s}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                  <div className="mt-auto pt-5">
+                    <Button size="sm" className="lp-gold-btn">View &amp; apply</Button>
+                  </div>
+                </Link>
+              );
+            })}
           </div>
         )}
       </section>

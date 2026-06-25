@@ -38,7 +38,6 @@ const STUDENT_NAV: NavItem[] = [
   { to: "/student/jobs", label: "Browse jobs", icon: Briefcase },
   { to: "/student/applications", label: "Applications", icon: FileText },
   { to: "/student/learn", label: "Learn", icon: BookOpen },
-  { to: "/student/lessons", label: "Lessons", icon: BookOpen },
   { to: "/student/job-map", label: "Job map", icon: MapPin },
   { to: "/student/cv-analyzer", label: "CV Analyzer", icon: Sparkles },
   { to: "/student/my-cv", label: "My CV", icon: User },

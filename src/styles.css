@@ -143,9 +143,15 @@
     letter-spacing: -0.01em;
   }
   ::selection {
-    background-color: color-mix(in oklab, var(--teal) 30%, transparent);
+    background-color: color-mix(in oklab, var(--gold) 35%, transparent);
+  }
+  /* Global smooth transitions */
+  a, button, [role="button"], .rounded-2xl, .rounded-xl, .rounded-lg, .rounded-full, input, select, textarea {
+    transition: background-color .25s ease, color .25s ease, border-color .25s ease,
+                box-shadow .3s ease, transform .25s ease, filter .25s ease;
   }
 }
+
 
 /* Subtle paper grain for hero surfaces */
 @utility grain {
@@ -324,3 +330,84 @@ html.dark .text-navy {
   animation: lp-shimmer 4s linear infinite;
 }
 
+
+/* =========================================================
+ * Lan Pwint — Border palette: deep navy + gold (dark mode),
+ * crisp white + darker gold (light mode)
+ * ========================================================= */
+.dark {
+  --border: oklch(0.52 0.10 260 / 0.55);            /* dark blue, visible */
+  --input: oklch(0.52 0.10 260 / 0.45);
+}
+.dark .border,
+.dark .border-border,
+.dark [class*="border-border"] {
+  border-color: color-mix(in oklab, var(--deep) 65%, var(--gold) 35%) !important;
+}
+.dark .rounded-2xl.border,
+.dark .rounded-xl.border,
+.dark .rounded-lg.border {
+  box-shadow:
+    inset 0 1px 0 color-mix(in oklab, var(--gold) 25%, transparent),
+    0 0 0 1px color-mix(in oklab, var(--deep) 40%, transparent),
+    0 10px 30px -18px color-mix(in oklab, var(--gold) 45%, transparent);
+}
+
+:root:not(.dark) {
+  --border: oklch(0.62 0.16 80 / 0.45);             /* darker gold */
+  --input: oklch(0.62 0.16 80 / 0.35);
+}
+:root:not(.dark) .border,
+:root:not(.dark) .border-border,
+:root:not(.dark) [class*="border-border"] {
+  border-color: color-mix(in oklab, #ffffff 55%, var(--gold) 45%) !important;
+}
+:root:not(.dark) .rounded-2xl.border,
+:root:not(.dark) .rounded-xl.border,
+:root:not(.dark) .rounded-lg.border {
+  box-shadow:
+    inset 0 1px 0 #ffffff,
+    0 0 0 1px color-mix(in oklab, var(--gold) 35%, transparent),
+    0 10px 28px -18px color-mix(in oklab, var(--gold) 35%, transparent);
+}
+
+/* Hover lift for cards */
+.rounded-2xl.border:hover,
+.rounded-xl.border:hover {
+  transform: translateY(-2px);
+  border-color: color-mix(in oklab, var(--gold) 70%, var(--deep)) !important;
+  box-shadow:
+    0 18px 40px -16px color-mix(in oklab, var(--gold) 55%, transparent),
+    0 0 0 1px color-mix(in oklab, var(--gold) 60%, transparent);
+}
+
+/* Reveal-in animation utility for sections */
+@keyframes lp-reveal {
+  from { opacity: 0; transform: translateY(18px) scale(.98); filter: blur(8px); }
+  to   { opacity: 1; transform: translateY(0)    scale(1);   filter: blur(0); }
+}
+.lp-reveal { animation: lp-reveal .7s cubic-bezier(.2,.7,.2,1) both; }
+.lp-reveal-stagger > * { animation: lp-reveal .7s cubic-bezier(.2,.7,.2,1) both; }
+.lp-reveal-stagger > *:nth-child(1){ animation-delay: .02s }
+.lp-reveal-stagger > *:nth-child(2){ animation-delay: .08s }
+.lp-reveal-stagger > *:nth-child(3){ animation-delay: .14s }
+.lp-reveal-stagger > *:nth-child(4){ animation-delay: .20s }
+.lp-reveal-stagger > *:nth-child(5){ animation-delay: .26s }
+.lp-reveal-stagger > *:nth-child(6){ animation-delay: .32s }
+.lp-reveal-stagger > *:nth-child(7){ animation-delay: .38s }
+.lp-reveal-stagger > *:nth-child(8){ animation-delay: .44s }
+.lp-reveal-stagger > *:nth-child(9){ animation-delay: .50s }
+
+/* Gold underline link effect */
+.lp-link-gold { position: relative; }
+.lp-link-gold::after {
+  content: ""; position: absolute; left: 0; bottom: -2px; width: 100%; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  transform: scaleX(0); transform-origin: right; transition: transform .35s ease;
+}
+.lp-link-gold:hover::after { transform: scaleX(1); transform-origin: left; }
+
+@media (prefers-reduced-motion: reduce) {
+  .lp-reveal, .lp-reveal-stagger > * { animation: none !important; }
+  .rounded-2xl.border:hover, .rounded-xl.border:hover { transform: none; }
+}

@@ -4,6 +4,8 @@ import { z } from "zod";
 const Input = z.object({
   system: z.string().min(1),
   prompt: z.string().min(1),
+  imageDataUrl: z.string().optional(),
+  model: z.string().optional(),
 });
 
 export const askGemini = createServerFn({ method: "POST" })
@@ -12,14 +14,24 @@ export const askGemini = createServerFn({ method: "POST" })
     const key = process.env.LOVABLE_API_KEY;
     if (!key) throw new Error("Missing LOVABLE_API_KEY");
 
+    const userContent: any = data.imageDataUrl
+      ? [
+          { type: "text", text: data.prompt },
+          { type: "image_url", image_url: { url: data.imageDataUrl } },
+        ]
+      : data.prompt;
+
     const res = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
-      headers: { "Content-Type": "application/json", "Lovable-API-Key": key },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${key}`,
+      },
       body: JSON.stringify({
-        model: "google/gemini-3-flash-preview",
+        model: data.model ?? "google/gemini-2.5-flash",
         messages: [
           { role: "system", content: data.system },
-          { role: "user", content: data.prompt },
+          { role: "user", content: userContent },
         ],
       }),
     });
@@ -34,3 +46,4 @@ export const askGemini = createServerFn({ method: "POST" })
     const json = (await res.json()) as { choices?: { message?: { content?: string } }[] };
     return { content: json.choices?.[0]?.message?.content ?? "" };
   });
+
